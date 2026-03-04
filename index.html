@@ -593,10 +593,10 @@
 
       <div class="grid md:grid-cols-2 gap-8 mb-12">
         <div class="bg-white rounded-2xl p-12 flex items-center justify-center border border-gray-200">
-          <p class="text-3xl font-extrabold tracking-tight text-dsBlack">digital scientists</p>
+          <img src="images/ds-logo-black.svg" alt="Digital Scientists wordmark — black" class="h-12">
         </div>
         <div class="bg-dsBlack rounded-2xl p-12 flex items-center justify-center">
-          <p class="text-3xl font-extrabold tracking-tight text-white">digital scientists</p>
+          <img src="images/ds-logo-white.svg" alt="Digital Scientists wordmark — white" class="h-12">
         </div>
       </div>
 
@@ -790,9 +790,17 @@
             <li>Process output: resize to 1440px wide, convert to WebP, under 200KB</li>
           </ul>
         </div>
-        <div>
-          <img src="images/hero-scientist-framework.webp" alt="The Scientist character — Digital Scientists branded illustration" class="rounded-2xl shadow-xl w-full">
-          <p class="text-gray-500 text-sm mt-3 text-center">The Scientist with the Discover / Experiment / Engineer / Optimize framework</p>
+        <div class="space-y-6">
+          <div>
+            <img src="images/hero-scientist-framework.webp" alt="The Scientist character — Digital Scientists branded illustration" class="rounded-2xl shadow-xl w-full">
+            <p class="text-gray-500 text-sm mt-3 text-center">Light version (default — used on white/dsGray backgrounds)</p>
+          </div>
+          <div>
+            <div class="bg-dsBlack rounded-2xl p-4">
+              <img src="images/hero-scientist-framework.webp" alt="The Scientist character — reverse on dark background" class="rounded-xl w-full" style="filter: invert(1) brightness(2);">
+            </div>
+            <p class="text-gray-500 text-sm mt-3 text-center">Reverse version (CSS <code class="bg-gray-100 px-1 rounded text-xs font-mono">filter: invert(1) brightness(2)</code> — for dark backgrounds)</p>
+          </div>
         </div>
       </div>
     </div>
