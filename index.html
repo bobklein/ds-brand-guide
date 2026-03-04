@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Scientists — Brand &amp; Site Guide</title>
+  <meta name="robots" content="noindex, nofollow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { colors: {
+    dsBlue: '#304FFF', dsBlack: '#050505', dsGray: '#F5F5F5',
+    dsTeal: '#26D9C4', dsLime: '#D1F259',
+  }, fontFamily: {
+    sans: ['Inter', 'system-ui', 'sans-serif'],
+    mono: ['Roboto Mono', 'monospace'],
+  }}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-size: 1.125rem; line-height: 1.6; }
+    h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
+    .toc-link { transition: color 0.15s; }
+    .toc-link:hover { color: #304FFF; }
+    .banned-word { text-decoration: line-through; color: #ef4444; }
+    .use-word { color: #059669; font-weight: 600; }
+    .section-label { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #304FFF; margin-bottom: 0.5rem; }
+    .guide-card { border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.5rem; }
+    .color-swatch { width: 100%; height: 80px; border-radius: 0.75rem; margin-bottom: 0.75rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-weight: 600; padding: 0.75rem 1rem; border-bottom: 2px solid #e5e7eb; font-size: 0.875rem; }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid #f3f4f6; font-size: 0.9375rem; }
+    tr:last-child td { border-bottom: none; }
+    code { background: #f3f4f6; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.875rem; font-family: 'Roboto Mono', monospace; }
+    pre { background: #1e1e1e; color: #d4d4d4; border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.5; }
+    pre code { background: none; padding: 0; color: inherit; }
+    .phase-card { border-left: 4px solid #304FFF; padding-left: 1.5rem; }
+    @media print { .no-print { display: none; } }
+  </style>
+</head>
+<body class="bg-white text-dsBlack antialiased">
+
+  <!-- ============================================================ -->
+  <!-- HEADER -->
+  <!-- ============================================================ -->
+  <header class="bg-dsBlack text-white py-16 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="text-dsLime text-sm font-mono font-medium uppercase tracking-wider mb-4">Internal Document — Not for Public Distribution</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Brand &amp; Site Guide</h1>
+      <p class="text-gray-300 text-lg max-w-2xl">Everything about how Digital Scientists presents itself and how the website is maintained. One document, one source of truth.</p>
+      <p class="text-gray-500 text-sm mt-6">Last updated: March 2026</p>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- TABLE OF CONTENTS -->
+  <!-- ============================================================ -->
+  <nav class="bg-dsGray py-12 px-6 no-print">
+    <div class="max-w-screen-xl mx-auto">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <p class="section-label">Brand</p>
+          <ul class="space-y-2 text-base">
+            <li><a href="#who-we-are" class="toc-link text-gray-600">1. Who We Are</a></li>
+            <li><a href="#the-name" class="toc-link text-gray-600">2. The Name</a></li>
+            <li><a href="#methodology" class="toc-link text-gray-600">3. Methodology</a></li>
+            <li><a href="#voice-and-tone" class="toc-link text-gray-600">4. Voice &amp; Tone</a></li>
+            <li><a href="#messaging" class="toc-link text-gray-600">5. Messaging Framework</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="section-label">Visual Identity</p>
+          <ul class="space-y-2 text-base">
+            <li><a href="#colors" class="toc-link text-gray-600">6. Colors &amp; Typography</a></li>
+            <li><a href="#scientist" class="toc-link text-gray-600">7. The Scientist Character</a></li>
+            <li><a href="#imagery" class="toc-link text-gray-600">8. Imagery Standards</a></li>
+            <li><a href="#blog-heroes" class="toc-link text-gray-600">9. Blog Hero System</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="section-label">Site Design</p>
+          <ul class="space-y-2 text-base">
+            <li><a href="#page-architecture" class="toc-link text-gray-600">10. Page Architecture</a></li>
+            <li><a href="#components" class="toc-link text-gray-600">11. Component Patterns</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="section-label">Publishing &amp; Ops</p>
+          <ul class="space-y-2 text-base">
+            <li><a href="#how-it-works" class="toc-link text-gray-600">12. How the Site Works</a></li>
+            <li><a href="#claude" class="toc-link text-gray-600">13. The Claude Ecosystem</a></li>
+            <li><a href="#workflows" class="toc-link text-gray-600">14. Publishing Workflows</a></li>
+            <li><a href="#agency" class="toc-link text-gray-600">15. Agency Partners</a></li>
+            <li><a href="#review" class="toc-link text-gray-600">16. Review Process</a></li>
+            <li><a href="#procedures" class="toc-link text-gray-600">17. Operating Procedures</a></li>
+            <li><a href="#seo" class="toc-link text-gray-600">18. SEO Guidelines</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================ -->
+  <!-- 1. WHO WE ARE -->
+  <!-- ============================================================ -->
+  <section id="who-we-are" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Brand</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">1. Who We Are</h2>
+
+      <div class="max-w-3xl">
+        <p class="text-lg mb-6">Digital Scientists is an innovation partner that applies the scientific method to software product development. We help organizations discover what's worth building, prove it works, and scale it to production.</p>
+
+        <p class="text-lg mb-6">We are not a dev shop. We are not a consultancy. We are scientists — disciplined, evidence-driven, and unafraid of complexity. We work alongside our clients as partners, not vendors. We give them permission to build and leverage software in their own worlds, to solve problems of their own.</p>
+      </div>
+
+      <h3 class="text-xl font-bold mt-12 mb-6">What Makes Us Different</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="guide-card">
+          <p class="text-3xl font-extrabold text-dsBlue mb-2">100%</p>
+          <p class="text-gray-600">Production rate on healthcare AI projects. Everything we build ships.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-3xl font-extrabold text-dsBlue mb-2">$20M+</p>
+          <p class="text-gray-600">Verified client ROI across our portfolio.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-3xl font-extrabold text-dsBlue mb-2">26,000+</p>
+          <p class="text-gray-600">Patients served through NeverAlone, our own 24/7 virtual care platform across 130+ facilities.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-3xl font-extrabold text-dsBlue mb-2">Senior Teams</p>
+          <p class="text-gray-600">We do not rotate junior developers through client projects.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-3xl font-extrabold text-dsBlue mb-2">Not Intimidated</p>
+          <p class="text-gray-600">Large data sets, complex integrations, regulated environments, ambiguous requirements — these are our strengths.</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mt-12 mb-6">Our Focus Areas</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="guide-card border-t-4 border-t-dsBlue">
+          <h4 class="font-bold text-lg mb-2">Healthcare</h4>
+          <p class="text-gray-600 text-base">Our proof point. Clinical workflows, revenue cycle, HIPAA, EHR integration, AI-powered automation. Skilled nursing, health systems, home health, hospice, IDD, senior living.</p>
+        </div>
+        <div class="guide-card border-t-4 border-t-dsTeal">
+          <h4 class="font-bold text-lg mb-2">AI</h4>
+          <p class="text-gray-600 text-base">In the middle of everything we do. Agentic AI that does work for you. LLM-powered insights. AI-accelerated development that gets to production faster.</p>
+        </div>
+        <div class="guide-card border-t-4 border-t-dsLime">
+          <h4 class="font-bold text-lg mb-2">Custom Software</h4>
+          <p class="text-gray-600 text-base">For organizations with complex technical challenges — defense, energy, logistics, enterprise innovation teams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 2. THE NAME -->
+  <!-- ============================================================ -->
+  <section id="the-name" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Brand</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">2. The Name</h2>
+
+      <div class="max-w-3xl">
+        <p class="text-lg mb-6">We lean into the name. "Digital Scientists" is not a metaphor — it's a method.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-8">
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Rigor Over Hype</h4>
+          <p class="text-gray-600 text-base">We test hypotheses. We gather evidence. We make decisions based on data, not assumptions.</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Curiosity</h4>
+          <p class="text-gray-600 text-base">We are drawn to the hard problems. Complex regulatory environments, massive data sets, legacy systems that everyone else avoids.</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Honesty</h4>
+          <p class="text-gray-600 text-base">If the evidence says stop, we stop. That is not failure — that is the methodology working.</p>
+        </div>
+      </div>
+
+      <div class="mt-10 p-6 bg-white rounded-xl border border-gray-200">
+        <h4 class="font-bold mb-3">Usage Rules</h4>
+        <ul class="space-y-2 text-gray-600">
+          <li>Use the full name <strong>"Digital Scientists"</strong> in formal contexts.</li>
+          <li><strong>"DS"</strong> is acceptable in internal shorthand.</li>
+          <li>Never abbreviate to "DigiSci" or similar.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 3. METHODOLOGY -->
+  <!-- ============================================================ -->
+  <section id="methodology" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Brand</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">3. Methodology</h2>
+      <p class="text-xl text-gray-600 mb-12 max-w-2xl">Our four-phase framework is the backbone of how we work and how we talk about our work.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="phase-card">
+          <div class="text-dsBlue/20 text-5xl font-extrabold mb-2">01</div>
+          <h4 class="text-xl font-bold mb-1">Discover</h4>
+          <p class="text-dsBlue font-medium text-sm mb-3">"What should we do?"</p>
+          <p class="text-gray-600 text-base">Research, opportunity mapping, prioritization. We identify the highest-ROI problem to solve.</p>
+        </div>
+        <div class="phase-card">
+          <div class="text-dsBlue/20 text-5xl font-extrabold mb-2">02</div>
+          <h4 class="text-xl font-bold mb-1">Experiment</h4>
+          <p class="text-dsBlue font-medium text-sm mb-3">"Does it actually work?"</p>
+          <p class="text-gray-600 text-base">Working prototypes and MVPs tested on real data, real workflows, real users. Proof before commitment.</p>
+        </div>
+        <div class="phase-card">
+          <div class="text-dsBlue/20 text-5xl font-extrabold mb-2">03</div>
+          <h4 class="text-xl font-bold mb-1">Engineer</h4>
+          <p class="text-dsBlue font-medium text-sm mb-3">"Make it real."</p>
+          <p class="text-gray-600 text-base">Sprint-based production engineering. Architecture for scale, security, and integration.</p>
+        </div>
+        <div class="phase-card">
+          <div class="text-dsBlue/20 text-5xl font-extrabold mb-2">04</div>
+          <h4 class="text-xl font-bold mb-1">Optimize</h4>
+          <p class="text-dsBlue font-medium text-sm mb-3">"Make it better."</p>
+          <p class="text-gray-600 text-base">Ongoing support, monitoring, continuous improvement until KPIs are hit and beyond.</p>
+        </div>
+      </div>
+
+      <div class="mt-12 p-6 bg-dsGray rounded-xl max-w-3xl">
+        <p class="font-bold mb-2">The Principle</p>
+        <p class="text-gray-600">Evidence earns the next investment. Every phase produces proof — a validated hypothesis, working software, measurable outcomes — that justifies moving forward.</p>
+      </div>
+
+      <div class="mt-8 p-6 bg-red-50 border border-red-200 rounded-xl max-w-3xl">
+        <p class="font-bold text-red-800 mb-2">Retired Framework</p>
+        <p class="text-red-700 text-base">Never use the legacy "Direct, Discover, Design, Develop, Deploy" framework. That is retired. The canonical phrasing is <strong>Discover. Experiment. Engineer. Optimize.</strong></p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 4. VOICE AND TONE -->
+  <!-- ============================================================ -->
+  <section id="voice-and-tone" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Brand</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">4. Voice &amp; Tone</h2>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Confident, not corporate</h4>
+          <p class="text-gray-600 text-base">We know what we are doing and we say so directly. We do not hedge with "we strive to" or "we aim to." We say "we do."</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Evidence-first, not aspirational</h4>
+          <p class="text-gray-600 text-base">We lead with proof — numbers, outcomes, production systems. We do not promise futures; we show track records.</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Direct, not salesy</h4>
+          <p class="text-gray-600 text-base">Short sentences. No jargon walls. The reader should feel like they are talking to a senior engineer — not a marketing department.</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Warm, not distant</h4>
+          <p class="text-gray-600 text-base">We are partners, not vendors. We use "we" and speak to specific buyer concerns. We acknowledge complexity honestly.</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Words We Use vs. Words We Don't</h3>
+      <div class="overflow-x-auto">
+        <table class="bg-white rounded-xl overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="text-green-700">Use This</th>
+              <th class="text-red-700">Not This</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="use-word">evidence</td><td class="banned-word">best practices</td></tr>
+            <tr><td class="use-word">proof</td><td class="banned-word">thought leadership</td></tr>
+            <tr><td class="use-word">build</td><td class="banned-word">leverage (as a verb)</td></tr>
+            <tr><td class="use-word">operate</td><td class="banned-word">ensure</td></tr>
+            <tr><td class="use-word">verify, confirm</td><td class="banned-word">ensure</td></tr>
+            <tr><td class="use-word">production</td><td class="banned-word">at scale</td></tr>
+            <tr><td class="use-word">specific numbers ("130+ facilities")</td><td class="banned-word">industry-leading</td></tr>
+            <tr><td class="use-word">partner</td><td class="banned-word">vendor, provider</td></tr>
+            <tr><td class="use-word">complex, challenging</td><td class="banned-word">robust, comprehensive</td></tr>
+            <tr><td class="use-word">work, use</td><td class="banned-word">leverage, utilize</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-xl font-bold mt-12 mb-6">Banned Words</h3>
+      <p class="text-gray-600 mb-4">These words are banned from all new content. Replace them in existing pages when encountered.</p>
+      <div class="flex flex-wrap gap-3">
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">robust</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">comprehensive</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">at scale</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">leverage</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">ensure</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">state-of-the-art</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">industry-leading</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">cutting-edge</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">synergy</span>
+        <span class="inline-block bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full line-through">holistic</span>
+      </div>
+
+      <h3 class="text-xl font-bold mt-12 mb-6">Tone by Context</h3>
+      <div class="overflow-x-auto">
+        <table class="bg-white rounded-xl overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr><th>Context</th><th>Tone</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Homepage</td><td>Confident, inviting</td><td class="italic text-gray-500">"See your idea working — in 5 days"</td></tr>
+            <tr><td>Healthcare pages</td><td>Authoritative, specific</td><td class="italic text-gray-500">"AI-powered clinical documentation that integrates with your EHR"</td></tr>
+            <tr><td>Case studies</td><td>Results-oriented, factual</td><td class="italic text-gray-500">"30% reduction in task completion time across 72 facilities"</td></tr>
+            <tr><td>Blog posts</td><td>Thoughtful, educational</td><td class="italic text-gray-500">Teaching the reader something useful, not selling</td></tr>
+            <tr><td>Security/compliance</td><td>Formal, precise</td><td class="italic text-gray-500">"We do not store PHI in test environments"</td></tr>
+            <tr><td>CTAs</td><td>Direct, low-pressure</td><td class="italic text-gray-500">"30-minute call. No pitch. Just honest assessment."</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 5. MESSAGING FRAMEWORK -->
+  <!-- ============================================================ -->
+  <section id="messaging" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Brand</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">5. Messaging Framework</h2>
+
+      <div class="grid md:grid-cols-2 gap-12 mb-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">The AI + Healthcare Balance</h3>
+          <p class="text-gray-600 mb-4">Our go-to-market balances AI capability with healthcare domain expertise. Neither leads alone.</p>
+          <div class="space-y-4">
+            <div class="p-4 bg-dsGray rounded-xl">
+              <p class="font-bold text-sm mb-1">Healthcare earns credibility</p>
+              <p class="text-gray-600 text-base">Our depth in healthcare proves we can operate in complex, regulated environments. This credibility transfers to other verticals.</p>
+            </div>
+            <div class="p-4 bg-dsGray rounded-xl">
+              <p class="font-bold text-sm mb-1">AI earns attention</p>
+              <p class="text-gray-600 text-base">AI is what buyers search for now. Our AI positioning brings people to the site; healthcare proof points close the deal.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">The Innovation Partner Angle</h3>
+          <p class="text-gray-600 mb-4">We do not just build what clients ask for. We help them figure out what is worth building.</p>
+          <ul class="space-y-3">
+            <li class="flex gap-3"><span class="text-dsTeal mt-1"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span><span class="text-gray-600"><strong>"We give you permission to build."</strong> We de-risk it with evidence at every stage.</span></li>
+            <li class="flex gap-3"><span class="text-dsTeal mt-1"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span><span class="text-gray-600"><strong>"We solve the problems others avoid."</strong> Large data sets, complex integrations, regulatory compliance.</span></li>
+            <li class="flex gap-3"><span class="text-dsTeal mt-1"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span><span class="text-gray-600"><strong>"We are not intimidated."</strong> Technical depth and domain experience for challenges that scare generalists away.</span></li>
+            <li class="flex gap-3"><span class="text-dsTeal mt-1"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span><span class="text-gray-600"><strong>"We are your partner, not your vendor."</strong> We share risk. We care about outcomes, not just deliverables.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Value Propositions by Audience</h3>
+      <div class="overflow-x-auto">
+        <table class="bg-dsGray rounded-xl overflow-hidden">
+          <thead class="bg-gray-200">
+            <tr><th>Audience</th><th>Lead With</th><th>Proof Points</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="font-medium">Healthcare CIO/CTO</td><td>Technical depth, HIPAA, integration</td><td>NeverAlone, 100% production rate, BAA process</td></tr>
+            <tr><td class="font-medium">Healthcare COO/CFO</td><td>ROI, efficiency, revenue recovery</td><td>$20M+ ROI, 30% task reduction, RAF/HCC coding</td></tr>
+            <tr><td class="font-medium">Startup founder</td><td>Speed, methodology, AI capability</td><td>5-day proof of concept, Discover→Optimize</td></tr>
+            <tr><td class="font-medium">Enterprise innovation</td><td>De-risking, evidence-first</td><td>Methodology, cross-vertical case studies</td></tr>
+            <tr><td class="font-medium">Agency/partner</td><td>Execution, reliability, healthcare</td><td>Portfolio, team seniority, production record</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 6. COLORS AND TYPOGRAPHY -->
+  <!-- ============================================================ -->
+  <section id="colors" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Visual Identity</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">6. Colors &amp; Typography</h2>
+
+      <h3 class="text-xl font-bold mb-6">Brand Colors</h3>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-6 mb-12">
+        <div>
+          <div class="color-swatch bg-dsBlue"></div>
+          <p class="font-bold text-sm">DS Blue</p>
+          <p class="text-gray-500 font-mono text-sm">#304FFF</p>
+          <p class="text-gray-500 text-xs mt-1">Primary. Buttons, links, accents.</p>
+        </div>
+        <div>
+          <div class="color-swatch bg-dsBlack"></div>
+          <p class="font-bold text-sm">DS Black</p>
+          <p class="text-gray-500 font-mono text-sm">#050505</p>
+          <p class="text-gray-500 text-xs mt-1">Headlines, body, dark bgs.</p>
+        </div>
+        <div>
+          <div class="color-swatch bg-dsGray border border-gray-200"></div>
+          <p class="font-bold text-sm">DS Gray</p>
+          <p class="text-gray-500 font-mono text-sm">#F5F5F5</p>
+          <p class="text-gray-500 text-xs mt-1">Alternating section bgs.</p>
+        </div>
+        <div>
+          <div class="color-swatch bg-dsTeal"></div>
+          <p class="font-bold text-sm">DS Teal</p>
+          <p class="text-gray-500 font-mono text-sm">#26D9C4</p>
+          <p class="text-gray-500 text-xs mt-1">Checks, success, accents.</p>
+        </div>
+        <div>
+          <div class="color-swatch bg-dsLime"></div>
+          <p class="font-bold text-sm">DS Lime</p>
+          <p class="text-gray-500 font-mono text-sm">#D1F259</p>
+          <p class="text-gray-500 text-xs mt-1">Highlights, badges. Sparingly.</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Typography</h3>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="guide-card bg-white">
+          <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-3">Primary Typeface</p>
+          <p class="text-4xl font-bold mb-2" style="letter-spacing:-0.02em">Inter</p>
+          <p class="text-gray-500 text-base">Weights 300–800. All text on the site.</p>
+          <div class="mt-4 space-y-2">
+            <p class="text-3xl font-extrabold" style="letter-spacing:-0.02em">Heading (800, -0.02em)</p>
+            <p class="text-lg">Body text (400, 18px, line-height 1.6)</p>
+            <p class="text-xs font-medium text-dsBlue uppercase tracking-wider">Label (500, uppercase, wider tracking)</p>
+          </div>
+        </div>
+        <div class="guide-card bg-white">
+          <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-3">Monospace</p>
+          <p class="text-4xl font-bold font-mono mb-2">Roboto Mono</p>
+          <p class="text-gray-500 text-base">Weights 400–500. Code and technical labels.</p>
+          <div class="mt-4">
+            <code>font-family: 'Roboto Mono'</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 7. THE SCIENTIST CHARACTER -->
+  <!-- ============================================================ -->
+  <section id="scientist" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Visual Identity</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">7. The Scientist Character</h2>
+
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div>
+          <p class="text-lg mb-4">The Scientist is a branded illustrated character that represents Digital Scientists visually. He appears on the homepage, in marketing materials, and across social media.</p>
+
+          <p class="text-gray-600 mb-6">The character is new and will evolve. He was created using <strong>Nana Banana</strong> (an AI image generation tool). The visual style should remain consistent even as details are refined.</p>
+
+          <h4 class="font-bold mb-3">Visual Guidelines</h4>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span> Professional but approachable — a scientist, not a cartoon</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span> Active contexts: working, pointing, explaining — never idle</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span> Reinforces the methodology framework</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span> DS brand color palette</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span> Always reference existing images for style consistency</li>
+          </ul>
+
+          <h4 class="font-bold mt-8 mb-3">Where He Appears</h4>
+          <ul class="space-y-1 text-gray-600">
+            <li>Homepage hero (with methodology framework)</li>
+            <li>Blog hero images (contextual element)</li>
+            <li>Social media and marketing collateral</li>
+            <li>OG/share images</li>
+          </ul>
+
+          <h4 class="font-bold mt-8 mb-3">Generating New Images</h4>
+          <ul class="space-y-1 text-gray-600">
+            <li>Use <strong>Nana Banana</strong> for consistency</li>
+            <li>Provide existing character images as reference</li>
+            <li>Specify the scene/context</li>
+            <li>Process output: resize to 1440px wide, convert to WebP, under 200KB</li>
+          </ul>
+        </div>
+        <div>
+          <img src="images/hero-scientist-framework.webp" alt="The Scientist character — Digital Scientists branded illustration" class="rounded-2xl shadow-xl w-full">
+          <p class="text-gray-500 text-sm mt-3 text-center">The Scientist with the Discover / Experiment / Engineer / Optimize framework</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 8. IMAGERY STANDARDS -->
+  <!-- ============================================================ -->
+  <section id="imagery" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Visual Identity</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">8. Imagery Standards</h2>
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl">Every image on the site must earn its place. Images are not decoration — they are visual evidence.</p>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">Executive Tone</h4>
+          <p class="text-gray-600 text-base">Calm, deliberate, structured, professional, accountable. If it feels flashy or dramatic — it fails.</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">One Image, One Job</h4>
+          <p class="text-gray-600 text-base">A product we built, an argument we make, a capability we offer, or a result we delivered.</p>
+        </div>
+        <div class="guide-card bg-white">
+          <h4 class="font-bold text-lg mb-2">No Visual Slop</h4>
+          <p class="text-gray-600 text-base">No glowing arrows, neon gradients, 3D effects, hexagon patterns, floating icons, or "futuristic" anything.</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Image Specifications</h3>
+      <div class="overflow-x-auto">
+        <table class="bg-white rounded-xl overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr><th>Type</th><th>Width</th><th>Format</th><th>Max Size</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hero / banner</td><td>1440px</td><td>WebP</td><td>200KB</td></tr>
+            <tr><td>Section content</td><td>1280px</td><td>WebP</td><td>150KB</td></tr>
+            <tr><td>Blog inline</td><td>960px</td><td>WebP</td><td>100KB</td></tr>
+            <tr><td>Card thumbnail</td><td>640px</td><td>WebP</td><td>60KB</td></tr>
+            <tr><td>Team headshot</td><td>400px</td><td>WebP</td><td>40KB</td></tr>
+            <tr><td>Logo / icon</td><td>200px</td><td>SVG preferred</td><td>15KB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-8 p-6 bg-white rounded-xl border border-gray-200">
+        <h4 class="font-bold mb-3">Screenshot Sanitization</h4>
+        <p class="text-gray-600">Before publishing any screenshot, check for: real patient names (PHI), unapproved internal system names, confidential labels or watermarks, anything marked "draft" or "internal only." When in doubt, blur it or replace with test data.</p>
+      </div>
+
+      <div class="mt-6 p-6 bg-white rounded-xl border border-gray-200">
+        <h4 class="font-bold mb-3">Color in Imagery</h4>
+        <div class="grid md:grid-cols-3 gap-4 text-base">
+          <div>
+            <p class="font-medium mb-1">LLM-Generated</p>
+            <p class="text-gray-600">Muted blues, slate grays, warm neutrals. Status indicators (R/A/G) are the brightest elements.</p>
+          </div>
+          <div>
+            <p class="font-medium mb-1">Product Screenshots</p>
+            <p class="text-gray-600">Show as-is. Container framing provides treatment.</p>
+          </div>
+          <div>
+            <p class="font-medium mb-1">Stock Photography</p>
+            <p class="text-gray-600">Muted, natural tones. No HDR. Calm clinical or clean workspace settings.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 9. BLOG HERO IMAGE SYSTEM -->
+  <!-- ============================================================ -->
+  <section id="blog-heroes" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Visual Identity</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">9. Blog Hero Image System</h2>
+      <p class="text-xl text-gray-600 mb-12 max-w-2xl">Every blog hero is a 2-second argument for why Digital Scientists is the right partner.</p>
+
+      <div class="p-6 bg-dsGray rounded-xl mb-12 max-w-3xl">
+        <h4 class="font-bold mb-2">Core Principle: Argument Over Topic</h4>
+        <p class="text-gray-600 mb-3"><strong>Topic</strong> = what the article is about. <strong>Argument</strong> = what the article concludes. An image that illustrates the topic is generic. An image that illustrates the argument is specific.</p>
+        <p class="text-gray-600 text-sm italic">Test: If the image could belong to a different article on the same topic, it fails.</p>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Four Composition Types</h3>
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="guide-card">
+          <p class="text-dsBlue font-mono font-medium text-sm mb-2">Composition A</p>
+          <h4 class="font-bold text-lg mb-2">Partnership Scene</h4>
+          <p class="text-gray-600 text-base">Three-quarter overhead of two professionals at a conference table. Best for collaboration, governance articles. Focal artifact on the table.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-mono font-medium text-sm mb-2">Composition B</p>
+          <h4 class="font-bold text-lg mb-2">Decision Desk (Top-Down)</h4>
+          <p class="text-gray-600 text-base">Bird's-eye view of desk with documents. Best for frameworks, evaluations. Central document carries the argument.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-mono font-medium text-sm mb-2">Composition C</p>
+          <h4 class="font-bold text-lg mb-2">Lifecycle View</h4>
+          <p class="text-gray-600 text-base">Horizontal progression with checkpoints. Best for method, process maturity, delivery governance articles.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-mono font-medium text-sm mb-2">Composition D</p>
+          <h4 class="font-bold text-lg mb-2">Minimal Boardroom</h4>
+          <p class="text-gray-600 text-base">One presentation screen with 2-3 status elements. Best for executive alignment. No dashboards.</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Artifact Layer System</h3>
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="guide-card border-l-4 border-l-dsBlue bg-dsGray">
+          <p class="font-bold mb-2">Level 1: Focal (Required)</p>
+          <p class="text-gray-600 text-base">The single most prominent element. Communicates the article's argument. Risk assessment with R/A/G indicators, decision framework with one option highlighted.</p>
+        </div>
+        <div class="guide-card border-l-4 border-l-gray-400 bg-dsGray">
+          <p class="font-bold mb-2">Level 2: Context (2-3)</p>
+          <p class="text-gray-600 text-base">Supporting elements that tell how the conclusion was reached. Workflow with gaps, comparison with strikethroughs, architecture sketch.</p>
+        </div>
+        <div class="guide-card border-l-4 border-l-gray-200 bg-dsGray">
+          <p class="font-bold mb-2">Level 3: Environmental (1-2)</p>
+          <p class="text-gray-600 text-base">Small objects implying professional setting. Coffee cup, pen, notepad. Never compete for attention.</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">State Signals</h3>
+      <div class="overflow-x-auto">
+        <table class="bg-dsGray rounded-xl overflow-hidden">
+          <thead class="bg-gray-200">
+            <tr><th>Visual Signal</th><th>What It Communicates</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="inline-block w-3 h-3 rounded-full bg-red-500 mr-2"></span>Red indicators</td><td>Problems were found</td></tr>
+            <tr><td><span class="inline-block w-3 h-3 rounded-full bg-amber-500 mr-2"></span>Amber flags</td><td>Risk is being managed</td></tr>
+            <tr><td><span class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"></span>Green checkmarks</td><td>Path is being executed</td></tr>
+            <tr><td><span class="line-through text-gray-400 mr-2">Strikethrough</span></td><td>Option was rejected</td></tr>
+            <tr><td><span class="text-gray-300 mr-2">Faded/muted</span> vs <strong>highlighted</strong></td><td>Decision has been made</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 10. PAGE ARCHITECTURE -->
+  <!-- ============================================================ -->
+  <section id="page-architecture" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Site Design</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">10. Page Architecture</h2>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Section Pattern</h3>
+          <p class="text-gray-600 mb-4">Every page is built from alternating sections:</p>
+          <div class="space-y-3">
+            <div class="bg-white p-4 rounded-xl border border-gray-200 text-center font-mono text-sm">bg-white &middot; py-20 px-6</div>
+            <div class="bg-gray-100 p-4 rounded-xl border border-gray-200 text-center font-mono text-sm">bg-dsGray &middot; py-20 px-6</div>
+            <div class="bg-white p-4 rounded-xl border border-gray-200 text-center font-mono text-sm">bg-white &middot; py-20 px-6</div>
+            <div class="bg-gray-100 p-4 rounded-xl border border-gray-200 text-center font-mono text-sm">bg-dsGray &middot; py-20 px-6</div>
+          </div>
+          <p class="text-gray-500 text-sm mt-3">Content width: <code>max-w-screen-xl mx-auto</code></p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">Gold Standard</h3>
+          <p class="text-gray-600 mb-4">The authoritative reference for all styling decisions is <code>public/healthcare/index.html</code>.</p>
+          <div class="p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p class="text-red-800 font-bold text-sm mb-1">Never</p>
+            <p class="text-red-700 text-base">Reference the WordPress production site for styling. The WP site uses different colors, typography, spacing, and components.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Key Design Patterns</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-gray-200">
+          <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-2">Cards</p>
+          <div class="border border-gray-200 rounded-xl p-4 hover:border-dsBlue transition-colors cursor-pointer">
+            <p class="font-bold">Example Card</p>
+            <p class="text-gray-500 text-sm">rounded-xl, border, hover:border-dsBlue, p-6</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-gray-200">
+          <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-2">Buttons</p>
+          <div class="space-y-3">
+            <button class="bg-dsBlue text-white px-6 py-3 rounded-full font-medium text-sm">Primary Button</button>
+            <button class="border-2 border-dsBlack text-dsBlack px-6 py-3 rounded-full font-medium text-sm">Ghost Button</button>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-gray-200">
+          <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-2">Pills &amp; Labels</p>
+          <div class="space-y-3">
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full uppercase tracking-wider">Healthcare</span>
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full uppercase tracking-wider">AI</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-gray-500 mt-8 text-base">For the complete 1,580-line CSS/component technical reference, see <code>ds-design-standard.md</code>.</p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 11. COMPONENT PATTERNS -->
+  <!-- ============================================================ -->
+  <section id="components" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Site Design</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">11. Component Patterns</h2>
+
+      <h3 class="text-xl font-bold mb-4">FAQ Accordion</h3>
+      <div class="max-w-2xl space-y-3 mb-12">
+        <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+          <button onclick="this.parentElement.classList.toggle('faq-open')" class="w-full flex items-center justify-between p-6 text-left">
+            <span class="font-semibold text-lg">How does the FAQ accordion work?</span>
+            <svg class="w-5 h-5 text-gray-400 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-body hidden px-6 pb-6">
+            <p class="text-gray-600">Click the question to toggle the answer. Uses a CSS class toggle — <code>.faq-open .faq-body { display: block !important; }</code>. This is a live example of the pattern used across the site.</p>
+          </div>
+        </div>
+        <style>.faq-open .faq-body { display: block !important; } .faq-open svg { transform: rotate(180deg); }</style>
+      </div>
+
+      <h3 class="text-xl font-bold mb-4">Logo Ribbon</h3>
+      <div class="bg-gray-50 py-8 px-6 rounded-xl flex items-center justify-around gap-8 overflow-hidden opacity-60 mb-12">
+        <span class="text-gray-400 font-bold text-sm whitespace-nowrap">Client Logo</span>
+        <span class="text-gray-400 font-bold text-sm whitespace-nowrap border-l border-gray-300 pl-8">Client Logo</span>
+        <span class="text-gray-400 font-bold text-sm whitespace-nowrap border-l border-gray-300 pl-8">Client Logo</span>
+        <span class="text-gray-400 font-bold text-sm whitespace-nowrap border-l border-gray-300 pl-8">Client Logo</span>
+        <span class="text-gray-400 font-bold text-sm whitespace-nowrap border-l border-gray-300 pl-8">Client Logo</span>
+      </div>
+      <p class="text-gray-500 text-base mb-2">Pattern: <code>bg-gray-50 py-12</code>, logos in flex row, <code>grayscale</code> filter, <code>border-right: 1px solid #d1d5db</code>.</p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 12. HOW THE SITE WORKS -->
+  <!-- ============================================================ -->
+  <section id="how-it-works" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">12. How the Site Works</h2>
+
+      <div class="max-w-3xl">
+        <p class="text-lg mb-6">The website is a collection of HTML files in a GitHub repository. All site files live in the <code>public/</code> directory. When someone merges a change into <code>main</code>, Netlify publishes it within 30 seconds.</p>
+        <p class="text-lg mb-6">There is no CMS, no WordPress admin, no login. The files are the site.</p>
+        <p class="text-lg mb-8">You do not need to know HTML or GitHub to participate. Your job is to produce the content and assets. A technical implementer (or Claude Code) handles the rest.</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="guide-card bg-white text-center">
+          <p class="text-3xl font-bold text-dsBlue mb-2">Blog Post</p>
+          <p class="text-gray-500 text-sm">2-4 per month</p>
+          <p class="text-gray-500 text-sm">30 min to build</p>
+        </div>
+        <div class="guide-card bg-white text-center">
+          <p class="text-3xl font-bold text-dsBlue mb-2">Case Study</p>
+          <p class="text-gray-500 text-sm">1-2 per quarter</p>
+          <p class="text-gray-500 text-sm">1-2 weeks total</p>
+        </div>
+        <div class="guide-card bg-white text-center">
+          <p class="text-3xl font-bold text-dsBlue mb-2">Landing Page</p>
+          <p class="text-gray-500 text-sm">As needed</p>
+          <p class="text-gray-500 text-sm">1 hour to build</p>
+        </div>
+        <div class="guide-card bg-white text-center">
+          <p class="text-3xl font-bold text-dsBlue mb-2">Quick Edit</p>
+          <p class="text-gray-500 text-sm">As needed</p>
+          <p class="text-gray-500 text-sm">15 minutes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 13. CLAUDE ECOSYSTEM -->
+  <!-- ============================================================ -->
+  <section id="claude" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">13. The Claude Ecosystem</h2>
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl">We use Claude at every stage of the content lifecycle.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="guide-card">
+          <p class="text-dsBlue font-bold mb-2">Brainstorming &amp; Drafting</p>
+          <p class="text-gray-500 text-sm mb-2">Claude (claude.ai)</p>
+          <p class="text-gray-600 text-base">Generate outlines, draft posts, refine copy, write meta descriptions, brainstorm headlines.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-bold mb-2">Brand Compliance</p>
+          <p class="text-gray-500 text-sm mb-2">Claude (claude.ai)</p>
+          <p class="text-gray-600 text-base">Paste draft copy and ask Claude to check against our voice/tone guidelines.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-bold mb-2">Image Generation</p>
+          <p class="text-gray-500 text-sm mb-2">Nana Banana</p>
+          <p class="text-gray-600 text-base">Create Scientist character images, blog heroes, conceptual illustrations.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-bold mb-2">Technical Implementation</p>
+          <p class="text-gray-500 text-sm mb-2">Claude Code (terminal)</p>
+          <p class="text-gray-600 text-base">Build pages, process images, update navigation, run validation, manage Git.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-bold mb-2">Site Maintenance</p>
+          <p class="text-gray-500 text-sm mb-2">Claude Code (terminal)</p>
+          <p class="text-gray-600 text-base">Fix bugs, update content, rebuild search index, run QA checks.</p>
+        </div>
+        <div class="guide-card">
+          <p class="text-dsBlue font-bold mb-2">Project Memory</p>
+          <p class="text-gray-500 text-sm mb-2">CLAUDE.md + memory files</p>
+          <p class="text-gray-600 text-base">Claude Code retains context about the project structure, standards, and preferences.</p>
+        </div>
+      </div>
+
+      <div class="mt-12 p-6 bg-dsGray rounded-xl max-w-3xl">
+        <h4 class="font-bold mb-3">Example: Talking to Claude Code</h4>
+        <p class="text-gray-600 mb-3">You give instructions in plain English:</p>
+        <div class="bg-white p-4 rounded-lg border border-gray-200 italic text-gray-700 text-base">
+          "Create a new blog post with the slug 'ai-revenue-cycle'. The title is 'How AI Is Changing Revenue Cycle Management'. Here's the content: [paste]. The hero image is at /tmp/hero.png."
+        </div>
+        <p class="text-gray-500 text-sm mt-3">Claude Code reads CLAUDE.md, follows operating procedures, processes images, scaffolds the page, and opens a Pull Request for review.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 14. PUBLISHING WORKFLOWS -->
+  <!-- ============================================================ -->
+  <section id="workflows" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">14. Publishing Workflows</h2>
+
+      <h3 class="text-xl font-bold mb-6">Blog Post: End to End</h3>
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="guide-card bg-white border-t-4 border-t-dsBlue">
+          <p class="text-dsBlue font-mono text-sm font-medium mb-2">Phase 1: Create</p>
+          <p class="font-bold mb-2">Outside GitHub</p>
+          <ol class="list-decimal list-inside space-y-1 text-gray-600 text-base">
+            <li>Pick topic and keywords</li>
+            <li>Draft in Google Docs (use Claude to help)</li>
+            <li>Internal review and approval</li>
+            <li>Prepare hero image (1440px wide min)</li>
+            <li>Organize in shared Drive folder</li>
+          </ol>
+        </div>
+        <div class="guide-card bg-white border-t-4 border-t-dsTeal">
+          <p class="text-dsTeal font-mono text-sm font-medium mb-2">Phase 2: Build</p>
+          <p class="font-bold mb-2">Claude Code</p>
+          <ol class="list-decimal list-inside space-y-1 text-gray-600 text-base">
+            <li>Open Claude Code, provide content + image</li>
+            <li>Claude scaffolds page, processes images, sets SEO</li>
+            <li>Creates branch + Pull Request</li>
+            <li>Netlify generates preview link</li>
+          </ol>
+        </div>
+        <div class="guide-card bg-white border-t-4 border-t-dsLime">
+          <p class="text-dsLime font-mono text-sm font-medium mb-2" style="color:#8da600">Phase 3: Publish</p>
+          <p class="font-bold mb-2">Review &amp; Merge</p>
+          <ol class="list-decimal list-inside space-y-1 text-gray-600 text-base">
+            <li>Click Netlify preview link</li>
+            <li>Check content, images, mobile</li>
+            <li>Approve + Merge in GitHub</li>
+            <li>Live in 30 seconds</li>
+          </ol>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Case Study: Key Differences</h3>
+      <div class="max-w-3xl mb-12">
+        <ul class="space-y-3 text-gray-600">
+          <li class="flex gap-3"><span class="text-red-500 font-bold">1.</span><strong>Get client permission first</strong> — can we name them? Show screenshots? Use their logo? Quote someone? Get it in writing.</li>
+          <li class="flex gap-3"><span class="text-red-500 font-bold">2.</span><strong>Sanitize all screenshots</strong> — no PHI, no confidential data, no unapproved system names.</li>
+          <li class="flex gap-3"><span class="text-red-500 font-bold">3.</span><strong>Allow 1-2 weeks</strong> for asset gathering — this is always the bottleneck.</li>
+          <li class="flex gap-3"><span class="text-red-500 font-bold">4.</span><strong>Extra review scrutiny</strong> — Reviewer + Project Lead check metrics, screenshots, attribution.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Landing Page: Key Differences</h3>
+      <div class="max-w-3xl">
+        <ul class="space-y-3 text-gray-600">
+          <li class="flex gap-3"><span class="text-dsBlue font-bold">1.</span>Define the page's purpose, audience, and traffic source</li>
+          <li class="flex gap-3"><span class="text-dsBlue font-bold">2.</span>Write a content brief (headline, sections, CTA, keywords)</li>
+          <li class="flex gap-3"><span class="text-dsBlue font-bold">3.</span>Wireframe if non-standard layout</li>
+          <li class="flex gap-3"><span class="text-dsBlue font-bold">4.</span>Reference an existing page for layout patterns when telling Claude Code what to build</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 15. AGENCY PARTNERS -->
+  <!-- ============================================================ -->
+  <section id="agency" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">15. Working with Agency Partners</h2>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">What They Need</h3>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>This guide (brand, voice, imagery standards)</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>Shared Google Drive folder</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>Example content from the live site</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>Image specs (Section 8)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">What They Don't Need</h3>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex gap-3"><span class="text-red-400">&#10007;</span>GitHub access</li>
+            <li class="flex gap-3"><span class="text-red-400">&#10007;</span>Netlify access</li>
+            <li class="flex gap-3"><span class="text-red-400">&#10007;</span>HTML knowledge</li>
+            <li class="flex gap-3"><span class="text-red-400">&#10007;</span>Claude Code</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Handoff Flow</h3>
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-4 text-base">
+        <div class="bg-dsGray rounded-xl p-4 text-center font-medium">Agency delivers<br>content + assets</div>
+        <span class="hidden md:block text-gray-400 text-2xl">&rarr;</span>
+        <span class="md:hidden text-gray-400 text-2xl text-center w-full">&darr;</span>
+        <div class="bg-dsGray rounded-xl p-4 text-center font-medium">Internal team<br>reviews content</div>
+        <span class="hidden md:block text-gray-400 text-2xl">&rarr;</span>
+        <span class="md:hidden text-gray-400 text-2xl text-center w-full">&darr;</span>
+        <div class="bg-dsGray rounded-xl p-4 text-center font-medium">Implementer<br>builds page</div>
+        <span class="hidden md:block text-gray-400 text-2xl">&rarr;</span>
+        <span class="md:hidden text-gray-400 text-2xl text-center w-full">&darr;</span>
+        <div class="bg-dsGray rounded-xl p-4 text-center font-medium">Preview shared<br>for sign-off</div>
+        <span class="hidden md:block text-gray-400 text-2xl">&rarr;</span>
+        <span class="md:hidden text-gray-400 text-2xl text-center w-full">&darr;</span>
+        <div class="bg-dsBlue text-white rounded-xl p-4 text-center font-medium">Merge<br>&rarr; Live</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 16. REVIEW PROCESS -->
+  <!-- ============================================================ -->
+  <section id="review" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">16. Review Process</h2>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="guide-card bg-white border-t-4 border-t-dsTeal">
+          <h4 class="font-bold text-lg mb-2">Fast Lane</h4>
+          <p class="text-gray-600 text-base mb-2">Typo fixes, minor text edits, image swaps</p>
+          <p class="text-gray-500 text-sm">Push directly to <code>main</code>. No PR needed.</p>
+        </div>
+        <div class="guide-card bg-white border-t-4 border-t-dsBlue">
+          <h4 class="font-bold text-lg mb-2">Review Lane</h4>
+          <p class="text-gray-600 text-base mb-2">New pages, posts, design changes, multi-file changes</p>
+          <p class="text-gray-500 text-sm">Pull Request &rarr; Netlify preview &rarr; Approve &rarr; Merge</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-4">For Reviewers</h3>
+      <div class="max-w-3xl">
+        <ol class="list-decimal list-inside space-y-3 text-gray-600">
+          <li><strong>Click the Netlify preview link</strong> in the Pull Request description.</li>
+          <li><strong>Browse the new or changed pages.</strong> Check content, images, links, mobile layout.</li>
+          <li><strong>If it looks good:</strong> Click "Approve" &rarr; "Merge pull request" &rarr; "Confirm merge." Done.</li>
+          <li><strong>If something needs fixing:</strong> Leave a comment. The implementer fixes it, the preview updates, you review again.</li>
+        </ol>
+        <p class="text-gray-500 mt-4 text-base">You never need to look at code. You are reviewing the preview — the actual website.</p>
+      </div>
+
+      <h3 class="text-xl font-bold mt-12 mb-4">Roles</h3>
+      <div class="overflow-x-auto">
+        <table class="bg-white rounded-xl overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr><th>Role</th><th>What They Do</th><th>Tools</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="font-medium">Content Author</td><td>Writes copy, gathers data</td><td>Google Docs, Claude</td></tr>
+            <tr><td class="font-medium">Designer</td><td>Creates images, graphics</td><td>Figma, Canva, Nana Banana</td></tr>
+            <tr><td class="font-medium">Implementer</td><td>Builds pages, processes images</td><td>Claude Code, GitHub</td></tr>
+            <tr><td class="font-medium">Reviewer</td><td>Checks preview, approves</td><td>Browser, GitHub</td></tr>
+            <tr><td class="font-medium">Agency Partner</td><td>Any of the above</td><td>Shared Drive + their tools</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 17. OPERATING PROCEDURES -->
+  <!-- ============================================================ -->
+  <section id="procedures" class="bg-white py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">17. Operating Procedures</h2>
+      <p class="text-gray-600 mb-8">Technical reference for implementers using Claude Code.</p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4">B1: Add a Blog Post</h3>
+          <ol class="list-decimal list-inside space-y-2 text-gray-600 text-base">
+            <li>Run scaffolding script with slug, title, date, author</li>
+            <li>Process hero image (1440px, WebP, &lt;200KB)</li>
+            <li>Edit the generated HTML template</li>
+            <li>Review/adjust taxonomy JSON</li>
+            <li>Rebuild search index</li>
+            <li>Validate, commit, push, QA</li>
+          </ol>
+
+          <h3 class="text-lg font-bold mt-8 mb-4">C1: Add a Case Study</h3>
+          <ol class="list-decimal list-inside space-y-2 text-gray-600 text-base">
+            <li>Run scaffolding script with slug, title, vertical</li>
+            <li>Process all images</li>
+            <li>Edit the generated HTML template</li>
+            <li>Review/adjust taxonomy JSON</li>
+            <li>Verify filter counts on index page</li>
+            <li>Rebuild search, validate, commit, push, QA</li>
+          </ol>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">Q1: Post-Push QA</h3>
+          <ol class="list-decimal list-inside space-y-2 text-gray-600 text-base">
+            <li>Page loads (no 404)</li>
+            <li>Nav + footer inject</li>
+            <li>No broken images</li>
+            <li>Meta tags present</li>
+            <li>Schema.org present</li>
+            <li>Blog/case study filters work</li>
+            <li>Search works (Cmd+K)</li>
+            <li>Mobile layout correct</li>
+            <li>No console JS errors</li>
+          </ol>
+
+          <h3 class="text-lg font-bold mt-8 mb-4">Taxonomy Categories</h3>
+          <p class="text-sm text-gray-500 mb-2">Blog primaries:</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full">healthcare</span>
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full">ai</span>
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full">development</span>
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full">design</span>
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full">product</span>
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-medium px-3 py-1 rounded-full">news</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 18. SEO GUIDELINES -->
+  <!-- ============================================================ -->
+  <section id="seo" class="bg-dsGray py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="section-label">Publishing &amp; Operations</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">18. SEO Guidelines</h2>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Target Keywords</h3>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-1">Primary</p>
+              <p class="text-gray-600">HIPAA compliant software development, healthcare AI development, healthcare app development</p>
+            </div>
+            <div>
+              <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-1">Secondary</p>
+              <p class="text-gray-600">PHI protection, healthcare platform security, MDS optimization software</p>
+            </div>
+            <div>
+              <p class="text-xs text-dsBlue font-medium uppercase tracking-wider mb-1">Long-tail</p>
+              <p class="text-gray-600">healthcare app security, HIPAA app development partner, AI for revenue cycle management</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">On-Page Checklist</h3>
+          <ul class="space-y-2 text-gray-600 text-base">
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span><code>&lt;title&gt;</code> under 60 chars, keyword near front</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span><code>meta description</code> 150-160 chars</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>OG title + description mirror meta</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>Canonical URL to production domain</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>JSON-LD schema (Organization, Service, FAQ, Article)</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>H1 includes or relates to primary keyword</li>
+            <li class="flex gap-3"><span class="text-dsTeal">&#10003;</span>Internal links to 2-3 related pages</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="p-6 bg-white rounded-xl border border-gray-200 max-w-3xl">
+        <h4 class="font-bold mb-2">Content Strategy Principles</h4>
+        <ul class="space-y-2 text-gray-600 text-base">
+          <li>Lead with the problem the buyer has, not the solution we sell</li>
+          <li>Use specific numbers and outcomes over vague claims</li>
+          <li>Every page should have a clear CTA</li>
+          <li>Blog posts target long-tail keywords; landing pages target primary keywords</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================================ -->
+  <footer class="bg-dsBlack text-white py-12 px-6">
+    <div class="max-w-screen-xl mx-auto text-center">
+      <p class="text-gray-400 text-sm mb-2">Digital Scientists Brand &amp; Site Guide</p>
+      <p class="text-gray-500 text-xs">Internal document. Not for public distribution. Last updated March 2026.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
