@@ -1250,25 +1250,60 @@ sips --resampleWidth 960 input.png --out /tmp/r.png &amp;&amp; cwebp -q 82 /tmp/
         </div>
       </div>
 
-      <h3 class="text-xl font-bold mb-4">Real Examples from the Site</h3>
-      <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <h3 class="text-xl font-bold mb-4">Gold Standard Examples</h3>
+      <p class="text-gray-600 text-sm mb-6">These three blog posts set the standard. Each demonstrates a different composition type from the system below. All were generated with Nana Banana.</p>
+      <div class="grid md:grid-cols-3 gap-6 mb-6">
         <div class="bg-white rounded-xl border-2 border-green-300 overflow-hidden">
-          <img src="images/example-hero-good.webp" alt="Good blog hero example — custom AI illustration of a nurse with tablet at patient bedside" class="w-full aspect-video object-cover">
+          <img src="images/example-hero-partnership.webp" alt="Composition A — two executives reviewing a risk assessment with R/A/G indicators" class="w-full aspect-video object-cover">
           <div class="p-5">
-            <div class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Meets standard</div>
-            <p class="font-semibold text-sm mb-1">Technology Priorities for Post-Acute Providers</p>
-            <p class="text-gray-600 text-xs">Custom AI-generated illustration. Flat vector, muted palette, specific clinical scene (nurse with tablet, patient in bed, "Plan of Care" artifact). Executive tone. Tells a story about where care actually happens.</p>
+            <div class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">A — Partnership Scene</div>
+            <p class="font-semibold text-sm mb-1">Managing Software Development Risk</p>
+            <p class="text-gray-600 text-xs">Two executives reviewing a "Risk Assessment" document with red/amber/green status dots. Laptop open, project board on wall. The focal artifact (the risk doc with its R/A/G indicators) communicates the argument: risk is measurable and manageable.</p>
           </div>
         </div>
-        <div class="bg-white rounded-xl border-2 border-red-300 overflow-hidden">
-          <img src="images/example-hero-bad.webp" alt="Bad blog hero example — generic stock photo with glowing holographic charts" class="w-full aspect-video object-cover">
+        <div class="bg-white rounded-xl border-2 border-green-300 overflow-hidden">
+          <img src="images/example-hero-decision.webp" alt="Composition B — bird's-eye desk with buy/build/partner decision matrix" class="w-full aspect-video object-cover">
           <div class="p-5">
-            <div class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Does not meet standard</div>
-            <p class="font-semibold text-sm mb-1">Cost Containment Strategies for Healthcare</p>
-            <p class="text-gray-600 text-xs">Generic stock photo. Glowing holographic graphs, neon effects, floating icons. Could appear on any competitor's site. Illustrates "healthcare + data" (the topic), not the article's argument.</p>
+            <div class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">B — Decision Desk</div>
+            <p class="font-semibold text-sm mb-1">Buy, Build, or Partner</p>
+            <p class="text-gray-600 text-xs">Bird's-eye desk: three-column decision matrix with "Buy" crossed out, "Partner" circled. Discovery findings with red flags at left, checklist at right, coffee cup. The focal artifact instantly communicates the article's conclusion: partner wins the evaluation.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border-2 border-green-300 overflow-hidden">
+          <img src="images/example-hero-lifecycle.webp" alt="Composition C — claims flow through AI review engine, red to green transformation" class="w-full aspect-video object-cover">
+          <div class="p-5">
+            <div class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">C — Lifecycle View</div>
+            <p class="font-semibold text-sm mb-1">Leveraging AI for ROI in Healthcare</p>
+            <p class="text-gray-600 text-xs">Left-to-right flow: red-flagged claims → "Custom AI Review Engine" (learns from denial patterns) → green-validated claims. Rework cost bar shrinks, clean claim revenue grows. The transformation tells the argument: AI turns claims denials into revenue.</p>
           </div>
         </div>
       </div>
+
+      <details class="mb-12 bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center text-red-600">
+          What does NOT meet the standard
+          <span class="text-gray-400 text-xl ml-2">+</span>
+        </summary>
+        <div class="px-5 pb-5">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <img src="images/example-hero-bad.webp" alt="Bad blog hero — generic stock photo with glowing holographic charts" class="w-full aspect-video object-cover rounded-xl border-2 border-red-300">
+            </div>
+            <div class="text-sm text-gray-600 space-y-2">
+              <div class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-2">Does not meet standard</div>
+              <p class="font-semibold text-dsBlack">Cost Containment Strategies for Healthcare (before)</p>
+              <p>Generic stock photo. Glowing holographic graphs, neon effects, floating icons. Could appear on any competitor's site.</p>
+              <p class="font-semibold text-dsBlack mt-3">Why it fails:</p>
+              <ul class="space-y-1 text-xs">
+                <li>&#10005; Illustrates "healthcare + data" (the topic), not the article's argument</li>
+                <li>&#10005; Neon/holographic effects violate "no visual slop" rule</li>
+                <li>&#10005; No focal artifact — no single element communicates a conclusion</li>
+                <li>&#10005; Generic enough for any healthcare company's blog</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </details>
 
       <h3 class="text-xl font-bold mb-4">Four Composition Types</h3>
       <div class="grid md:grid-cols-2 gap-6 mb-12">
