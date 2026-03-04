@@ -862,14 +862,14 @@
         </div>
         <div class="space-y-6">
           <div>
-            <img src="images/hero-scientist-framework.webp" alt="The Scientist character — Digital Scientists branded illustration" class="rounded-2xl shadow-xl w-full">
-            <p class="text-gray-500 text-sm mt-3 text-center">Light version (default — used on white/dsGray backgrounds)</p>
+            <div class="bg-white border border-gray-200 rounded-2xl p-8 flex justify-center">
+              <img src="images/hero-scientist-framework.webp" alt="The Scientist character — light version on white background" class="w-full max-w-sm h-auto">
+            </div>
+            <p class="text-gray-500 text-sm mt-3 text-center">Light version — used on white/dsGray backgrounds (homepage hero)</p>
           </div>
           <div>
-            <div class="bg-dsBlack rounded-2xl p-4">
-              <img src="images/hero-scientist-framework.webp" alt="The Scientist character — reverse on dark background" class="rounded-xl w-full" style="filter: invert(1) brightness(2);">
-            </div>
-            <p class="text-gray-500 text-sm mt-3 text-center">Reverse version (CSS <code class="bg-gray-100 px-1 rounded text-xs font-mono">filter: invert(1) brightness(2)</code> — for dark backgrounds)</p>
+            <img src="images/scientist-on-dark.png" alt="The Scientist character — on dark background with methodology framework and homepage copy" class="rounded-2xl shadow-xl w-full">
+            <p class="text-gray-500 text-sm mt-3 text-center">Dark version — used for OG images, social media, dark-background contexts</p>
           </div>
         </div>
       </div>
@@ -1883,115 +1883,139 @@ End with a CTA linking to /proof/ (for healthcare topics) or /start/ (general).<
     <div class="max-w-screen-xl mx-auto">
       <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-4">Part 7: Technical Reference</p>
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6" style="letter-spacing:-0.02em">Operating Procedures</h2>
-      <p class="text-gray-600 text-lg mb-10 max-w-3xl">Step-by-step runbook for site operations. Every procedure assumes you're in the repo root. Every push triggers Procedure Q1.</p>
+      <p class="text-gray-600 text-lg mb-4 max-w-3xl">Step-by-step runbook for site operations using <strong>Claude Code</strong> from the command line. Every push triggers Procedure Q1.</p>
+
+      <div class="bg-dsBlue/5 border border-dsBlue/20 rounded-xl p-5 mb-10">
+        <h4 class="font-bold text-dsBlue text-sm mb-2">How This Works</h4>
+        <p class="text-sm text-gray-700 mb-3">All site changes are made through <strong>Claude Code</strong> (<code class="bg-white px-1 rounded text-xs font-mono">claude</code> CLI). You describe what you want in plain English, and Claude handles the file edits, image processing, search index rebuilds, and validation.</p>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-white rounded-lg p-4 border border-gray-200">
+            <p class="font-semibold text-dsTeal text-xs uppercase tracking-wider mb-1">Single-Page Changes — Auto-Approve</p>
+            <p class="text-gray-600 text-xs">Fix a typo, update a headline, swap an image, edit one blog post or case study. Claude can do these without review.</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-gray-200">
+            <p class="font-semibold text-dsBlue text-xs uppercase tracking-wider mb-1">Multi-Page Changes — Review Required</p>
+            <p class="text-gray-600 text-xs">Add a new blog post, add a case study, change nav/footer, reclassify content, delete pages. Claude will show you the plan first.</p>
+          </div>
+        </div>
+      </div>
 
       <!-- B1: Add Blog Post -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          B1: Add a New Blog Post
+          <span>B1: Add a New Blog Post <span class="text-xs font-normal text-dsBlue ml-2 bg-dsBlue/10 px-2 py-0.5 rounded-full">review required</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Add entry to <code class="bg-white px-1 rounded text-xs font-mono">scratchpad/blog-taxonomy-assignments.json</code></li>
-            <li>Run scaffolding: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/add_blog_post.py</code></li>
-            <li>Process hero image: <code class="bg-white px-1 rounded text-xs font-mono">sips --resampleWidth 1440 input.png --out /tmp/r.png && cwebp -q 82 /tmp/r.png -o hero.webp</code></li>
-            <li>Process thumbnail: <code class="bg-white px-1 rounded text-xs font-mono">sips --resampleWidth 640 input.png --out /tmp/t.png && cwebp -q 82 /tmp/t.png -o thumb.webp</code></li>
-            <li>Place content into the generated HTML template</li>
-            <li>Run label updater: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/apply_single_blog_label.py [slug]</code></li>
-            <li>Rebuild search: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/build_search_index.py</code></li>
-            <li>Validate: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/validate_content.py</code></li>
-            <li>Push → Q1</li>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-dsTeal">$</span> claude<br>
+            <span class="text-gray-500">&gt;</span> Add a new blog post titled "Your Title Here" in the healthcare category.<br>
+            <span class="text-gray-500">&gt;</span> The hero image is at ~/Downloads/hero-image.png.<br>
+            <span class="text-gray-500">&gt;</span> Here's the content: [paste or describe]
+          </div>
+          <p class="text-xs text-gray-500">Claude will handle all of these steps automatically:</p>
+          <ol class="list-decimal list-inside space-y-1 text-xs">
+            <li>Add taxonomy entry to <code class="bg-white px-1 rounded font-mono">scratchpad/blog-taxonomy-assignments.json</code></li>
+            <li>Scaffold the blog post directory and HTML file</li>
+            <li>Process hero image (resize to 1440px, convert to WebP, &lt;200KB)</li>
+            <li>Process thumbnail (resize to 640px, convert to WebP, &lt;60KB)</li>
+            <li>Place content into the HTML template following DS design patterns</li>
+            <li>Apply taxonomy labels to the post</li>
+            <li>Rebuild <code class="bg-white px-1 rounded font-mono">search-index.json</code></li>
+            <li>Run validation</li>
+            <li>Commit, push, and run Q1 post-push QA</li>
           </ol>
+          <p class="text-xs text-gray-500 italic">Touches ~6 files across blog/, scratchpad/, and public/. Claude will show you the plan before making changes.</p>
         </div>
       </details>
 
       <!-- B2: Edit Blog Post -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          B2: Edit / Reclassify a Blog Post
+          <span>B2: Edit / Reclassify a Blog Post <span class="text-xs font-normal ml-2 bg-gray-200 px-2 py-0.5 rounded-full">edit = auto-approve &middot; reclassify = review</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Update <code class="bg-white px-1 rounded text-xs font-mono">scratchpad/blog-taxonomy-assignments.json</code> if reclassifying</li>
-            <li>Run label updater: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/apply_single_blog_label.py [slug]</code></li>
-            <li>Edit HTML content directly</li>
-            <li>Rebuild search: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/build_search_index.py</code></li>
-            <li>Push → Q1</li>
-          </ol>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Fix the typo in the blog post "your-post-slug" — change "teh" to "the" in the third paragraph.<br>
+            <span class="text-gray-400">— or —</span><br>
+            <span class="text-gray-500">&gt;</span> Reclassify the blog post "your-post-slug" from "development" to "ai".
+          </div>
+          <p class="text-xs text-gray-500">For a simple content edit (typo, headline change), Claude edits the single HTML file — no review needed. For reclassification, Claude also updates the taxonomy JSON and rebuilds the search index.</p>
         </div>
       </details>
 
       <!-- B3: Delete Blog Post -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          B3: Delete a Blog Post
+          <span>B3: Delete a Blog Post <span class="text-xs font-normal text-dsBlue ml-2 bg-dsBlue/10 px-2 py-0.5 rounded-full">review required</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Remove directory from <code class="bg-white px-1 rounded text-xs font-mono">public/blog/</code></li>
-            <li>Remove entry from taxonomy JSON</li>
-            <li>Check for references (internal links from other pages)</li>
-            <li>Add redirect in <code class="bg-white px-1 rounded text-xs font-mono">public/_redirects</code> if the post had traffic</li>
-            <li>Rebuild search: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/build_search_index.py</code></li>
-            <li>Push → Q1</li>
-          </ol>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Delete the blog post "your-post-slug". Add a redirect to the blog index.
+          </div>
+          <p class="text-xs text-gray-500">Claude will remove the post directory, remove the taxonomy entry, check for internal links from other pages, add a redirect in <code class="bg-white px-1 rounded font-mono">public/_redirects</code>, and rebuild the search index. Always requires review because it's destructive.</p>
         </div>
       </details>
 
       <!-- C1: Add Case Study -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          C1: Add a New Case Study
+          <span>C1: Add a New Case Study <span class="text-xs font-normal text-dsBlue ml-2 bg-dsBlue/10 px-2 py-0.5 rounded-full">review required</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Add entry to <code class="bg-white px-1 rounded text-xs font-mono">scratchpad/case-study-taxonomy.json</code></li>
-            <li>Run scaffolding: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/add_case_study.py</code></li>
-            <li>Process hero + thumbnail images (per I1)</li>
-            <li>Place content: Challenge, Approach, Built, Results (per Section 19)</li>
-            <li>Add dual-path CTA</li>
-            <li>Run tag updater: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/apply_single_case_study_tag.py [slug]</code></li>
-            <li>Rebuild search → Validate → Push → Q1</li>
-          </ol>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Add a new case study for "Client Name" in the healthcare vertical.<br>
+            <span class="text-gray-500">&gt;</span> The hero image is at ~/Downloads/client-hero.png.<br>
+            <span class="text-gray-500">&gt;</span> Challenge: [describe]. Results: [describe].
+          </div>
+          <p class="text-xs text-gray-500">Claude scaffolds the case study (taxonomy, HTML, images, tags, search index, dual-path CTA) following the structure in Section 19. Requires review because it touches multiple files and appears on the case studies listing page.</p>
         </div>
       </details>
 
       <!-- C2: Change Case Study Tags -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          C2: Change a Case Study's Vertical / Tags
+          <span>C2: Change a Case Study's Vertical / Tags <span class="text-xs font-normal text-dsBlue ml-2 bg-dsBlue/10 px-2 py-0.5 rounded-full">review required</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Update <code class="bg-white px-1 rounded text-xs font-mono">scratchpad/case-study-taxonomy.json</code></li>
-            <li>Run tag updater: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/apply_single_case_study_tag.py [slug]</code></li>
-            <li>Rebuild search → Push → Q1</li>
-          </ol>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Change the "client-slug" case study from "enterprise" to "healthcare" vertical, and add the "ai" tag.
+          </div>
+          <p class="text-xs text-gray-500">Updates taxonomy JSON, applies tags to the HTML, and rebuilds search. Affects the listing page filter behavior.</p>
         </div>
       </details>
 
       <!-- I1: Process Images -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          I1: Process Images for Web
+          <span>I1: Process Images for Web <span class="text-xs font-normal ml-2 bg-dsTeal/10 text-dsTeal px-2 py-0.5 rounded-full">auto-approve</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600">
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Process ~/Downloads/photo.png as a blog hero image and put it in the right place for the post "your-slug".
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Claude knows the image specs and will resize and convert automatically:</p>
           <div class="overflow-x-auto">
-            <table class="w-full text-xs bg-white rounded-lg border border-gray-200 mt-2">
+            <table class="w-full text-xs bg-white rounded-lg border border-gray-200">
               <thead class="bg-gray-50 text-gray-500 uppercase tracking-wider">
-                <tr><th class="px-4 py-2">Type</th><th class="px-4 py-2">Width</th><th class="px-4 py-2">Max Size</th><th class="px-4 py-2">Command</th></tr>
+                <tr><th class="px-4 py-2">Type</th><th class="px-4 py-2">Width</th><th class="px-4 py-2">Max Size</th><th class="px-4 py-2">Format</th></tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 font-mono">
-                <tr><td class="px-4 py-2">Hero</td><td class="px-4 py-2">1440px</td><td class="px-4 py-2">&lt;200KB</td><td class="px-4 py-2">sips --resampleWidth 1440 in.png --out /tmp/r.png && cwebp -q 82 /tmp/r.png -o hero.webp</td></tr>
-                <tr><td class="px-4 py-2">Thumbnail</td><td class="px-4 py-2">640px</td><td class="px-4 py-2">&lt;60KB</td><td class="px-4 py-2">sips --resampleWidth 640 in.png --out /tmp/t.png && cwebp -q 82 /tmp/t.png -o thumb.webp</td></tr>
-                <tr><td class="px-4 py-2">Blog inline</td><td class="px-4 py-2">960px</td><td class="px-4 py-2">&lt;100KB</td><td class="px-4 py-2">sips --resampleWidth 960 in.png --out /tmp/i.png && cwebp -q 82 /tmp/i.png -o img.webp</td></tr>
-                <tr><td class="px-4 py-2">Logo</td><td class="px-4 py-2">200px</td><td class="px-4 py-2">&lt;15KB</td><td class="px-4 py-2">SVG preferred; PNG: sips --resampleWidth 200</td></tr>
+              <tbody class="divide-y divide-gray-200">
+                <tr><td class="px-4 py-2">Hero</td><td class="px-4 py-2">1440px</td><td class="px-4 py-2">&lt;200KB</td><td class="px-4 py-2">WebP, quality 82</td></tr>
+                <tr><td class="px-4 py-2">Thumbnail</td><td class="px-4 py-2">640px</td><td class="px-4 py-2">&lt;60KB</td><td class="px-4 py-2">WebP, quality 82</td></tr>
+                <tr><td class="px-4 py-2">Blog inline</td><td class="px-4 py-2">960px</td><td class="px-4 py-2">&lt;100KB</td><td class="px-4 py-2">WebP, quality 82</td></tr>
+                <tr><td class="px-4 py-2">Logo</td><td class="px-4 py-2">200px</td><td class="px-4 py-2">&lt;15KB</td><td class="px-4 py-2">SVG preferred</td></tr>
               </tbody>
             </table>
           </div>
@@ -2002,35 +2026,34 @@ End with a CTA linking to /proof/ (for healthcare topics) or /start/ (general).<
       <!-- N1: Update Navigation -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          N1: Update Navigation
+          <span>N1: Update Navigation <span class="text-xs font-normal text-dsBlue ml-2 bg-dsBlue/10 px-2 py-0.5 rounded-full">review required</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Edit <code class="bg-white px-1 rounded text-xs font-mono">public/includes/nav.html</code></li>
-            <li>Keep desktop and mobile nav in sync (both sections in same file)</li>
-            <li>Test at multiple viewport widths</li>
-            <li>Push → Q1</li>
-          </ol>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Add a "Capabilities" link to the main nav, pointing to /capabilities/. Put it after "Healthcare".
+          </div>
+          <p class="text-xs text-gray-500">The nav is in <code class="bg-white px-1 rounded font-mono">public/includes/nav.html</code> — desktop and mobile sections are in the same file and must stay in sync. Always requires review because it affects every page on the site.</p>
         </div>
       </details>
 
       <!-- Q1: Post-Push QA -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          Q1: Post-Push QA Checklist
+          <span>Q1: Post-Push QA Checklist <span class="text-xs font-normal ml-2 bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">required after every push</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <p class="font-semibold text-dsBlack">Required after every push:</p>
-          <ol class="list-decimal list-inside space-y-1">
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="text-xs text-gray-500">Claude Code runs this automatically after pushing. You should also verify yourself:</p>
+          <ol class="list-decimal list-inside space-y-1 text-xs">
             <li>Open the live page in an incognito window</li>
             <li>Verify nav loads correctly (logo, links, mobile hamburger)</li>
             <li>Verify footer loads correctly</li>
             <li>Check all internal links on the changed page(s)</li>
             <li>Verify images load and display at correct size</li>
             <li>Check alternating section backgrounds (white/gray pattern)</li>
-            <li>Test mobile layout (≤768px)</li>
+            <li>Test mobile layout (&le;768px)</li>
             <li>Verify meta tags (title, description, OG image) via View Source</li>
             <li>Check search functionality (if search index was rebuilt)</li>
             <li>Confirm no console errors (open DevTools)</li>
@@ -2041,15 +2064,15 @@ End with a CTA linking to /proof/ (for healthcare topics) or /start/ (general).<
       <!-- S1: Rebuild Search -->
       <details class="mb-4 bg-dsGray rounded-xl border border-gray-200 overflow-hidden">
         <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-          S1: Rebuild Search Index
+          <span>S1: Rebuild Search Index <span class="text-xs font-normal ml-2 bg-dsTeal/10 text-dsTeal px-2 py-0.5 rounded-full">auto-approve</span></span>
           <span class="text-gray-400 text-xl ml-2">+</span>
         </summary>
-        <div class="px-5 pb-5 text-sm text-gray-600 space-y-2">
-          <ol class="list-decimal list-inside space-y-1">
-            <li>Run: <code class="bg-white px-1 rounded text-xs font-mono">python3 scratchpad/build_search_index.py</code></li>
-            <li>Verify output: <code class="bg-white px-1 rounded text-xs font-mono">public/search-index.json</code> should be updated</li>
-            <li>Spot-check: search for a known term on the live site after push</li>
-          </ol>
+        <div class="px-5 pb-5 text-sm text-gray-600 space-y-3">
+          <p class="font-semibold text-dsBlack">Tell Claude Code:</p>
+          <div class="bg-dsBlack text-gray-300 rounded-lg p-4 font-mono text-xs leading-relaxed">
+            <span class="text-gray-500">&gt;</span> Rebuild the search index.
+          </div>
+          <p class="text-xs text-gray-500">Claude rebuilds <code class="bg-white px-1 rounded font-mono">public/search-index.json</code> from all pages. This is done automatically as part of blog/case study procedures, but you can also trigger it manually.</p>
         </div>
       </details>
 
