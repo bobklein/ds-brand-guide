@@ -2569,6 +2569,7 @@ End with a CTA linking to /proof/ (for healthcare topics) or /start/ (general).<
             <li>Verify meta tags (title, description, OG image) via View Source</li>
             <li>Check search functionality (if search index was rebuilt)</li>
             <li>Confirm no console errors (open DevTools)</li>
+            <li>If <code class="bg-white px-1 rounded font-mono">netlify.toml</code> was changed: run <code class="bg-white px-1 rounded font-mono">python3 scratchpad/check_analytics_csp.py</code> to verify analytics services aren't blocked by CSP</li>
           </ol>
         </div>
       </details>
