@@ -1075,14 +1075,24 @@
         <table class="bg-dsGray rounded-xl overflow-hidden">
           <thead class="bg-gray-200"><tr><th>Type</th><th>Width</th><th>Format</th><th>Max Size</th></tr></thead>
           <tbody>
-            <tr><td>Hero / banner</td><td>1440px</td><td>WebP preferred</td><td>200KB</td></tr>
-            <tr><td>Section content</td><td>1280px</td><td>WebP preferred</td><td>150KB</td></tr>
-            <tr><td>Blog inline</td><td>960px</td><td>WebP preferred</td><td>100KB</td></tr>
-            <tr><td>Card thumbnail</td><td>640px</td><td>WebP preferred</td><td>60KB</td></tr>
-            <tr><td>Team headshot</td><td>400px</td><td>WebP preferred</td><td>40KB</td></tr>
+            <tr><td>Hero / banner</td><td>1440px</td><td>PNG default; WebP for photos</td><td>200KB</td></tr>
+            <tr><td>Section content</td><td>1280px</td><td>PNG default; WebP for photos</td><td>150KB</td></tr>
+            <tr><td>Blog inline</td><td>960px</td><td>PNG default; WebP for photos</td><td>100KB</td></tr>
+            <tr><td>Card thumbnail</td><td>640px</td><td>PNG default; WebP for photos</td><td>60KB</td></tr>
+            <tr><td>OG / social preview</td><td>1200&times;630</td><td>PNG (pngquant)</td><td>300KB</td></tr>
+            <tr><td>Team headshot</td><td>400px</td><td>WebP or JPEG (photo)</td><td>40KB</td></tr>
             <tr><td>Logo / icon</td><td>200px</td><td>SVG preferred</td><td>15KB</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="p-6 bg-dsGray rounded-xl border border-gray-200 mb-12">
+        <h4 class="font-bold mb-3">Format Guidelines</h4>
+        <p class="text-gray-600 text-sm mb-3"><strong>PNG is the default format.</strong> Use for screenshots, UI mockups, diagrams, OG/social images, and anything with sharp edges, text, or flat color. Most site imagery falls into this category. Compress with <code>pngquant</code> (quality 80&ndash;95) to keep file sizes manageable without visible quality loss.</p>
+        <p class="text-gray-600 text-sm mb-3"><strong>Use WebP</strong> for photographs and complex photographic content displayed on-page. Process with <code>sips</code> + <code>cwebp</code> at quality 82.</p>
+        <p class="text-gray-600 text-sm mb-3"><strong>JPEG is acceptable only for photos</strong> &mdash; team photos, event photos, stock photography. Use when WebP is not practical (e.g., email templates, third-party platforms that don&rsquo;t support WebP).</p>
+        <p class="text-gray-600 text-sm mb-3"><strong>Use SVG</strong> for logos, icons, and simple vector graphics.</p>
+        <p class="text-gray-600 text-sm"><strong>When in doubt, use PNG.</strong> If you receive a JPEG source file, convert it to PNG (for graphics) or WebP (for photos) before adding to the site.</p>
       </div>
 
       <h3 class="text-xl font-bold mb-6">Naming Convention</h3>
@@ -1109,7 +1119,10 @@ sips --resampleWidth 1440 input.png --out /tmp/r.png &amp;&amp; cwebp -q 82 /tmp
 sips --resampleWidth 640 input.png --out /tmp/r.png &amp;&amp; cwebp -q 82 /tmp/r.png -o output.webp
 
 # Blog inline (960px, &lt;100KB)
-sips --resampleWidth 960 input.png --out /tmp/r.png &amp;&amp; cwebp -q 82 /tmp/r.png -o output.webp</code></pre>
+sips --resampleWidth 960 input.png --out /tmp/r.png &amp;&amp; cwebp -q 82 /tmp/r.png -o output.webp
+
+# OG / social preview (1200x630, &lt;300KB, stays PNG)
+pngquant --quality=80-95 --speed 1 --force --output output.png input.png</code></pre>
         </div>
         <div class="p-6 bg-dsGray rounded-xl border border-gray-200">
           <h4 class="font-bold mb-3">Approval Checklist</h4>
@@ -1135,6 +1148,39 @@ sips --resampleWidth 960 input.png --out /tmp/r.png &amp;&amp; cwebp -q 82 /tmp/
       <div class="p-6 bg-dsGray rounded-xl border border-gray-200 mb-12">
         <h4 class="font-bold mb-3">Screenshot Sanitization</h4>
         <p class="text-gray-600 text-sm">Before publishing any screenshot, check for: real patient names (PHI), unapproved internal system names, confidential labels or watermarks, anything marked "draft" or "internal only." When in doubt, blur it or replace with test data.</p>
+      </div>
+
+      <h3 class="text-xl font-bold mb-6">Video &amp; Animation Standards</h3>
+      <div class="overflow-x-auto mb-8">
+        <table class="bg-dsGray rounded-xl overflow-hidden">
+          <thead class="bg-gray-200"><tr><th>Format</th><th>Use Case</th><th>Max Size</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>GIF</td><td>Short UI animations, micro-interactions</td><td>500KB</td><td>3&ndash;5 seconds max. Convert longer animations to MP4.</td></tr>
+            <tr><td>MP4 (H.264)</td><td>Product demos, app walkthroughs</td><td>N/A</td><td>720p max for inline. Host on <code>media.digitalscientists.com</code> (Cloudflare R2). Never commit to Git repo.</td></tr>
+            <tr><td>YouTube embed</td><td>Long-form video (interviews, webinars, talks)</td><td>N/A</td><td>Use <code>youtube-nocookie.com</code> domain. Add <code>loading="lazy"</code> on iframe.</td></tr>
+            <tr><td>Vimeo embed</td><td>Portfolio / premium video</td><td>N/A</td><td>Same lazy-loading pattern as YouTube.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="p-6 bg-dsGray rounded-xl border border-gray-200">
+          <h4 class="font-bold mb-3">Video Embed Pattern</h4>
+          <pre><code>&lt;!-- YouTube (privacy-enhanced) --&gt;
+&lt;div class="aspect-video rounded-2xl overflow-hidden"&gt;
+  &lt;iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+    loading="lazy" allowfullscreen
+    class="w-full h-full"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="p-6 bg-dsGray rounded-xl border border-gray-200">
+          <h4 class="font-bold mb-3">When to Use Each</h4>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li><strong>GIF:</strong> A button animating, a quick UI state change, a loading indicator. If you need to pause or scrub, it should be video.</li>
+            <li><strong>MP4:</strong> App demos, screen recordings, product walkthroughs. Host on <code>media.digitalscientists.com</code> (Cloudflare R2).</li>
+            <li><strong>YouTube:</strong> Podcast episodes, conference talks, interviews. Content that benefits from YouTube&rsquo;s discoverability.</li>
+            <li><strong>Vimeo:</strong> High-production brand videos, sizzle reels. Use when YouTube branding is undesirable.</li>
+          </ul>
+        </div>
       </div>
 
       <!-- Image Generation Tools -->
