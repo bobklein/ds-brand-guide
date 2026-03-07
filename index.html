@@ -2087,6 +2087,152 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
   </section>
 
   <!-- ============================================================ -->
+  <!-- SECTION: CONTENT SECURITY POLICY -->
+  <!-- ============================================================ -->
+  <section id="content-security-policy" class="py-20 px-6">
+    <div class="max-w-screen-xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6" style="letter-spacing:-0.02em">Content Security Policy (CSP)</h2>
+      <p class="text-gray-600 text-lg mb-10 max-w-3xl">The site sends a security header with every page that tells the browser exactly which external domains are allowed to load scripts, images, fonts, and make API calls. Anything not explicitly whitelisted gets blocked silently.</p>
+
+      <!-- Why we have it -->
+      <div class="bg-white rounded-xl border border-gray-200 p-8 mb-10">
+        <h3 class="text-xl font-bold mb-4">Why We Have It</h3>
+        <p class="text-gray-600 mb-4">CSP defends against <strong>cross-site scripting (XSS)</strong> and <strong>data injection attacks</strong>. If someone managed to inject malicious code into the site (through a form, a compromised third-party script, etc.), the CSP prevents that code from phoning home to an attacker's server or loading malicious scripts &mdash; because those domains wouldn't be on the whitelist.</p>
+        <p class="text-gray-600">This is especially important for a healthcare-focused site that handles contact forms and integrates with analytics, CRM, and visitor identification tools.</p>
+      </div>
+
+      <!-- Where it lives -->
+      <div class="bg-dsBlue/5 border border-dsBlue/20 rounded-xl p-6 mb-10">
+        <p class="font-semibold text-dsBlue mb-2">Where It Lives</p>
+        <p class="text-gray-700">The CSP is defined in <code class="bg-gray-100 px-2 py-0.5 rounded text-sm font-mono">netlify.toml</code> at the repo root, inside the <code class="bg-gray-100 px-2 py-0.5 rounded text-sm font-mono">[[headers]]</code> block for <code class="bg-gray-100 px-2 py-0.5 rounded text-sm font-mono">/*</code> (all pages). It deploys automatically with every push to main.</p>
+      </div>
+
+      <!-- Directives table -->
+      <h3 class="text-xl font-bold mb-4">What Each Directive Controls</h3>
+      <p class="text-gray-600 mb-6">The CSP is a single header string with multiple directives separated by semicolons. Each directive controls a different resource type.</p>
+      <div class="overflow-x-auto mb-10">
+        <table class="w-full text-sm text-left bg-white rounded-xl border border-gray-200">
+          <thead class="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+            <tr>
+              <th class="px-6 py-3">Directive</th>
+              <th class="px-6 py-3">Controls</th>
+              <th class="px-6 py-3">Currently Allowed</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">script-src</td>
+              <td class="px-6 py-3">JavaScript execution</td>
+              <td class="px-6 py-3 text-gray-600">Our site, inline scripts, GTM, Google Analytics, StatCounter, Pipedrive, RB2B (S3 + app), CookieYes, Workable, jsDelivr CDN</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">connect-src</td>
+              <td class="px-6 py-3">API calls (fetch, XHR)</td>
+              <td class="px-6 py-3 text-gray-600">Formspree, Pipedrive, Google Analytics, StatCounter, RB2B (app + AWS API Gateway), S3</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">img-src</td>
+              <td class="px-6 py-3">Image loading</td>
+              <td class="px-6 py-3 text-gray-600">Our site, data URIs, StatCounter pixels, YouTube thumbnails, Google/GTM pixels, RB2B, EventScribe, CDC</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">style-src</td>
+              <td class="px-6 py-3">CSS loading</td>
+              <td class="px-6 py-3 text-gray-600">Our site, inline styles, jsDelivr CDN (Tailwind)</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">font-src</td>
+              <td class="px-6 py-3">Font files</td>
+              <td class="px-6 py-3 text-gray-600">Our site only (Inter + Roboto Mono are self-hosted)</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">frame-src</td>
+              <td class="px-6 py-3">Iframes / embeds</td>
+              <td class="px-6 py-3 text-gray-600">YouTube, Vimeo, SlideShare, Workable (job listings)</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">media-src</td>
+              <td class="px-6 py-3">Video / audio files</td>
+              <td class="px-6 py-3 text-gray-600">Our site + <code class="bg-gray-50 px-1 rounded text-xs font-mono">media.digitalscientists.com</code> (Cloudflare R2)</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">form-action</td>
+              <td class="px-6 py-3">Form submission targets</td>
+              <td class="px-6 py-3 text-gray-600">Our site + Formspree</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">frame-ancestors</td>
+              <td class="px-6 py-3">Who can iframe our site</td>
+              <td class="px-6 py-3 text-gray-600">Nobody (<code class="bg-gray-50 px-1 rounded text-xs font-mono">'none'</code>) &mdash; prevents clickjacking</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">object-src</td>
+              <td class="px-6 py-3">Flash / plugins</td>
+              <td class="px-6 py-3 text-gray-600">Nobody (<code class="bg-gray-50 px-1 rounded text-xs font-mono">'none'</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Adding a new service -->
+      <h3 class="text-xl font-bold mb-4">Adding a New Third-Party Service</h3>
+      <p class="text-gray-600 mb-6">When onboarding a new tool (analytics, chat widget, CRM integration, etc.), its domains must be added to the CSP or the browser will silently block it. This is the most common gotcha.</p>
+      <div class="bg-white rounded-xl border border-gray-200 p-8 mb-8">
+        <ol class="space-y-4 text-gray-700">
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-dsBlue text-white text-sm font-bold flex items-center justify-center">1</span>
+            <div><strong>Identify all domains the service uses.</strong> Check the vendor's docs or load the site with DevTools Console open &mdash; CSP violations show as red errors with the blocked domain name.</div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-dsBlue text-white text-sm font-bold flex items-center justify-center">2</span>
+            <div><strong>Add each domain to the correct directive(s)</strong> in <code class="bg-gray-100 px-2 py-0.5 rounded text-sm font-mono">netlify.toml</code>. A single service often needs multiple directives (e.g., <code class="bg-gray-100 px-1 rounded text-xs font-mono">script-src</code> to load its JS, <code class="bg-gray-100 px-1 rounded text-xs font-mono">connect-src</code> to phone home, <code class="bg-gray-100 px-1 rounded text-xs font-mono">img-src</code> for tracking pixels).</div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-dsBlue text-white text-sm font-bold flex items-center justify-center">3</span>
+            <div><strong>Push and verify.</strong> Open the live site in incognito, open DevTools &rarr; Console. Zero CSP errors = working. Check the Network tab to confirm the service's requests return 200.</div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Other security headers -->
+      <h3 class="text-xl font-bold mb-4">Other Security Headers</h3>
+      <p class="text-gray-600 mb-6">The CSP is the most complex header, but we also set four others in the same <code class="bg-gray-100 px-2 py-0.5 rounded text-sm font-mono">netlify.toml</code> block:</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left bg-white rounded-xl border border-gray-200">
+          <thead class="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+            <tr>
+              <th class="px-6 py-3">Header</th>
+              <th class="px-6 py-3">What It Does</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">Strict-Transport-Security</td>
+              <td class="px-6 py-3 text-gray-600">Forces HTTPS for 1 year. Browsers remember and never attempt HTTP.</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">X-Frame-Options: DENY</td>
+              <td class="px-6 py-3 text-gray-600">Prevents other sites from embedding ours in an iframe (clickjacking protection).</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">X-Content-Type-Options: nosniff</td>
+              <td class="px-6 py-3 text-gray-600">Prevents browsers from guessing file types. A .css file is always CSS, never JavaScript.</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">Referrer-Policy</td>
+              <td class="px-6 py-3 text-gray-600">Only sends the origin domain (not full URL path) when linking to external sites. Protects page-level analytics data.</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-mono text-xs font-semibold">Permissions-Policy</td>
+              <td class="px-6 py-3 text-gray-600">Disables camera, microphone, and geolocation APIs. We don't need them and they're common attack vectors.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- SECTION 23: PUBLISHING WORKFLOWS -->
   <!-- ============================================================ -->
   <section id="publishing-workflows" class="py-20 px-6">
