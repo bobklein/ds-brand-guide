@@ -1242,6 +1242,23 @@
         </table>
       </div>
 
+      <h3 class="text-xl font-bold mb-6">OG / Social Preview Template</h3>
+      <p class="text-gray-600 text-sm mb-4">All OG images follow the A2 template: hero image with dark gradient overlay, DS logo top-left, category pill, page title, and <code>digitalscientists.com</code> footer. 1200&times;630px PNG.</p>
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div>
+          <img src="images/og-examples/og-healthcare-ai.png" alt="OG image — Healthcare AI Development page" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-xs text-center">Service page OG &mdash; product screenshot hero</p>
+        </div>
+        <div>
+          <img src="images/og-examples/og-method.png" alt="OG image — METHOD overview page" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-xs text-center">Method page OG &mdash; illustration hero</p>
+        </div>
+        <div>
+          <img src="images/og-examples/og-blog-pmf.png" alt="OG image — Product Market Fit blog post" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-xs text-center">Blog post OG &mdash; editorial illustration hero</p>
+        </div>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-6 mb-12">
         <div class="p-6 bg-dsGray rounded-xl border border-gray-200">
           <h4 class="font-bold mb-3">Image Processing Commands</h4>
@@ -1747,19 +1764,31 @@ Style: Clean lines, no gradients, no 3D effects, no neon, executive tone.
       </div>
 
       <h3 class="text-xl font-bold mb-4">Current METHOD Images</h3>
-      <div class="overflow-x-auto mb-8">
-        <table>
-          <thead class="bg-gray-50"><tr><th>Fig</th><th>Phase</th><th>File</th><th>Archetype</th></tr></thead>
-          <tbody>
-            <tr><td class="font-semibold">1</td><td>Overview</td><td class="font-mono text-xs">hero-method.webp</td><td>Iterative circular</td></tr>
-            <tr><td class="font-semibold">2</td><td>Discover</td><td class="font-mono text-xs">hero-method-discover.webp</td><td>Radial cardinal</td></tr>
-            <tr><td class="font-semibold">3</td><td>Experiment</td><td class="font-mono text-xs">hero-method-experiment.webp</td><td>Branching flowchart</td></tr>
-            <tr><td class="font-semibold">4</td><td>Engineer</td><td class="font-mono text-xs">hero-method-engineer.webp</td><td>Layered architecture</td></tr>
-            <tr><td class="font-semibold">5</td><td>Optimize</td><td class="font-mono text-xs">hero-method-optimize.webp</td><td>Performance chart</td></tr>
-          </tbody>
-        </table>
+      <p class="text-gray-600 text-sm mb-6">All images: 1440&times;803px, WebP, pure B&amp;W, under 200 KB.</p>
+
+      <div class="mb-8">
+        <img src="images/method/fig1-overview.webp" alt="Fig. 1 — METHOD Overview: four-phase iterative cycle" class="w-full rounded-xl border border-gray-200 mb-2">
+        <p class="text-gray-500 text-sm text-center">Fig. 1 &mdash; Overview &middot; Iterative circular archetype &middot; <code class="text-xs">hero-method.webp</code></p>
       </div>
-      <p class="text-gray-600 text-sm mb-4">All images: 1440&times;803px, WebP, pure B&amp;W, under 200 KB.</p>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <img src="images/method/fig2-discover.webp" alt="Fig. 2 — Discover: radial cardinal diagram" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-sm text-center">Fig. 2 &mdash; Discover &middot; Radial cardinal</p>
+        </div>
+        <div>
+          <img src="images/method/fig3-experiment.webp" alt="Fig. 3 — Experiment: branching flowchart" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-sm text-center">Fig. 3 &mdash; Experiment &middot; Branching flowchart</p>
+        </div>
+        <div>
+          <img src="images/method/fig4-engineer.webp" alt="Fig. 4 — Engineer: layered system architecture" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-sm text-center">Fig. 4 &mdash; Engineer &middot; Layered architecture</p>
+        </div>
+        <div>
+          <img src="images/method/fig5-optimize.webp" alt="Fig. 5 — Optimize: performance and scientific charts" class="w-full rounded-xl border border-gray-200 mb-2">
+          <p class="text-gray-500 text-sm text-center">Fig. 5 &mdash; Optimize &middot; Performance chart</p>
+        </div>
+      </div>
 
       <details class="mb-4">
         <summary class="cursor-pointer font-semibold text-dsBlue hover:underline">Processing &amp; Generation Notes</summary>
@@ -2382,17 +2411,51 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
       </div>
 
       <h3 class="text-xl font-bold mb-6">Carousel Standards</h3>
-      <div class="overflow-x-auto mb-8">
-        <table>
-          <thead class="bg-gray-50"><tr><th>Slide</th><th>Content</th><th>Design</th></tr></thead>
-          <tbody>
-            <tr><td>Cover (slide 1)</td><td>Hook title + topic context</td><td>dsBlack bg, white text, dsBlue accent</td></tr>
-            <tr><td>Content (2&ndash;N)</td><td>One idea per slide, numbered</td><td>White bg, dsBlue header strip, dsBlack body</td></tr>
-            <tr><td>CTA (final)</td><td>Clear next step + URL</td><td>dsBlue bg, white text, DS logo</td></tr>
-          </tbody>
-        </table>
+      <p class="text-gray-600 text-sm mb-4">5&ndash;10 slides per carousel (sweet spot: 7). Page numbers on each slide. Cover must hook without requiring swipe.</p>
+      <div class="flex gap-4 overflow-x-auto pb-4 mb-12">
+        <!-- Cover slide -->
+        <div class="flex-shrink-0 w-48 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-dsBlack p-5 aspect-[4/5] flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-0.5 bg-dsBlue mb-3"></div>
+              <p class="text-white font-bold text-sm leading-tight">5 Signs Your EHR Integration Is Costing You Money</p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-[8px]">Bob Klein &middot; Digital Scientists</p>
+              <p class="text-gray-600 text-[8px] mt-1">1 / 7</p>
+            </div>
+          </div>
+        </div>
+        <!-- Content slide -->
+        <div class="flex-shrink-0 w-48 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-white p-5 aspect-[4/5] flex flex-col border border-gray-200">
+            <div class="bg-dsBlue h-1 rounded-full mb-4 w-full"></div>
+            <p class="text-dsBlue text-3xl font-extrabold mb-1">01</p>
+            <p class="font-bold text-sm mb-2">Manual data entry still required</p>
+            <p class="text-gray-600 text-[9px] leading-relaxed">If clinicians are copying data between systems, your integration is decorative, not functional.</p>
+            <p class="text-gray-400 text-[8px] mt-auto">2 / 7</p>
+          </div>
+        </div>
+        <!-- Content slide 2 -->
+        <div class="flex-shrink-0 w-48 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-white p-5 aspect-[4/5] flex flex-col border border-gray-200">
+            <div class="bg-dsBlue h-1 rounded-full mb-4 w-full"></div>
+            <p class="text-dsBlue text-3xl font-extrabold mb-1">02</p>
+            <p class="font-bold text-sm mb-2">No real-time data sync</p>
+            <p class="text-gray-600 text-[9px] leading-relaxed">Batch processing means decisions are always based on stale data. That&rsquo;s a clinical risk.</p>
+            <p class="text-gray-400 text-[8px] mt-auto">3 / 7</p>
+          </div>
+        </div>
+        <!-- CTA slide -->
+        <div class="flex-shrink-0 w-48 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-dsBlue p-5 aspect-[4/5] flex flex-col justify-center items-center text-center">
+            <p class="text-white font-bold text-sm mb-2">See how we fixed this for 3 health systems.</p>
+            <p class="text-white/70 text-[9px] mb-4">digitalscientists.com/healthcare</p>
+            <img src="images/logos/logo-white.svg" alt="" class="w-8 opacity-70">
+            <p class="text-white/40 text-[8px] mt-auto">7 / 7</p>
+          </div>
+        </div>
       </div>
-      <p class="text-gray-500 text-sm mb-12">5&ndash;10 slides per carousel (sweet spot: 7). Page numbers on each slide. Cover must hook without requiring swipe.</p>
 
       <h3 class="text-xl font-bold mb-6">Post Formats</h3>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
@@ -2489,6 +2552,26 @@ border-radius: 24px;
 font-weight: 500;
 font-size: 14px;
 text-decoration: none;</code></pre>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mt-12 mb-6">Example Email Layout</h3>
+      <div class="flex justify-center mb-12">
+        <div class="w-full max-w-md bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg">
+          <!-- Email header -->
+          <div class="bg-dsBlack px-6 py-4 flex items-center gap-3">
+            <img src="images/logos/logo-white.svg" alt="DS" class="h-6">
+          </div>
+          <!-- Email body -->
+          <div class="px-6 py-6" style="font-family:Arial,Helvetica,sans-serif">
+            <p style="font-size:22px;font-weight:700;color:#050505;margin:0 0 8px">New case study: $10M recovered in PDPM revenue</p>
+            <p style="font-size:14px;color:#4B5563;line-height:1.6;margin:0 0 20px">See how we helped a multi-site skilled nursing operator identify and recover lost reimbursement using custom AI documentation tools.</p>
+            <a href="#" style="display:inline-block;background:#304FFF;color:white;padding:12px 24px;border-radius:24px;font-size:14px;font-weight:500;text-decoration:none">Read the Case Study</a>
+            <div style="border-top:1px solid #E5E7EB;margin-top:24px;padding-top:16px">
+              <p style="font-size:12px;color:#9CA3AF;margin:0">Digital Scientists &middot; 21 S Main St, Alpharetta, GA</p>
+              <p style="font-size:12px;color:#9CA3AF;margin:4px 0 0"><a href="#" style="color:#304FFF;text-decoration:none">Unsubscribe</a></p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2594,29 +2677,80 @@ text-decoration: none;</code></pre>
 
       <h3 class="text-xl font-bold mt-12 mb-6">Standard Slide Types</h3>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-2">Title Slide</h4>
-          <p class="text-gray-600 text-base">dsBlack background. DS wordmark in white. Title in Inter Bold 44pt. Subtitle in gray-400. Optional pixel extraction accent element.</p>
+        <!-- Title Slide mockup -->
+        <div>
+          <div class="bg-dsBlack rounded-xl p-6 aspect-video flex flex-col justify-between mb-2">
+            <img src="images/logos/logo-white.svg" alt="DS" class="w-10 h-10 object-contain">
+            <div>
+              <p class="text-white font-bold text-lg leading-tight">Healthcare AI<br>Capabilities</p>
+              <p class="text-gray-400 text-xs mt-1">Digital Scientists &middot; 2026</p>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm font-semibold">Title Slide</p>
+          <p class="text-gray-500 text-xs">dsBlack bg, white logo, bold title, subtitle in gray-400</p>
         </div>
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-2">Value Proposition</h4>
-          <p class="text-gray-600 text-base">&ldquo;Top 5 Reasons&rdquo; format. White background. Numbered list with dsBlue numbers. Icon optional per item.</p>
+        <!-- Value Proposition mockup -->
+        <div>
+          <div class="bg-white rounded-xl p-6 aspect-video flex flex-col justify-center border border-gray-200 mb-2">
+            <p class="text-xs font-bold text-dsBlue uppercase tracking-wider mb-2">Why Digital Scientists</p>
+            <div class="space-y-1.5 text-xs">
+              <p><span class="text-dsBlue font-extrabold text-sm mr-2">1</span> 100% healthcare AI production rate</p>
+              <p><span class="text-dsBlue font-extrabold text-sm mr-2">2</span> $20M+ verified client ROI</p>
+              <p><span class="text-dsBlue font-extrabold text-sm mr-2">3</span> Same-timezone nearshore team</p>
+              <p><span class="text-dsBlue font-extrabold text-sm mr-2">4</span> HIPAA compliant operations</p>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm font-semibold">Value Proposition</p>
+          <p class="text-gray-500 text-xs">White bg, numbered list with dsBlue numbers</p>
         </div>
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-2">Service Overview</h4>
-          <p class="text-gray-600 text-base">White or dsGray background. 2&times;3 or 3&times;2 icon grid. dsBlue simple line icons. Short label + one-line description per cell.</p>
+        <!-- Case Study mockup -->
+        <div>
+          <div class="bg-white rounded-xl p-6 aspect-video flex flex-col justify-center border border-gray-200 mb-2">
+            <span class="inline-block bg-dsBlue/10 text-dsBlue text-[8px] font-semibold px-2 py-0.5 rounded-full uppercase mb-2 w-fit">Skilled Nursing</span>
+            <p class="text-dsBlue text-3xl font-extrabold leading-none">$10M+</p>
+            <p class="text-gray-600 text-xs mt-1">recovered PDPM revenue</p>
+            <div class="mt-3 pt-2 border-t border-gray-100 text-[9px] text-gray-500">
+              <span class="font-semibold text-dsBlack">Challenge</span> &rarr; <span class="font-semibold text-dsBlack">Approach</span> &rarr; <span class="font-semibold text-dsBlack">Results</span>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm font-semibold">Case Study</p>
+          <p class="text-gray-500 text-xs">Lead with hero metric in dsBlue at 44pt+</p>
         </div>
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-2">Case Study</h4>
-          <p class="text-gray-600 text-base">Challenge &rarr; Approach &rarr; Results. Lead with the headline metric in dsBlue at 44pt+. Optional product screenshot.</p>
+        <!-- Service Overview mockup -->
+        <div>
+          <div class="bg-dsGray rounded-xl p-5 aspect-video flex flex-col justify-center border border-gray-200 mb-2">
+            <p class="text-[10px] font-bold uppercase tracking-wider mb-3">Our Capabilities</p>
+            <div class="grid grid-cols-3 gap-2">
+              <div class="text-center"><div class="w-6 h-6 rounded-full bg-dsBlue/10 mx-auto mb-1 flex items-center justify-center text-dsBlue text-[8px]">AI</div><p class="text-[7px] text-gray-600">AI Dev</p></div>
+              <div class="text-center"><div class="w-6 h-6 rounded-full bg-dsBlue/10 mx-auto mb-1 flex items-center justify-center text-dsBlue text-[8px]">UX</div><p class="text-[7px] text-gray-600">Design</p></div>
+              <div class="text-center"><div class="w-6 h-6 rounded-full bg-dsBlue/10 mx-auto mb-1 flex items-center justify-center text-dsBlue text-[8px]">PM</div><p class="text-[7px] text-gray-600">Product</p></div>
+              <div class="text-center"><div class="w-6 h-6 rounded-full bg-dsBlue/10 mx-auto mb-1 flex items-center justify-center text-dsBlue text-[8px]">ENG</div><p class="text-[7px] text-gray-600">Platform</p></div>
+              <div class="text-center"><div class="w-6 h-6 rounded-full bg-dsBlue/10 mx-auto mb-1 flex items-center justify-center text-dsBlue text-[8px]">QA</div><p class="text-[7px] text-gray-600">Testing</p></div>
+              <div class="text-center"><div class="w-6 h-6 rounded-full bg-dsBlue/10 mx-auto mb-1 flex items-center justify-center text-dsBlue text-[8px]">OPS</div><p class="text-[7px] text-gray-600">DevOps</p></div>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm font-semibold">Service Overview</p>
+          <p class="text-gray-500 text-xs">Icon grid on white or dsGray bg</p>
         </div>
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-2">Team / Capability</h4>
-          <p class="text-gray-600 text-base">Rounded-full headshots. Name + title underneath. Use for team intros or capability-by-person layouts.</p>
+        <!-- Divider mockup -->
+        <div>
+          <div class="bg-dsBlack rounded-xl p-6 aspect-video flex items-center justify-center mb-2 relative overflow-hidden">
+            <img src="images/logos/shapes-01.svg" alt="" class="absolute right-0 top-0 w-24 h-24 opacity-20">
+            <p class="text-white text-lg font-bold text-center">Our Approach</p>
+          </div>
+          <p class="text-gray-600 text-sm font-semibold">Section Divider</p>
+          <p class="text-gray-500 text-xs">dsBlack bg, pixel extraction accent allowed</p>
         </div>
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-2">CTA / Contact</h4>
-          <p class="text-gray-600 text-base">dsBlue background. &ldquo;Let&rsquo;s talk.&rdquo; headline. Bob Klein, CEO + Nick Alexander, COO. DS logo in white. Contact details.</p>
+        <!-- CTA mockup -->
+        <div>
+          <div class="bg-dsBlue rounded-xl p-6 aspect-video flex flex-col justify-center items-center text-center mb-2">
+            <p class="text-white text-lg font-bold mb-2">Let&rsquo;s talk.</p>
+            <p class="text-white/70 text-[9px]">Bob Klein, CEO &middot; Nick Alexander, COO</p>
+            <p class="text-white/50 text-[8px] mt-2">bob@digitalscientists.com</p>
+            <img src="images/logos/logo-white.svg" alt="" class="w-8 h-8 mt-3 opacity-60">
+          </div>
+          <p class="text-gray-600 text-sm font-semibold">CTA / Contact</p>
+          <p class="text-gray-500 text-xs">dsBlue bg, white text, DS logo</p>
         </div>
       </div>
 
@@ -2676,23 +2810,71 @@ text-decoration: none;</code></pre>
       </div>
 
       <h3 class="text-xl font-bold mb-6">Case Study PDFs</h3>
-      <div class="guide-card bg-white mb-8 max-w-3xl">
-        <p class="text-gray-600 mb-4"><strong>Format:</strong> Challenge &rarr; Approach &rarr; Results. 1&ndash;2 pages max.</p>
-        <div class="overflow-x-auto">
-          <table>
-            <thead class="bg-gray-50"><tr><th>Section</th><th>Content</th></tr></thead>
-            <tbody>
-              <tr><td class="font-semibold">Header</td><td>DS logo + &ldquo;Case Study&rdquo; label + client industry</td></tr>
-              <tr><td class="font-semibold">Hero Metric</td><td>Large dsBlue number &mdash; lead with the result, not the client name</td></tr>
-              <tr><td class="font-semibold">Challenge</td><td>2&ndash;3 bullets describing the problem</td></tr>
-              <tr><td class="font-semibold">Approach</td><td>What DS did, METHOD phases referenced</td></tr>
-              <tr><td class="font-semibold">Results</td><td>3&ndash;5 measurable metrics</td></tr>
-              <tr><td class="font-semibold">Tech Stack</td><td>Tags for frameworks, platforms, and tools</td></tr>
-              <tr><td class="font-semibold">CTA</td><td>Next step + contact information</td></tr>
-            </tbody>
-          </table>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <!-- Case study PDF mockup -->
+        <div class="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+          <div class="p-6">
+            <!-- Header -->
+            <div class="flex justify-between items-start mb-4">
+              <img src="images/ds-logo-black.svg" alt="DS" class="h-5">
+              <span class="bg-dsBlue/10 text-dsBlue text-[8px] font-semibold px-2 py-0.5 rounded-full uppercase">Case Study</span>
+            </div>
+            <div class="w-full h-0.5 bg-dsBlue mb-4"></div>
+            <!-- Hero metric -->
+            <p class="text-dsBlue text-4xl font-extrabold">$10M+</p>
+            <p class="text-gray-600 text-xs mb-4">recovered PDPM revenue across 20,000+ patients</p>
+            <!-- Sections -->
+            <div class="space-y-3 text-[9px]">
+              <div>
+                <p class="font-bold text-[10px] text-dsBlack border-b border-dsBlue/30 pb-1 mb-1">Challenge</p>
+                <p class="text-gray-600">Multi-site SNF operator losing revenue due to inconsistent MDS coding and documentation gaps.</p>
+              </div>
+              <div>
+                <p class="font-bold text-[10px] text-dsBlack border-b border-dsBlue/30 pb-1 mb-1">Approach</p>
+                <p class="text-gray-600">AI-powered documentation analysis + real-time clinician feedback loop. METHOD phases: Discover &rarr; Experiment &rarr; Engineer.</p>
+              </div>
+              <div>
+                <p class="font-bold text-[10px] text-dsBlack border-b border-dsBlue/30 pb-1 mb-1">Results</p>
+                <div class="flex gap-3">
+                  <span class="text-dsBlue font-extrabold text-lg">40%</span>
+                  <span class="text-dsBlue font-extrabold text-lg">3x</span>
+                  <span class="text-dsBlue font-extrabold text-lg">92%</span>
+                </div>
+                <div class="flex gap-3 text-gray-500 text-[7px]">
+                  <span>less doc time</span>
+                  <span>faster reviews</span>
+                  <span>accuracy rate</span>
+                </div>
+              </div>
+            </div>
+            <!-- Tech tags -->
+            <div class="flex flex-wrap gap-1 mt-3">
+              <span class="bg-gray-100 text-gray-600 text-[7px] px-1.5 py-0.5 rounded">React</span>
+              <span class="bg-gray-100 text-gray-600 text-[7px] px-1.5 py-0.5 rounded">Python</span>
+              <span class="bg-gray-100 text-gray-600 text-[7px] px-1.5 py-0.5 rounded">AWS</span>
+              <span class="bg-gray-100 text-gray-600 text-[7px] px-1.5 py-0.5 rounded">HL7 FHIR</span>
+            </div>
+          </div>
         </div>
-        <p class="text-gray-600 text-sm mt-4">Include real screenshots (sanitized). The METHOD diagram may be used as a visual accent.</p>
+        <!-- Structure description -->
+        <div class="guide-card bg-white">
+          <p class="text-gray-600 mb-4"><strong>Format:</strong> Challenge &rarr; Approach &rarr; Results. 1&ndash;2 pages max.</p>
+          <div class="overflow-x-auto">
+            <table>
+              <thead class="bg-gray-50"><tr><th>Section</th><th>Content</th></tr></thead>
+              <tbody>
+                <tr><td class="font-semibold">Header</td><td>DS logo + &ldquo;Case Study&rdquo; label + client industry</td></tr>
+                <tr><td class="font-semibold">Hero Metric</td><td>Large dsBlue number &mdash; lead with result</td></tr>
+                <tr><td class="font-semibold">Challenge</td><td>2&ndash;3 bullets describing the problem</td></tr>
+                <tr><td class="font-semibold">Approach</td><td>What DS did, METHOD phases referenced</td></tr>
+                <tr><td class="font-semibold">Results</td><td>3&ndash;5 measurable metrics</td></tr>
+                <tr><td class="font-semibold">Tech Stack</td><td>Tags for frameworks, platforms, tools</td></tr>
+                <tr><td class="font-semibold">CTA</td><td>Next step + contact information</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-gray-600 text-sm mt-4">Include real screenshots (sanitized). The METHOD diagram may be used as a visual accent.</p>
+        </div>
       </div>
 
       <h3 class="text-xl font-bold mb-6">Proposals</h3>
@@ -2741,31 +2923,31 @@ text-decoration: none;</code></pre>
       <p class="text-xl text-gray-600 mb-12 max-w-2xl">Every physical touchpoint reinforces the DS brand. Stationery is matte, minimal, and typographically precise.</p>
 
       <h3 class="text-xl font-bold mb-6">Business Cards</h3>
-      <div class="grid md:grid-cols-2 gap-6 mb-12">
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-3">Front</h4>
-          <p class="text-gray-600 mb-4">DS wordmark + name + title + contact info</p>
-          <div class="overflow-x-auto">
-            <table>
-              <thead class="bg-gray-50"><tr><th>Element</th><th>Font</th><th>Size</th></tr></thead>
-              <tbody>
-                <tr><td>Name</td><td>Inter SemiBold</td><td>9pt</td></tr>
-                <tr><td>Title</td><td>Inter Regular</td><td>7pt</td></tr>
-                <tr><td>Contact</td><td>Inter Regular</td><td>7pt</td></tr>
-              </tbody>
-            </table>
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <!-- Front mockup -->
+        <div>
+          <div class="bg-white border border-gray-200 rounded-xl p-6 aspect-[3.5/2] flex flex-col justify-between shadow-md">
+            <img src="images/logos/logo-black.svg" alt="DS" class="w-12 h-12 object-contain">
+            <div>
+              <p class="font-semibold text-sm">Bob Klein</p>
+              <p class="text-gray-500 text-[10px]">Chief Executive Officer</p>
+              <p class="text-gray-500 text-[10px] mt-1">bob@digitalscientists.com</p>
+              <p class="text-gray-500 text-[10px]">(770) 818-4104</p>
+              <p class="text-dsBlue text-[10px]">digitalscientists.com</p>
+            </div>
           </div>
+          <p class="text-gray-500 text-sm text-center mt-2">Front &mdash; white bg, wordmark + contact</p>
         </div>
-        <div class="guide-card">
-          <h4 class="font-bold text-lg mb-3">Back</h4>
-          <p class="text-gray-600 mb-4">dsBlack or dsBlue background with optional pixel extraction accent.</p>
-          <div class="flex gap-4 mb-4">
-            <div class="w-20 h-12 rounded-lg bg-dsBlack flex items-center justify-center"><span class="text-white text-xs font-mono">#050505</span></div>
-            <div class="w-20 h-12 rounded-lg bg-dsBlue flex items-center justify-center"><span class="text-white text-xs font-mono">#304FFF</span></div>
+        <!-- Back mockup -->
+        <div>
+          <div class="bg-dsBlack rounded-xl p-6 aspect-[3.5/2] flex items-center justify-center shadow-md relative overflow-hidden">
+            <img src="images/logos/shapes-01.svg" alt="" class="absolute inset-0 w-full h-full opacity-5 object-cover">
+            <img src="images/logos/logo-white.svg" alt="DS" class="w-16 h-16 object-contain relative z-10">
           </div>
-          <p class="text-gray-600 text-sm"><strong>Format:</strong> 3.5&times;2&quot; standard US. Matte finish.</p>
+          <p class="text-gray-500 text-sm text-center mt-2">Back &mdash; dsBlack bg, pixel extraction accent, centered logo</p>
         </div>
       </div>
+      <p class="text-gray-600 text-sm mb-12"><strong>Format:</strong> 3.5&times;2&quot; standard US. Matte finish. Inter SemiBold 9pt (name), Inter Regular 7pt (title, contact).</p>
 
       <h3 class="text-xl font-bold mb-6">Digital Letterhead</h3>
       <div class="guide-card mb-12 max-w-3xl">
