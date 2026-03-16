@@ -27,6 +27,7 @@
 14. [Case Study Page Patterns](#14-case-study-page-patterns)
 15. [SEO Implementation](#15-seo-implementation)
 16. [CSP & Security Headers](#16-csp--security-headers)
+17. [Forms & CRM Integration](#17-forms--crm-integration)
 
 ---
 
@@ -1841,6 +1842,100 @@ Cache headers are set in `netlify.toml` and control how long Cloudflare (CDN) an
 
 ---
 
+## 17. Forms & CRM Integration
+
+The website connects to Pipedrive CRM through three integrated systems. Full technical documentation (webhook architecture, API keys, failure modes) lives in `scratchpad/pipedrive-scheduler-setup.md` in the DS website repo. A formatted HTML version is available at `pipedrive-scheduler-report.html`.
+
+### 17.1 Overview
+
+| System | Purpose | Pages |
+|---|---|---|
+| **Formspree Forms** | Contact forms, inquiries, newsletter signups | 20+ pages |
+| **Pipedrive Scheduler** | Meeting bookings (replaced Calendly March 2026) | 6 pages |
+| **Google Calendar** | Two-way sync with Pipedrive for scheduling | Automatic |
+
+### 17.2 Formspree Forms
+
+All forms submit to a single Formspree endpoint: `https://formspree.io/f/xvzbywbr`
+
+Every form **must** include these hidden fields:
+
+```html
+<input type="hidden" name="source" value="page-identifier">
+<input type="hidden" name="_subject" value="Lead Title for Pipedrive">
+```
+
+UTM hidden fields (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`) are injected automatically by `ds-includes-v2.js` — do not add them manually.
+
+**How it works:** Formspree receives the submission → fires a webhook to `formspree-webhook.mjs` → the function creates a Person (deduplicated by email) and Organization in Pipedrive → creates a **Deal** (if UTMs present) or **Lead** (no UTMs) with a pinned note containing the form details.
+
+### 17.3 Pipedrive Scheduler
+
+All scheduler links point to: `https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein`
+
+**Link format** (most pages):
+```html
+<a href="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
+   target="_blank" rel="noopener noreferrer"
+   class="inline-flex items-center gap-2 bg-dsBlue text-white px-8 py-4 rounded-full font-medium hover:bg-dsBlack transition text-lg">
+    Schedule a 30-Minute Call &rarr;
+</a>
+```
+
+**Iframe embed** (assessment page only):
+```html
+<iframe src="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
+        title="Schedule a Meeting with Bob Klein"
+        frameborder="0" height="700px" width="100%"
+        style="min-width:320px" allowfullscreen></iframe>
+```
+
+**How it works (two phases):**
+1. **Pre-booking:** When a visitor clicks a scheduler link, `ds-includes-v2.js` intercepts the click, sends UTM data to `schedule-lead.mjs` (creates a Deal for campaign traffic), then redirects to the Scheduler.
+2. **Post-booking:** After the visitor books, Pipedrive creates an Activity. A webhook fires to `scheduler-webhook.mjs`, which enriches the Deal with contact info and form text, or creates a Lead for organic traffic. The Activity syncs to Google Calendar automatically.
+
+### 17.4 UTM Attribution Rule
+
+Pipedrive Leads do not support custom fields. UTM data can only be stored natively on Deals.
+
+| Visitor has UTMs? | Pipedrive record | Pipeline |
+|---|---|---|
+| **Yes** | Deal | Inbound Project → Marketing Qualified |
+| **No** | Lead | Inbox (qualify manually) |
+
+This rule applies consistently across both forms and scheduler bookings.
+
+### 17.5 Adding a New Form Page
+
+When creating a new page with a form:
+
+1. Copy the form HTML from an existing page (e.g., `/start/index.html`)
+2. Update the `source` hidden field with a unique page identifier
+3. Update the `_subject` hidden field with the desired Pipedrive Lead/Deal title
+4. UTM fields are auto-injected — no manual setup needed
+5. The form will automatically route to Pipedrive via the existing Formspree webhook
+
+### 17.6 Adding a Scheduler Link
+
+When adding a scheduler CTA to a new page:
+
+1. Use the standard link format from 17.3
+2. `ds-includes-v2.js` automatically intercepts scheduler link clicks — no additional JS needed
+3. Ensure `digitalscientists3.pipedrive.com` remains in the CSP `frame-src` directive (already configured in `netlify.toml`)
+
+### 17.7 CSP Requirements
+
+The following domains must be in the Content Security Policy (`netlify.toml`) for forms and scheduling to work:
+
+| CSP Directive | Required Domains |
+|---|---|
+| `frame-src` | `digitalscientists3.pipedrive.com` |
+| `connect-src` | `formspree.io`, `*.pipedrive.com` |
+| `form-action` | `formspree.io` |
+
+---
+
 ## Revision History
 
+- 2026-03-16: v1.1 — Added §17 Forms & CRM Integration (Formspree, Pipedrive Scheduler, Google Calendar, UTM attribution)
 - 2026-03-07: v1.0 — Extracted from ds-design-standard.md as part of brand guide consolidation
