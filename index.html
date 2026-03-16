@@ -123,10 +123,11 @@
     <a href="#agency" class="toc-link">31. Agency Partners</a>
 
     <div class="toc-part">Part 8 — Technical</div>
-    <a href="#procedures" class="toc-link">32. Operating Procedures</a>
+    <a href="#forms-crm" class="toc-link">32. Forms &amp; CRM Integration</a>
+    <a href="#procedures" class="toc-link">33. Operating Procedures</a>
 
     <div class="toc-part">Part 9 — Reference Docs</div>
-    <a href="#reference-docs" class="toc-link">33. Reference Documents</a>
+    <a href="#reference-docs" class="toc-link">34. Reference Documents</a>
   </nav>
   <p class="text-gray-400 text-xs mt-6">Last updated: March 2026</p>
 </aside>
@@ -144,7 +145,7 @@
       <p class="text-gray-300 text-lg max-w-2xl">The single source of truth for anyone — internal team or agency — working on the DS brand, website, or marketing materials.</p>
       <div class="flex flex-wrap gap-3 mt-8">
         <span class="text-xs font-medium bg-white/10 text-white px-3 py-1 rounded-full">9 Parts</span>
-        <span class="text-xs font-medium bg-white/10 text-white px-3 py-1 rounded-full">33 Sections</span>
+        <span class="text-xs font-medium bg-white/10 text-white px-3 py-1 rounded-full">34 Sections</span>
         <span class="text-xs font-medium bg-white/10 text-white px-3 py-1 rounded-full">March 2026</span>
       </div>
     </div>
@@ -3672,6 +3673,160 @@ text-decoration: none;</code></pre>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: FORMS & CRM INTEGRATION -->
+  <!-- ============================================================ -->
+  <section id="forms-crm" class="py-20 px-6 bg-white">
+    <div class="max-w-screen-xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6" style="letter-spacing:-0.02em">Forms &amp; CRM Integration</h2>
+      <p class="text-gray-600 text-lg mb-10 max-w-3xl">The website captures leads through two conversion paths &mdash; Formspree forms and Pipedrive Scheduler bookings &mdash; both routing into Pipedrive CRM with consistent campaign attribution. Scheduler bookings sync to Google Calendar automatically.</p>
+
+      <!-- Three Systems -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-dsGray rounded-xl p-6">
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">System 1</p>
+          <h3 class="text-lg font-bold mb-2">Formspree Forms</h3>
+          <p class="text-gray-600 text-sm">All web form submissions. Single endpoint (<code>formspree.io/f/xvzbywbr</code>), 20+ pages. Webhook creates Deal or Lead in Pipedrive.</p>
+        </div>
+        <div class="bg-dsGray rounded-xl p-6">
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">System 2</p>
+          <h3 class="text-lg font-bold mb-2">Pipedrive Scheduler</h3>
+          <p class="text-gray-600 text-sm">Meeting bookings (replaced Calendly). Two-phase flow: pre-booking UTM capture + post-booking contact enrichment via webhook.</p>
+        </div>
+        <div class="bg-dsGray rounded-xl p-6">
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">System 3</p>
+          <h3 class="text-lg font-bold mb-2">Google Calendar</h3>
+          <p class="text-gray-600 text-sm">Two-way sync with Pipedrive. Scheduler bookings appear on Bob&rsquo;s calendar automatically. Pipedrive is the single source of truth.</p>
+        </div>
+      </div>
+
+      <!-- Attribution Rule -->
+      <div class="bg-dsBlue/5 border border-dsBlue/20 rounded-xl p-6 mb-12">
+        <h3 class="text-lg font-bold mb-3">The Attribution Rule</h3>
+        <p class="text-gray-600 mb-4">Pipedrive Leads do not support custom fields. UTM data can only be stored natively on Deals. So we use a consistent routing rule across all conversion paths:</p>
+        <table>
+          <thead><tr><th>Visitor has UTMs?</th><th>Pipedrive Record</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Yes</strong></td><td>Deal &rarr; Inbound Project &rarr; Marketing Qualified</td><td>UTM fields populated natively &mdash; filterable, sortable, reportable</td></tr>
+            <tr><td><strong>No</strong></td><td>Lead (inbox)</td><td>No attribution to store &mdash; qualify manually, convert to Deal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Form Submission Flow -->
+      <h3 class="text-xl font-bold mb-4">Form Submission Flow</h3>
+      <div class="grid md:grid-cols-4 gap-4 mb-12">
+        <div class="guide-card"><p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Step 1</p><p class="text-sm text-gray-600"><strong>Visitor fills out form.</strong> Hidden fields carry source page ID and UTM params (auto-injected by <code>ds-includes-v2.js</code>).</p></div>
+        <div class="guide-card"><p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Step 2</p><p class="text-sm text-gray-600"><strong>Formspree receives submission.</strong> Stores data, sends email notification, fires webhook to Netlify Function.</p></div>
+        <div class="guide-card"><p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Step 3</p><p class="text-sm text-gray-600"><strong><code>formspree-webhook.mjs</code> runs.</strong> Finds/creates Person (by email) and Organization (by company) in Pipedrive.</p></div>
+        <div class="guide-card"><p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Step 4</p><p class="text-sm text-gray-600"><strong>Deal or Lead created.</strong> Campaign traffic &rarr; Deal with UTM custom fields. Organic &rarr; Lead. Both get a pinned note with form details.</p></div>
+      </div>
+
+      <!-- Scheduler Booking Flow -->
+      <h3 class="text-xl font-bold mb-4">Scheduler Booking Flow</h3>
+      <p class="text-gray-600 mb-4">Because booking happens on Pipedrive&rsquo;s domain (not ours), the integration runs in two phases:</p>
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="guide-card" style="border-left: 4px solid #304FFF;">
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Phase 1 &mdash; Pre-Booking</p>
+          <p class="text-sm text-gray-600 mb-2">Visitor clicks &ldquo;Schedule a Call&rdquo; on our site. JS intercepts the click, reads UTMs from <code>sessionStorage</code>, and calls <code>schedule-lead.mjs</code>.</p>
+          <p class="text-sm text-gray-600 mb-2"><strong>Campaign traffic:</strong> Creates a Deal with UTM custom fields (no person linked yet).</p>
+          <p class="text-sm text-gray-600"><strong>Organic:</strong> Passthrough &mdash; no Pipedrive action. Browser redirects to Scheduler.</p>
+        </div>
+        <div class="guide-card" style="border-left: 4px solid #26D9C4;">
+          <p class="text-xs font-medium text-dsTeal uppercase tracking-wider mb-2">Phase 2 &mdash; Post-Booking</p>
+          <p class="text-sm text-gray-600 mb-2">Prospect enters details and picks a time on Pipedrive Scheduler. Pipedrive creates Person, Org, and Activity.</p>
+          <p class="text-sm text-gray-600 mb-2"><strong>Webhook fires</strong> (<code>scheduler-webhook.mjs</code>): finds recent unlinked Deal &rarr; enriches with person, org, form text as pinned note.</p>
+          <p class="text-sm text-gray-600"><strong>No Deal found:</strong> Creates a Lead with person, org, and form text. Activity syncs to Google Calendar.</p>
+        </div>
+      </div>
+
+      <!-- Where Scheduler Appears -->
+      <h3 class="text-xl font-bold mb-4">Where the Scheduler Appears</h3>
+      <table class="mb-12">
+        <thead><tr><th>Page</th><th>Format</th></tr></thead>
+        <tbody>
+          <tr><td><code>/start/</code></td><td>Button (also has a Formspree form)</td></tr>
+          <tr><td><code>/thank-you/</code></td><td>Button (post-form CTA)</td></tr>
+          <tr><td><code>/healthcare/assessment/</code></td><td><strong>Embedded iframe</strong> (in-page widget)</td></tr>
+          <tr><td><code>/event/paltc26-annual-conference/</code></td><td>4 buttons (hero + pills + footer)</td></tr>
+          <tr><td><code>/event/beckers-health-it-rcm-2026/</code></td><td>4 buttons (hero + pills + footer)</td></tr>
+          <tr><td><code>/event/2026-nchcfa-annual-convention-expo/</code></td><td>1 button (footer)</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Technical Components -->
+      <h3 class="text-xl font-bold mb-4">Technical Components</h3>
+      <table class="mb-8">
+        <thead><tr><th>Component</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>formspree-webhook.mjs</code></td><td>Form submissions &rarr; Deal (w/ UTMs) or Lead in Pipedrive</td></tr>
+          <tr><td><code>schedule-lead.mjs</code></td><td>Pre-booking: creates Deal with UTM fields for campaign traffic</td></tr>
+          <tr><td><code>scheduler-webhook.mjs</code></td><td>Post-booking: enriches Deal with person/org/note, or creates Lead</td></tr>
+          <tr><td><code>ds-includes-v2.js</code></td><td>Frontend: captures UTMs, injects hidden fields, intercepts scheduler clicks</td></tr>
+          <tr><td>Pipedrive Webhook #3102756</td><td>Fires on <code>activity.create</code>, calls <code>scheduler-webhook.mjs</code></td></tr>
+        </tbody>
+      </table>
+
+      <!-- Adding a Form to a New Page -->
+      <h3 class="text-xl font-bold mb-4 mt-12">Adding a Form to a New Page</h3>
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div>
+          <ol class="list-decimal list-inside text-gray-600 text-sm space-y-2">
+            <li>Copy form HTML from an existing page (e.g., <code>/start/index.html</code>)</li>
+            <li>Update the <code>source</code> hidden field with a unique page identifier</li>
+            <li>Update the <code>_subject</code> hidden field with the desired Pipedrive title</li>
+            <li>UTM hidden fields are auto-injected by JS &mdash; do not add manually</li>
+            <li>The form will automatically route to Pipedrive via the existing webhook</li>
+          </ol>
+        </div>
+        <div>
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Required Hidden Fields</p>
+          <pre><code>&lt;input type="hidden" name="source" value="your-page-id"&gt;
+&lt;input type="hidden" name="_subject" value="Your Page — New Lead"&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- Adding a Scheduler Link -->
+      <h3 class="text-xl font-bold mb-4">Adding a Scheduler Link to a New Page</h3>
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div>
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Standard Button Link</p>
+          <pre><code>&lt;a href="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
+   target="_blank" rel="noopener noreferrer"
+   class="inline-flex items-center gap-2 bg-dsBlue text-white px-8 py-4 rounded-full font-medium hover:bg-dsBlack transition text-lg"&gt;
+    Schedule a 30-Minute Call &amp;rarr;
+&lt;/a&gt;</code></pre>
+        </div>
+        <div>
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Iframe Embed (Assessment Page Style)</p>
+          <pre><code>&lt;iframe
+  src="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
+  title="Schedule a Meeting with Bob Klein"
+  frameborder="0" height="700px" width="100%"
+  style="min-width:320px"
+  allowfullscreen&gt;
+&lt;/iframe&gt;</code></pre>
+          <p class="text-xs text-gray-500 mt-2">No additional JS needed &mdash; <code>ds-includes-v2.js</code> automatically intercepts scheduler link clicks for UTM capture.</p>
+        </div>
+      </div>
+
+      <!-- Calendar Sync -->
+      <h3 class="text-xl font-bold mb-4">Calendar Sync Chain</h3>
+      <div class="flex flex-wrap items-center gap-3 bg-dsGray rounded-xl p-6 mb-12">
+        <span class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium">Pipedrive Scheduler</span>
+        <span class="text-gray-400">&rarr;</span>
+        <span class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium">Pipedrive Activity (Meeting)</span>
+        <span class="text-gray-400">&rarr;</span>
+        <span class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium">Google Calendar (two-way sync)</span>
+      </div>
+
+      <!-- Full Docs Reference -->
+      <div class="bg-dsGray rounded-xl p-6">
+        <p class="text-sm text-gray-600"><strong>Full technical documentation:</strong> Webhook architecture, Pipedrive API field keys, failure modes, end-to-end examples, and the complete 20+ page form inventory are in <code>scratchpad/pipedrive-scheduler-setup.md</code> in the DS website repo. A formatted HTML version is available as <code>pipedrive-scheduler-report.html</code>.</p>
       </div>
     </div>
   </section>
