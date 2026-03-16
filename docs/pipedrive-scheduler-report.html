@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Website-to-CRM Integration — How It Works</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e; --ink-mid: #3a3a3a; --ink-light: #7a7a7a;
+    --rule: #d8d8d8; --bg: #f7f5f0; --paper: #ffffff;
+    --accent: #1a4fbd; --accent-soft: #e8edf9;
+    --green: #1a6644; --green-soft: #e8f3ed;
+    --amber: #7a4a00; --amber-soft: #fef3e2;
+    --purple: #5b21b6; --purple-soft: #ede9fe;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .page { max-width: 880px; margin: 0 auto; padding: 60px 40px 100px; }
+  header { border-top: 3px solid var(--ink); padding-top: 32px; margin-bottom: 52px; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 14px; }
+  h1 { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); max-width: 640px; margin-bottom: 20px; }
+  .subtitle { font-size: 15.5px; color: var(--ink-mid); font-weight: 300; max-width: 560px; border-left: 2px solid var(--accent); padding-left: 14px; margin-bottom: 28px; line-height: 1.6; }
+  .meta-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-item { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-light); letter-spacing: 0.06em; }
+  section { margin-bottom: 56px; }
+  h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  h3 { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mid); margin-bottom: 12px; margin-top: 28px; }
+  p { color: var(--ink-mid); margin-bottom: 12px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .summary-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 18px; }
+  .summary-card .num { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  .summary-card .num.blue { color: var(--accent); } .summary-card .num.green { color: var(--green); } .summary-card .num.purple { color: var(--purple); }
+  .summary-card .label { font-size: 12px; color: var(--ink-light); line-height: 1.4; }
+  .system-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+  .system-pill { border-radius: 6px; padding: 16px 18px; border: 1px solid; }
+  .system-pill.blue { background: var(--accent-soft); border-color: #b8caf5; }
+  .system-pill.green { background: var(--green-soft); border-color: #aad4be; }
+  .system-pill.purple { background: var(--purple-soft); border-color: #c4b5fd; }
+  .sys-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .system-pill.blue .sys-label { color: var(--accent); } .system-pill.green .sys-label { color: var(--green); } .system-pill.purple .sys-label { color: var(--purple); }
+  .sys-name { font-weight: 500; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+  .sys-desc { font-size: 12px; color: var(--ink-light); line-height: 1.5; }
+  .data-table { width: 100%; border-collapse: collapse; background: var(--paper); border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); font-size: 13px; }
+  .data-table thead th { background: var(--ink); color: #fff; text-align: left; padding: 9px 13px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+  .data-table tbody tr:nth-child(even) { background: #fafafa; }
+  .data-table tbody td { padding: 9px 13px; color: var(--ink-mid); border-bottom: 1px solid #efefef; vertical-align: top; line-height: 1.5; }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  code { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; background: var(--accent-soft); color: var(--accent); padding: 2px 6px; border-radius: 3px; }
+  .flow { display: flex; flex-direction: column; }
+  .flow-step { display: flex; gap: 18px; align-items: flex-start; position: relative; }
+  .flow-step:not(:last-child)::after { content: ''; position: absolute; left: 16px; top: 36px; bottom: -1px; width: 2px; background: var(--rule); }
+  .step-num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; position: relative; z-index: 1; }
+  .step-num.blue { background: var(--accent); color: #fff; } .step-num.green { background: var(--green); color: #fff; } .step-num.purple { background: var(--purple); color: #fff; }
+  .step-body { padding: 5px 0 26px; flex: 1; }
+  .step-title { font-weight: 500; color: var(--ink); font-size: 14px; margin-bottom: 3px; }
+  .step-desc { font-size: 13px; color: var(--ink-light); line-height: 1.6; margin-bottom: 0; }
+  .step-tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; padding: 2px 8px; border-radius: 3px; margin-top: 5px; letter-spacing: 0.03em; }
+  .step-tag.blue { background: var(--accent-soft); color: var(--accent); } .step-tag.green { background: var(--green-soft); color: var(--green); }
+  .scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .scenario-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 20px; }
+  .scenario-card.campaign { border-top: 3px solid var(--accent); } .scenario-card.organic { border-top: 3px solid var(--green); }
+  .scenario-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .campaign .scenario-label { color: var(--accent); } .organic .scenario-label { color: var(--green); }
+  .scenario-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+  .scenario-desc { font-size: 13px; color: var(--ink-mid); margin-bottom: 14px; line-height: 1.6; }
+  .outcome-box { border-radius: 4px; padding: 11px 13px; font-size: 12.5px; line-height: 1.5; }
+  .campaign .outcome-box { background: var(--accent-soft); color: #1a3a8f; } .organic .outcome-box { background: var(--green-soft); color: #0f4429; }
+  .outcome-box strong { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; opacity: 0.7; }
+  .chain { display: flex; align-items: center; background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 22px; flex-wrap: wrap; gap: 6px; }
+  .chain-node { background: var(--accent-soft); color: var(--accent); padding: 7px 14px; border-radius: 4px; font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .chain-arrow { font-size: 16px; color: var(--rule); padding: 0 6px; }
+  .note-box { background: var(--amber-soft); border-left: 3px solid #e6a817; border-radius: 0 6px 6px 0; padding: 14px 18px; font-size: 13.5px; color: var(--amber); line-height: 1.6; }
+  .note-box strong { color: #5a3800; }
+  .info-box { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 18px; font-size: 13px; color: #1a3a8f; line-height: 1.6; }
+  .info-box strong { color: var(--accent); }
+  .example-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .example-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 18px; }
+  .ex-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 6px; }
+  .ex-title { font-weight: 500; font-size: 13.5px; color: var(--ink); margin-bottom: 10px; }
+  .ex-steps { list-style: none; padding: 0; margin-bottom: 12px; }
+  .ex-steps li { font-size: 12.5px; color: var(--ink-light); padding: 3px 0 3px 16px; position: relative; line-height: 1.5; }
+  .ex-steps li::before { content: '→'; position: absolute; left: 0; color: var(--rule); font-size: 11px; top: 4px; }
+  .ex-result { background: #f5f5f5; border-radius: 4px; padding: 10px 12px; font-size: 12px; color: var(--ink-mid); line-height: 1.6; }
+  .ex-result strong { color: var(--ink); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 3px; }
+  .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tech-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 15px; display: flex; gap: 12px; align-items: flex-start; }
+  .tech-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .tech-dot.blue { background: var(--accent); } .tech-dot.green { background: var(--green); } .tech-dot.gray { background: var(--ink-light); }
+  .tech-name { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--accent); margin-bottom: 3px; }
+  .tech-desc { font-size: 12.5px; color: var(--ink-light); line-height: 1.5; margin-bottom: 0; }
+  .resilience-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .resilience-table thead th { background: var(--ink); color: #fff; padding: 9px 13px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+  .resilience-table tbody td { padding: 10px 13px; border-bottom: 1px solid #efefef; color: var(--ink-mid); vertical-align: top; line-height: 1.5; }
+  .resilience-table tbody tr:last-child td { border-bottom: none; }
+  .resilience-table tbody tr:nth-child(even) td { background: #fafafa; }
+  .resilience-table td:first-child { color: var(--ink); font-weight: 500; }
+  .query-list { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .query-item { padding: 11px 16px; border-bottom: 1px solid #efefef; font-size: 13px; color: var(--ink-mid); display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .query-item:last-child { border-bottom: none; }
+  .query-q { flex: 1; }
+  .query-filter { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-light); white-space: nowrap; }
+  .code-block { background: var(--ink); border-radius: 6px; padding: 18px 20px; overflow-x: auto; }
+  .code-block pre { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #c9d1d9; line-height: 1.7; margin: 0; }
+  .section-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; margin-bottom: 14px; font-weight: 400; }
+  .section-badge.blue { background: var(--accent-soft); color: var(--accent); }
+  .section-badge.green { background: var(--green-soft); color: var(--green); }
+  .section-badge.purple { background: var(--purple-soft); color: var(--purple); }
+  footer { border-top: 1px solid var(--rule); padding-top: 28px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-light); letter-spacing: 0.06em; }
+  @media (max-width: 640px) {
+    .page { padding: 36px 20px 60px; } h1 { font-size: 28px; }
+    .summary-grid, .system-row, .scenarios, .tech-grid, .example-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Digital Scientists · Internal Reference</div>
+    <h1>Website-to-CRM Integration</h1>
+    <p class="subtitle">How digitalscientists.com captures leads, attributes campaigns, and routes every form submission and meeting booking into Pipedrive — automatically.</p>
+    <div class="meta-row">
+      <span class="meta-item">SYSTEMS // Formspree · Pipedrive Scheduler · Google Calendar</span>
+      <span class="meta-item">REV // March 2026</span>
+    </div>
+  </header>
+
+  <!-- At a Glance -->
+  <section>
+    <h2>At a Glance</h2>
+    <div class="summary-grid" style="margin-bottom:16px;">
+      <div class="summary-card"><div class="num blue">3</div><div class="label">Integrated systems: Formspree, Pipedrive Scheduler, Google Calendar</div></div>
+      <div class="summary-card"><div class="num green">20+</div><div class="label">Pages with Formspree forms routing submissions into Pipedrive</div></div>
+      <div class="summary-card"><div class="num purple">3</div><div class="label">Netlify Functions: form webhook, pre-booking, post-booking enrichment</div></div>
+    </div>
+    <div class="system-row">
+      <div class="system-pill blue"><div class="sys-label">System 1</div><div class="sys-name">Formspree Forms</div><div class="sys-desc">All web form submissions. Single endpoint, 20+ pages, webhook triggers Deal or Lead creation.</div></div>
+      <div class="system-pill green"><div class="sys-label">System 2</div><div class="sys-name">Pipedrive Scheduler</div><div class="sys-desc">All meeting bookings. Two-phase flow: pre-booking UTM capture + post-booking contact enrichment.</div></div>
+      <div class="system-pill purple"><div class="sys-label">System 3</div><div class="sys-name">Google Calendar</div><div class="sys-desc">Two-way sync with Pipedrive. Scheduler bookings appear on Bob's calendar automatically.</div></div>
+    </div>
+  </section>
+
+  <!-- System 1: Formspree -->
+  <section>
+    <div class="section-badge blue">System 1</div>
+    <h2>Formspree Forms</h2>
+    <p>All contact and inquiry forms on the site submit to a single Formspree endpoint (<code>formspree.io/f/xvzbywbr</code>). Formspree stores the submission, fires an email notification, and triggers a webhook to a Netlify Function that creates the appropriate Pipedrive record.</p>
+    <p>Every form automatically includes hidden UTM fields (injected by <code>ds-includes-v2.js</code> from <code>sessionStorage</code>) and a hidden <code>source</code> field identifying the page — so every submission is traceable back to its origin.</p>
+
+    <h3>Form → Pipedrive Flow</h3>
+    <div class="flow">
+      <div class="flow-step"><div class="step-num blue">1</div><div class="step-body"><div class="step-title">Visitor fills out a form</div><div class="step-desc">Name, email, company, and message collected. Hidden fields carry the source page ID, UTM parameters (if present), and any additional context fields (starting_phase, primary_interest, etc.).</div></div></div>
+      <div class="flow-step"><div class="step-num blue">2</div><div class="step-body"><div class="step-title">Form submits to Formspree</div><div class="step-desc">Formspree stores the submission and sends an email notification. No interruption to the visitor experience.</div><span class="step-tag blue">formspree.io/f/xvzbywbr</span></div></div>
+      <div class="flow-step"><div class="step-num blue">3</div><div class="step-body"><div class="step-title">Formspree fires webhook to Netlify</div><div class="step-desc"><code>formspree-webhook.mjs</code> receives the POST. It finds or creates a Person (deduplicated by email) and an Organization (from company field), then checks for UTM parameters.</div><span class="step-tag blue">/.netlify/functions/formspree-webhook</span></div></div>
+      <div class="flow-step"><div class="step-num blue">4</div><div class="step-body"><div class="step-title">Deal or Lead created in Pipedrive</div><div class="step-desc"><strong>If UTMs present:</strong> Creates a Deal in Inbound Project → Marketing Qualified, with all UTM fields as native custom fields and a pinned note including a Campaign Attribution section.<br><strong>If no UTMs:</strong> Creates a Lead in the inbox with a pinned note containing form details.</div><span class="step-tag blue">Deal (campaign traffic) or Lead (organic/direct)</span></div></div>
+    </div>
+
+    <h3>Complete Form Inventory</h3>
+    <table class="data-table">
+      <thead><tr><th>Page</th><th>Source ID</th><th>Pipedrive Title</th><th>Also Has Scheduler?</th></tr></thead>
+      <tbody>
+        <tr><td colspan="4" style="background:#f5f3ef;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-light);letter-spacing:0.07em;padding:7px 13px;">CORE CONVERSION PAGES</td></tr>
+        <tr><td><code>/</code></td><td><code>homepage</code></td><td>Homepage — New Lead</td><td>No</td></tr>
+        <tr><td><code>/start/</code></td><td><code>start-page</code></td><td>Get Started — New Lead</td><td><strong>Yes</strong> (button)</td></tr>
+        <tr><td><code>/proof/</code></td><td><code>proof-landing-page</code></td><td>Proof in 5 Days — New Lead</td><td>No</td></tr>
+        <tr><td><code>/method/</code></td><td><code>method-page</code></td><td>Method Page — New Lead</td><td>No</td></tr>
+        <tr><td><code>/reasons-to-believe/</code></td><td><code>reasons-to-believe</code></td><td>Reasons to Believe Page Inquiry</td><td>No</td></tr>
+        <tr><td colspan="4" style="background:#f5f3ef;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-light);letter-spacing:0.07em;padding:7px 13px;">HEALTHCARE HUB &amp; SOLUTIONS</td></tr>
+        <tr><td><code>/healthcare/</code></td><td><code>healthcare-hub</code></td><td>Healthcare Hub — New Lead</td><td>No</td></tr>
+        <tr><td><code>…/patient-portal-digital-front-door/</code></td><td><code>patient-portal</code></td><td>Patient Portal Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/electronic-health-record-practice-management/</code></td><td><code>ehr-practice-management</code></td><td>EHR/Practice Management Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/telemedicine-app-development/</code></td><td><code>telemedicine-app-development</code></td><td>Telemedicine Solutions Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/healthcare-interoperability-solutions/</code></td><td><code>healthcare-interoperability</code></td><td>Healthcare Interoperability Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/predictive-analytics-healthcare/</code></td><td><code>predictive-analytics</code></td><td>Predictive Analytics Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/population-health-management/</code></td><td><code>population-health-management</code></td><td>Population Health Management Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/remote-patient-monitoring-solutions/</code></td><td><code>remote-patient-monitoring</code></td><td>Remote Patient Monitoring Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/cdss-clinical-decision-support-system/</code></td><td><code>cdss</code></td><td>Clinical Decision Support Inquiry</td><td>No</td></tr>
+        <tr><td colspan="4" style="background:#f5f3ef;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-light);letter-spacing:0.07em;padding:7px 13px;">HEALTHCARE CAPABILITIES</td></tr>
+        <tr><td><code>…/healthcare-ai-development/</code></td><td><code>healthcare-ai-development</code></td><td>Healthcare AI Development Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/healthcare-saas-development/</code></td><td><code>healthcare-saas</code></td><td>Healthcare SaaS Development Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/healthcare-data-analytics-engineering/</code></td><td><code>healthcare-data-analytics</code></td><td>Healthcare Data Analytics Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/healthcare-ux-design-research/</code></td><td><code>healthcare-ux-design</code></td><td>Healthcare UX Design Inquiry</td><td>No</td></tr>
+        <tr><td><code>…/software-as-medical-device-samd/</code></td><td><code>software-as-medical-device</code></td><td>Software as Medical Device Inquiry</td><td>No</td></tr>
+        <tr><td colspan="4" style="background:#f5f3ef;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-light);letter-spacing:0.07em;padding:7px 13px;">HEALTHCARE ASSESSMENT &amp; OTHER</td></tr>
+        <tr><td><code>/healthcare/assessment/partnership/</code></td><td><code>healthcare-assessment-partnership</code></td><td>Partnership Assessment Inquiry</td><td>No</td></tr>
+        <tr><td><code>/healthcare/assessment/platform/</code></td><td><code>healthcare-assessment-platform</code></td><td>Platform Assessment Inquiry</td><td>No</td></tr>
+        <tr><td><em>Newsletter popup (all pages)</em></td><td><code>newsletter-popup</code></td><td>Insights Newsletter — New Subscriber</td><td>N/A</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:24px;">Pages with Scheduler Only (No Form)</h3>
+    <table class="data-table">
+      <thead><tr><th>Page</th><th>Scheduler Format</th></tr></thead>
+      <tbody>
+        <tr><td><code>/thank-you/</code></td><td>Button — post-form conversion CTA</td></tr>
+        <tr><td><code>/healthcare/assessment/</code></td><td><strong>Embedded iframe</strong> — in-page booking widget</td></tr>
+        <tr><td><code>/event/paltc26-annual-conference/</code></td><td>4 buttons — hero CTA + "Book time" pills + footer CTA</td></tr>
+        <tr><td><code>/event/beckers-health-it-rcm-2026/</code></td><td>4 buttons — hero CTA + "Book time" pills + footer CTA</td></tr>
+        <tr><td><code>/event/2026-nchcfa-annual-convention-expo/</code></td><td>1 button — footer CTA</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--ink-light);">Note: <code>/start/</code> is the only page with <strong>both</strong> a Formspree form and a Pipedrive Scheduler link.</p>
+  </section>
+
+  <!-- System 2: Scheduler -->
+  <section>
+    <div class="section-badge green">System 2</div>
+    <h2>Pipedrive Scheduler</h2>
+    <p>Replaced Calendly in March 2026. The Scheduler creates meetings natively in Pipedrive, eliminating a third-party middleware layer. Because booking happens on Pipedrive's domain (not ours), campaign attribution and contact details can't be captured in a single request — so the integration runs in two phases.</p>
+    <p style="font-size:13px;color:var(--ink-light);">All scheduler links point to: <code>digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein</code></p>
+
+    <h3>Phase 1 — Pre-Booking (on our site, before redirect)</h3>
+    <div class="flow">
+      <div class="flow-step"><div class="step-num green">1</div><div class="step-body"><div class="step-title">Visitor clicks "Schedule a Call"</div><div class="step-desc"><code>ds-includes-v2.js</code> intercepts the click and reads UTM data from <code>sessionStorage</code>.</div></div></div>
+      <div class="flow-step"><div class="step-num green">2</div><div class="step-body"><div class="step-title">Pre-booking function fires</div><div class="step-desc"><strong>If UTMs present:</strong> <code>schedule-lead.mjs</code> creates a Deal in Inbound Project → Marketing Qualified with UTM fields and source page populated. No person linked yet.<br><strong>If no UTMs:</strong> Passthrough — no Pipedrive action at this stage.</div><span class="step-tag green">2-second timeout fallback — booking is never blocked</span></div></div>
+      <div class="flow-step"><div class="step-num green">3</div><div class="step-body"><div class="step-title">Browser redirects to Pipedrive Scheduler</div><div class="step-desc">Prospect enters name, email, phone, company, and agenda — then picks a time. Seamless from their perspective.</div></div></div>
+    </div>
+
+    <h3>Phase 2 — Post-Booking (after prospect completes the form)</h3>
+    <div class="flow">
+      <div class="flow-step"><div class="step-num green">4</div><div class="step-body"><div class="step-title">Pipedrive creates Person, Organization, and Activity</div><div class="step-desc">The booking is recorded natively. Person is deduplicated by email. Activity subject: <em>"{Name} / Bob Klein - Meeting with Bob Klein."</em></div></div></div>
+      <div class="flow-step"><div class="step-num green">5</div><div class="step-body"><div class="step-title">Webhook fires to post-booking function</div><div class="step-desc">Pipedrive Webhook #3102756 fires on <code>activity.create</code>. <code>scheduler-webhook.mjs</code> fetches full Activity details (note text is not in the webhook payload — requires a separate API call), then searches for a recent unlinked Deal by title pattern within a 10-minute window.</div><span class="step-tag green">Webhook #3102756 — activity.create</span></div></div>
+      <div class="flow-step"><div class="step-num green">6</div><div class="step-body"><div class="step-title">Deal enriched or Lead created</div><div class="step-desc"><strong>If matching Deal found (campaign traffic):</strong> Person and org linked, Activity attached, form text added as pinned note. The Deal now has full attribution AND contact details.<br><strong>If no matching Deal (organic traffic):</strong> Creates a Lead titled "Scheduler — {Person Name}" with person, org, and form text note.</div></div></div>
+      <div class="flow-step"><div class="step-num green">7</div><div class="step-body"><div class="step-title">Activity syncs to Google Calendar</div><div class="step-desc">Two-way Pipedrive ↔ Google Calendar sync pushes the meeting to Bob's calendar automatically.</div><span class="step-tag green">Pipedrive Activity → Google Calendar</span></div></div>
+    </div>
+  </section>
+
+  <!-- UTM Attribution -->
+  <section>
+    <h2>UTM Attribution — How It Works Across Both Systems</h2>
+    <p>The same UTM capture mechanism feeds both Formspree and the Scheduler. When a visitor arrives via a campaign link, <code>ds-includes-v2.js</code> stores the UTM values in <code>sessionStorage</code> — persisting across page navigations within the same session. At conversion (form submit or scheduler click), UTMs are passed to the Netlify Function.</p>
+
+    <div class="scenarios" style="margin-bottom:16px;">
+      <div class="scenario-card campaign">
+        <div class="scenario-label">UTMs Present</div>
+        <div class="scenario-title">Campaign Traffic → Deal</div>
+        <div class="scenario-desc">Visitor arrived via a tracked link. UTMs are passed to the function and written as native custom fields.</div>
+        <div class="outcome-box"><strong>Pipedrive Outcome</strong>Deal in Inbound Project → Marketing Qualified. UTM Source, Medium, Campaign, Content, and Source Page stored natively — filterable and reportable.</div>
+      </div>
+      <div class="scenario-card organic">
+        <div class="scenario-label">No UTMs</div>
+        <div class="scenario-title">Organic / Direct → Lead</div>
+        <div class="scenario-desc">Visitor arrived via organic search, direct navigation, or untracked referral.</div>
+        <div class="outcome-box"><strong>Pipedrive Outcome</strong>Lead in inbox. Form details in pinned note. No campaign fields. Qualify and convert to Deal manually.</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Why Deals for campaign traffic, not Leads?</strong> Pipedrive Leads do not support custom fields — this is a Pipedrive platform limitation. UTM data can only be stored natively (filterable, reportable) on Deals. Without attribution data to capture, a Lead is sufficient.
+    </div>
+
+    <h3>Pipedrive Custom Field API Keys (Deal)</h3>
+    <table class="data-table" style="margin-top:8px;">
+      <thead><tr><th>Field</th><th>API Key</th><th>UTM Parameter</th></tr></thead>
+      <tbody>
+        <tr><td>UTM Source</td><td><code>2d987c86f8c2ba6d4a2ba671202fb101963cb7ae</code></td><td><code>utm_source</code></td></tr>
+        <tr><td>UTM Medium</td><td><code>5bc2cf59b8f65bac7fee4f0049decda09e64eefb</code></td><td><code>utm_medium</code></td></tr>
+        <tr><td>UTM Campaign</td><td><code>f6983c094a3678e33fa339a912595b1d8c1a0ed3</code></td><td><code>utm_campaign</code></td></tr>
+        <tr><td>UTM Content</td><td><code>de10675163c2f6d75a0699052c21d3a36e71091e</code></td><td><code>utm_content</code></td></tr>
+        <tr><td>Source Page</td><td><code>1fe5fef0101f8b10a757d9944b072e0c098da15a</code></td><td><em>(source field)</em></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- End-to-End Examples -->
+  <section>
+    <h2>End-to-End Examples</h2>
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="ex-label">Example 1 — Form path</div>
+        <div class="ex-title">LinkedIn Ad → /start/ Form Submission</div>
+        <ul class="ex-steps">
+          <li>LinkedIn ad with <code>utm_campaign=paltc26</code></li>
+          <li>Dr. Martinez lands on <code>/start/</code>, UTMs stored</li>
+          <li>Fills out contact form → submits to Formspree</li>
+          <li>Webhook fires → <code>formspree-webhook.mjs</code> runs</li>
+        </ul>
+        <div class="ex-result"><strong>Result in Pipedrive</strong>Person: Dr. Martinez · Org: Midwest Health Partners · Deal in Inbound Project → Marketing Qualified · UTM fields populated · Pinned note with form text + Campaign Attribution</div>
+      </div>
+      <div class="example-card">
+        <div class="ex-label">Example 2 — Scheduler path</div>
+        <div class="ex-title">Email Campaign → Event Page → Scheduler</div>
+        <ul class="ex-steps">
+          <li>Email link with <code>utm_campaign=paltc26-invite</code></li>
+          <li>Sarah lands on event page, UTMs stored</li>
+          <li>Clicks "Schedule a Meeting" → Deal pre-created</li>
+          <li>Books on Pipedrive Scheduler → webhook enriches Deal</li>
+        </ul>
+        <div class="ex-result"><strong>Result in Pipedrive</strong>Person + Org linked · Deal with UTM fields + source page · Pinned note with agenda · Activity attached · Meeting on Google Calendar</div>
+      </div>
+      <div class="example-card">
+        <div class="ex-label">Example 3 — Organic form</div>
+        <div class="ex-title">Organic Search → /proof/ Form Submission</div>
+        <ul class="ex-steps">
+          <li>Prospect finds site via Google, no UTMs</li>
+          <li>Browses to <code>/proof/</code>, fills out form</li>
+          <li>Formspree webhook fires, no UTMs detected</li>
+        </ul>
+        <div class="ex-result"><strong>Result in Pipedrive</strong>Person created/found · Lead "Proof in 5 Days — New Lead" in inbox · Pinned note with form details (no Campaign Attribution section)</div>
+      </div>
+      <div class="example-card">
+        <div class="ex-label">Example 4 — Organic scheduler</div>
+        <div class="ex-title">Direct Visit → /healthcare/assessment/ Embedded Scheduler</div>
+        <ul class="ex-steps">
+          <li>Prospect navigates directly, no UTMs</li>
+          <li>Books via embedded iframe on assessment page</li>
+          <li>Pre-booking is passthrough (no Deal created)</li>
+          <li>Post-booking webhook creates Lead directly</li>
+        </ul>
+        <div class="ex-result"><strong>Result in Pipedrive</strong>Person + Org from booking details · Lead "Scheduler — {Name}" in inbox · Pinned note with agenda · Meeting on Google Calendar</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System 3: Calendar -->
+  <section>
+    <div class="section-badge purple">System 3</div>
+    <h2>Google Calendar Integration</h2>
+    <p>Pipedrive's native two-way calendar sync connects Scheduler bookings to Bob's Google Calendar. Pipedrive is the single source of truth — no duplicate events (the old Calendly setup could write directly to Google Calendar and create doubles).</p>
+    <div class="chain" style="margin-bottom:14px;">
+      <div class="chain-node">Pipedrive Scheduler</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">Pipedrive Activity (Meeting)</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">Google Calendar (two-way sync)</div>
+    </div>
+    <p style="font-size:13px;color:var(--ink-light);">Configured in Pipedrive → Settings → Calendar Sync → Google Calendar. "Meeting" activity type must be enabled for sync.</p>
+  </section>
+
+  <!-- Technical Reference -->
+  <section>
+    <h2>Technical Reference</h2>
+
+    <h3>Netlify Functions</h3>
+    <div class="tech-grid" style="margin-bottom:16px;">
+      <div class="tech-card"><div class="tech-dot blue"></div><div><div class="tech-name">formspree-webhook.mjs</div><p class="tech-desc">Triggered by Formspree webhook on every form submission. Finds/creates Person + Org, then creates a Deal (UTMs present) or Lead (no UTMs) in Pipedrive.</p></div></div>
+      <div class="tech-card"><div class="tech-dot green"></div><div><div class="tech-name">schedule-lead.mjs</div><p class="tech-desc">Pre-booking. Called by frontend JS on scheduler click. Creates a Deal with UTM fields for campaign traffic; passthrough for organic.</p></div></div>
+      <div class="tech-card"><div class="tech-dot green"></div><div><div class="tech-name">scheduler-webhook.mjs</div><p class="tech-desc">Post-booking. Triggered by Pipedrive Webhook #3102756 on <code>activity.create</code>. Enriches Deal with person/org/note, or creates a Lead if no Deal found.</p></div></div>
+      <div class="tech-card"><div class="tech-dot gray"></div><div><div class="tech-name">ds-includes-v2.js</div><p class="tech-desc">Frontend JS, loaded site-wide. Captures UTMs into <code>sessionStorage</code>, intercepts scheduler clicks, and injects UTM hidden fields into Formspree forms.</p></div></div>
+    </div>
+
+    <h3>External Service Connections</h3>
+    <table class="data-table">
+      <thead><tr><th>From</th><th>To</th><th>Connection Type</th><th>Credential</th></tr></thead>
+      <tbody>
+        <tr><td>Website forms</td><td>Formspree</td><td>HTML form action</td><td>None (public endpoint)</td></tr>
+        <tr><td>Formspree</td><td>Netlify Function</td><td>REST webhook (<code>x-hook-secret</code>)</td><td>Configured in Formspree dashboard</td></tr>
+        <tr><td>Netlify Functions</td><td>Pipedrive API</td><td>REST API v1</td><td><code>PIPEDRIVE_API_TOKEN</code> env var</td></tr>
+        <tr><td>Pipedrive</td><td>Netlify Function</td><td>Webhook v2.0 (#3102756, <code>activity.create</code>)</td><td>Registered via Pipedrive API</td></tr>
+        <tr><td>Pipedrive</td><td>Google Calendar</td><td>Native two-way sync</td><td>OAuth (Pipedrive Settings)</td></tr>
+        <tr><td>Website</td><td>Pipedrive Scheduler</td><td>iframe embed + outbound links</td><td>Public scheduler URL</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pipedrive Configuration</h3>
+    <table class="data-table" style="margin-top:8px;">
+      <thead><tr><th>Setting</th><th>Location</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Webhook #3102756</td><td>Settings → Webhooks</td><td><code>activity.create</code> → <code>scheduler-webhook.mjs</code></td></tr>
+        <tr><td>Calendar sync</td><td>Settings → Calendar Sync</td><td>Google Calendar, two-way, Meetings enabled</td></tr>
+        <tr><td>UTM custom fields</td><td>Settings → Data Fields → Deal</td><td>5 fields (see keys table above)</td></tr>
+        <tr><td>Scheduler</td><td>Settings → Scheduler</td><td><code>kOOeAEu2/meeting-with-bob-klein</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box" style="margin-top:16px;">
+      <strong>Environment variable required:</strong> <code>PIPEDRIVE_API_TOKEN</code> must be set in Netlify's environment variables. All three Netlify Functions authenticate with Pipedrive using this token.
+    </div>
+  </section>
+
+  <!-- Resilience -->
+  <section>
+    <h2>Resilience &amp; Failure Modes</h2>
+    <table class="resilience-table">
+      <thead><tr><th>Failure</th><th>Impact</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-booking function fails</td><td>Visitor still reaches Scheduler (2s timeout fallback)</td><td>Post-booking webhook creates a Lead without UTMs</td></tr>
+        <tr><td>Scheduler webhook doesn't fire</td><td>Activity + Person still created by Pipedrive natively</td><td>Lead/Deal must be created manually; bookings are not lost</td></tr>
+        <tr><td>Formspree webhook fails</td><td>Formspree still stores submission + sends email</td><td>Function returns 200 to prevent retries; check Netlify logs</td></tr>
+        <tr><td>Pipedrive API down</td><td>Functions log errors, return gracefully</td><td>Formspree retains submissions; Scheduler retains bookings — can backfill</td></tr>
+        <tr><td>UTM sessionStorage cleared</td><td>No campaign attribution captured</td><td>Rare (private browsing, storage cleared); visitor shows as organic</td></tr>
+        <tr><td>Concurrent campaign bookings</td><td>Webhook could mismatch Deals (10-min window)</td><td>Extremely rare in B2B; review Deal titles if suspicious</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Reporting -->
+  <section>
+    <h2>Pipedrive Reporting</h2>
+    <p>With UTM fields on Deals, Pipedrive's built-in reporting can answer:</p>
+    <div class="query-list">
+      <div class="query-item"><span class="query-q">Which campaigns generate the most deals?</span><span class="query-filter">Group by UTM Campaign</span></div>
+      <div class="query-item"><span class="query-q">Which channels perform best?</span><span class="query-filter">Group by UTM Source</span></div>
+      <div class="query-item"><span class="query-q">Which pages convert best?</span><span class="query-filter">Group by Source Page</span></div>
+      <div class="query-item"><span class="query-q">Pipeline value by campaign?</span><span class="query-filter">Filter UTM Campaign, sum values</span></div>
+      <div class="query-item"><span class="query-q">Campaign close rate?</span><span class="query-filter">Filter UTM Campaign, won vs total</span></div>
+      <div class="query-item"><span class="query-q">Form vs Scheduler conversion mix?</span><span class="query-filter">Title prefix: "Website Inquiry" vs "Scheduler from"</span></div>
+    </div>
+  </section>
+
+  <!-- Webhook Payload Reference -->
+  <section>
+    <h2>Webhook Payload Reference (Pipedrive v2.0)</h2>
+    <p>Sent to <code>scheduler-webhook.mjs</code> on <code>activity.create</code>. The webhook uses <code>person_id</code> and <code>org_id</code> to link the Deal. Booking form text (name, phone, company, agenda) is <strong>not</strong> in this payload — the handler fetches it via a separate call to <code>GET /activities/{id}</code>.</p>
+    <div class="code-block">
+      <pre>{
+  "data": {
+    "id": 12345,
+    "type": "meeting",
+    "subject": "Jane Smith / Bob Klein - Meeting with Bob Klein",
+    "person_id": 20348,
+    "org_id": 13528,
+    "due_date": "2026-03-25",
+    "due_time": { "value": "10:00:00" }
+  },
+  "previous": null,
+  "meta": {
+    "action": "create",
+    "entity": "activity",
+    "version": "2.0"
+  }
+}</pre>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">Digital Scientists</div>
+    <div class="footer-note">INTERNAL // WEBSITE-TO-CRM INTEGRATION // MARCH 2026</div>
+  </footer>
+
+</div>
+</body>
+</html>
