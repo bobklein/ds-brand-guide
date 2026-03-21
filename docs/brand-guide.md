@@ -20,6 +20,16 @@
 4. [Color System](#4-color-system)
 5. [Typography](#5-typography)
 6. [Voice & Tone](#6-voice--tone)
+   - 6.1 [DS Voice Profile](#61-ds-voice-profile)
+   - 6.2 [Two Voices](#62-two-voices)
+   - 6.3 [Writing Rules](#63-writing-rules)
+   - 6.4 [Terminology Preferences](#64-terminology-preferences)
+   - 6.5 [Bob Klein — Detailed Voice Profile](#65-bob-klein--detailed-voice-profile)
+   - 6.6 [Content-Type Voice Guide](#66-content-type-voice-guide)
+   - 6.7 [Content Pillars and Voice Mapping](#67-content-pillars-and-voice-mapping)
+   - 6.8 [Storytelling Framework](#68-storytelling-framework)
+   - 6.9 [UTM & Campaign Tracking Conventions](#69-utm--campaign-tracking-conventions)
+   - 6.10 [AI Writing Instructions](#610-ai-writing-instructions)
 7. [Visual Principles (All Imagery)](#7-visual-principles-all-imagery)
 
 ### Part 2: Imagery Standards
@@ -380,6 +390,216 @@ Digital Scientists content is:
 | lost revenue | revenue leakage (unless in context) |
 | build | develop, engineer (in marketing copy) |
 | engagement | project (we run engagements, not projects) |
+
+### 6.5 Bob Klein — Detailed Voice Profile
+
+Bob's personal content (LinkedIn posts he writes, bylined blog posts, newsletter takes, McKnight's columns) carries the weight of the DS content program. His voice is the primary differentiator from competitors who sound like marketing departments. This section provides enough detail for a human writer drafting in Bob's voice or for an AI assistant generating first drafts.
+
+**How Bob sounds:**
+- First person always — "I," never "we" in personal posts
+- Opinions before information — lead with the point, then explain it
+- Short paragraphs — one idea per paragraph, line breaks between thoughts
+- Specific, not generic — real situations, real numbers, real names where possible
+- Historically grounded — connects current events to patterns he's seen before (ERP adoption, value-based care transition, prior technology waves)
+- Contrarian when warranted — takes positions that challenge conventional wisdom, but always with evidence, never for shock value
+- Ends with a question or a clear take — never a CTA to "learn more," never "link in comments"
+
+**How Bob does NOT sound:**
+- Never hedges: no "it seems," "perhaps," "it could be argued," "I believe"
+- Never uses corporate speak: no "excited to share," "thrilled to announce," "humbled"
+- Never sounds like a company talking to a customer — sounds like a smart person talking to a colleague
+- Never uses urgency theater: no "act now," no false scarcity
+- Never uses emoji walls or hashtag stuffing
+- Never writes in third person about himself
+
+**Sentence-level patterns:**
+- Opens with a concrete observation, not a thesis statement: "I just read the Anthropic labor data. Most people are relieved. I'm not."
+- Uses dashes for emphasis and parenthetical thoughts — not semicolons or formal connectors
+- Addresses the reader directly when making a point: "If you're running a post-acute operation, you already know this."
+- References specific dollar amounts, time savings, and facility counts — never "significant improvement"
+- Names industries, roles, and situations — "the MDS coordinator spending 45 minutes on a 5-minute task"
+
+**When someone else drafts in Bob's voice:**
+- Goal is 70% of the way there — Bob fills the last 30%
+- Write the post as Bob speaking from experience, not as a reporter summarizing facts
+- Reference specific numbers from DS's work and take a strong position
+- Bob will rewrite the parts that don't sound like him — this is expected, not a failure
+- If Bob rewrites more than 50%, the draft was too generic — add more specific data next time
+
+### 6.6 Content-Type Voice Guide
+
+Each content type has a distinct voice treatment, even when the underlying voice (Bob or DS Company) is the same.
+
+| Content Type | Voice | Length | Opening Pattern | Closing Pattern | CTA Style |
+|-------------|-------|--------|-----------------|-----------------|-----------|
+| **Blog A** (thought leadership) | Bob — opinionated, historical | 1,200–2,000 words | Observation or anecdote from experience | Clear position or open question | Soft — woven into the argument, never a banner |
+| **Blog B** (technical/SEO) | DS Company — expert, generous | 1,500–3,000 words | Define the topic, state the argument | Summary + next step | Direct — link to service page or assessment |
+| **Bob LinkedIn (Tue)** | Bob — writes from scratch | 200–300 words | Concrete observation or story | Question that invites comment | None in post body. Link in first comment. |
+| **Bob LinkedIn (Thu/Sat)** | Bob — edits from Japheth draft | 100–350 words | Data point, framework, or hot take | Question or clear POV | None in post body. Link in first comment. |
+| **DS LinkedIn** | DS Company — data-backed | 100–200 words | Lead metric or blog headline | Question or engagement prompt | Link to blog post |
+| **HC Newsletter** | Bob — conversational, like texting a peer | 2 paragraphs for Bob's take; rest is assembled | "Here's what I'm thinking about this week" | No formal close — Bob's take ends naturally | Rotating CTA (The Experiment, assessment, contact) |
+| **McKnight's Column** | Bob — practitioner op-ed | 700 words | Operator-facing problem statement | Actionable framework or question | None — editorial, not promotional |
+| **Service page** (website) | DS Company — expert, structured | 2,500–3,500 words | "What is [X]?" definition section | FAQ schema + CTA to contact/assessment | Direct — button to /start/ or /contact/ |
+| **Case study** (website) | DS Company — factual, results-led | 800–1,200 words | Lead metric + one-sentence context | Results table + related case studies | Soft — "See how we can help" |
+
+### 6.7 Content Pillars and Voice Mapping
+
+The DS content program runs on 11 content pillars (5 active, 6 queued). Each pillar has a designated voice treatment. See the DS Content Plan (v3) for the full pillar architecture and editorial calendar.
+
+| # | Pillar | Voice | Typical Format | Audience |
+|---|--------|-------|---------------|----------|
+| 1 | **Own the Disruption** | Bob — historical, opinionated | Blog A, LinkedIn, McKnight's | C-suite, PE, health system execs |
+| 2 | **Pain Is Real** | Bob — empathetic, specific | Blog A, LinkedIn stories, newsletter | Post-acute operators, CFOs, COOs |
+| 3 | **Evidence Before Investment** | Bob — analytical, contrarian | Blog A, LinkedIn hot takes, campaign content | C-suite evaluating AI vendors |
+| 4 | **Case Proof** | DS Company — factual, results-led | Blog B, DS LinkedIn, case studies | All audiences |
+| 5 | **Venture & Innovation** | Bob — builder, founder-to-founder | LinkedIn Saturday posts, Blog A | Founders, VCs, PE ops teams |
+| 6 | AI That Ships | Bob — contrarian, opinionated | Blog A, LinkedIn | Activate Q3 |
+| 7 | Technical Playbooks | DS Company — expert, generous | Blog B, service page rewrites | Activate Phase 2 |
+| 8 | Product Strategy | DS Company — structured | Blog B | Activate Q3–Q4 |
+| 9 | AI Workforce Reality | Bob — data-driven | Blog A, LinkedIn | Already seeding |
+| 10 | The Accountability Shift | Bob — insider perspective | Blog A, LinkedIn | Activate Q3–Q4 |
+| 11 | Operational Intelligence | Bob — strategic | Blog A, LinkedIn | Test Phase 2, activate Q4 |
+
+### 6.8 Storytelling Framework
+
+Every piece of DS content maps back to one narrative arc:
+
+> **The world says:** Buy a product, deploy it, hope it works.
+> **We say:** Understand your data first, test with evidence, build for production, then optimize continuously.
+> **The result:** Healthcare organizations that compound their ROI instead of replacing their vendors.
+
+**Three narrative modes:**
+
+| Mode | Voice | When to Use | Example |
+|------|-------|-------------|---------|
+| **Origin Story** | Bob, first person | Why DS exists. The founding insight. Deeply personal. | "I started DS because I watched a $40M ERP implementation fail — not because the technology was wrong, but because no one tested the assumptions." |
+| **Client Story** | DS Company, third person | A specific organization's journey. The client is the hero; DS is the guide. | CommuniCare PDPM recovery, NeverAlone deployment, Mailchimp innovation lab |
+| **Expert Story** | Either voice | A domain-specific insight demonstrating depth. | "Here's what we've learned from deploying documentation AI across 130+ post-acute facilities." |
+
+**Voice do's and don'ts:**
+
+| Do | Don't |
+|----|-------|
+| "We embed with your team" | "We are the premier healthcare AI partner" |
+| "$10M recovered in PDPM revenue" | "Significant revenue improvements" |
+| "Off-the-shelf AI doesn't know your business" | "We offer customized solutions" |
+| "No pitch. Just an honest conversation." | "Schedule a demo today!" |
+| "You can do this. Here's how." | "Only we can solve this problem." |
+| "Here's what broke (and how we fixed it)" | "Our seamless implementation process" |
+
+### 6.9 UTM & Campaign Tracking Conventions
+
+Every link shared on social media, email, or paid channels must include UTM parameters so we can measure what's working. The site captures UTMs automatically and persists them through form submissions and Pipedrive scheduler bookings.
+
+**Parameter taxonomy:**
+
+| Parameter | Convention | Examples |
+|-----------|-----------|----------|
+| `utm_source` | Platform name, lowercase, no spaces | `linkedin`, `newsletter`, `mcknights`, `beckers`, `twitter`, `email` |
+| `utm_medium` | Channel type, lowercase | `organic-social`, `paid-social`, `email`, `referral`, `earned-media` |
+| `utm_campaign` | Format: `YYYY-MM_descriptive-slug` | `2026-03_anthropic-disruption`, `2026-04_rcm-anchor`, `2026-q2_experiment-linkedin-ad` |
+| `utm_content` | Specific creative or placement, lowercase | `bob-tue-post`, `ds-wed-promo`, `newsletter-cta`, `carousel-slide-3` |
+| `utm_term` | For paid search only — keyword targeted | `healthcare+ai+vendor`, `mvp+development` |
+
+**Rules:**
+1. All values lowercase, hyphens for spaces — never spaces, underscores, or mixed case
+2. Campaign names always start with date prefix (YYYY-MM or YYYY-QN) so they sort chronologically in reports
+3. Every LinkedIn post, newsletter link, and shared URL must have UTMs — no exceptions
+4. Bob's personal LinkedIn posts: `utm_source=linkedin&utm_medium=organic-social&utm_content=bob-tue-post` (substitute day)
+5. DS company LinkedIn: `utm_source=linkedin&utm_medium=organic-social&utm_content=ds-wed-promo`
+6. Newsletter: `utm_source=newsletter&utm_medium=email&utm_campaign=2026-03_hc-newsletter-01`
+7. Paid LinkedIn ad: `utm_source=linkedin&utm_medium=paid-social&utm_campaign=2026-q1_experiment-linkedin-ad`
+
+**Example URLs:**
+
+```
+Blog A promotion (Bob's Tuesday LinkedIn):
+https://digitalscientists.com/blog/ai-implementation-gap/?utm_source=linkedin&utm_medium=organic-social&utm_campaign=2026-03_anthropic-disruption&utm_content=bob-tue-post
+
+Newsletter #1 Blog A link:
+https://digitalscientists.com/blog/ai-implementation-gap/?utm_source=newsletter&utm_medium=email&utm_campaign=2026-03_hc-newsletter-01&utm_content=blog-a-link
+
+DS LinkedIn Wednesday promo:
+https://digitalscientists.com/blog/ai-implementation-gap/?utm_source=linkedin&utm_medium=organic-social&utm_campaign=2026-03_anthropic-disruption&utm_content=ds-wed-promo
+```
+
+**Validation:** Before any link goes live, verify: (1) all values are lowercase, (2) campaign has a date prefix, (3) source matches the platform, (4) content identifies the specific placement. Scott reviews UTMs as part of content review.
+
+### 6.10 AI Writing Instructions
+
+This section is designed to be loaded into Claude, ChatGPT, or any AI writing tool as a system prompt or project instruction. Copy the block below into your AI assistant's context when drafting DS content.
+
+```
+You are writing content for Digital Scientists (digitalscientists.com), a custom
+software and AI development company focused on healthcare. Follow these rules exactly.
+
+VOICE PROFILE:
+- Expert but not academic — explain complex things simply
+- Confident but not arrogant — state what you know, acknowledge what you don't
+- Outcome-focused — lead with results, not process
+- Anti-sales — no urgency theater, no superlatives, no "revolutionary" or "cutting-edge"
+- Generous — share how things work, not just that they work
+
+TWO VOICES (select based on content type):
+
+Bob Klein voice (personal LinkedIn, bylined blog posts, newsletter takes, McKnight's):
+- First person always
+- Opinionated and direct — lead with the point, then explain
+- Story-driven — often opens with an anecdote or concrete observation
+- Contrarian when warranted — challenges conventional wisdom with evidence
+- Short paragraphs — one idea per paragraph
+- Ends with a question or a clear take, never a CTA
+- Sounds like a smart person talking to a colleague
+- NEVER: "it seems," "perhaps," "excited to share," "humbled," corporate speak, emoji walls
+
+DS Company voice (company LinkedIn, website pages, case studies, collateral):
+- Third or second person ("Digital Scientists built..." or "Your organization can...")
+- Data-backed — leads with metrics and outcomes
+- Structured — uses frameworks, comparison tables, clear headings
+- Authoritative without being preachy
+
+WRITING RULES:
+1. Active voice always
+2. Specific over vague — "$10M in PDPM revenue" not "significant cost savings"
+3. Lead with the result — "50X faster coding — here's how"
+4. No buzzword soup — never "leveraging cutting-edge AI to transform delivery"
+5. No urgency theater — never "act now," no countdown timers, no false scarcity
+6. Earn every claim — every number must be traceable to a real engagement
+
+TERMINOLOGY:
+- Say "custom software" not "bespoke solutions"
+- Say "AI-powered" not "AI-driven" or "AI-enabled"
+- Say "healthcare software" not "health tech" or "healthtech"
+- Say "clinician burden" not "provider burnout"
+- Say "build" not "develop" or "engineer" (in marketing copy)
+- Say "engagement" not "project"
+
+KEY PROOF POINTS (use when relevant):
+- CommuniCare: $10M+ PDPM revenue recovered, 130+ facilities, 45-min → 5-min documentation
+- HealthContext.AI: 50X faster medical coding
+- NeverAlone: 96% treat-in-place rate, deployed across 7 states
+- Mailchimp: Innovation lab → Creative Assistant → contributed to $12B acquisition
+- 200+ product launches over DS's history
+- The Experiment: 5-day prototype engagement, $20K, real data, no commitment
+
+CONTENT PILLARS (reference the relevant one):
+1. Own the Disruption — AI as the new reengineering
+2. Pain Is Real — Name the costs with dollar figures
+3. Evidence Before Investment — "Prove it first"
+4. Case Proof — Results with numbers and context
+5. Venture & Innovation — Builder/founder perspective
+
+NARRATIVE ARC:
+The world says: Buy a product, deploy it, hope it works.
+We say: Understand your data first, test with evidence, build for production, optimize.
+The result: Organizations that compound ROI instead of replacing vendors.
+```
+
+**How to use this block:**
+- **In Claude Code:** Add the block to the project's CLAUDE.md file or paste it at the start of a conversation where you're drafting content
+- **In Claude.ai:** Create a Project with this as the project instructions, then draft content within that project
+- **In ChatGPT:** Paste as a "Custom Instructions" block or at the start of a conversation
+- **For Japheth:** Paste into any AI tool before asking it to draft Blog A, Blog B, LinkedIn posts, or newsletter content. Then apply the Content-Type Voice Guide (§6.6) for format-specific adjustments.
 
 ---
 
