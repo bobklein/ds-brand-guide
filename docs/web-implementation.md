@@ -1844,7 +1844,9 @@ Cache headers are set in `netlify.toml` and control how long Cloudflare (CDN) an
 
 ## 17. Analytics, Attribution & CRM Integration
 
-Every paid click that becomes a lead carries its origin signal end-to-end. The campaign that drove it, the keyword that triggered it, the landing page it touched, and the Google Click ID are all captured on the first page load, persisted through the form, written into the Pipedrive Lead, and uploaded back to Google Ads the next morning so spend can be attributed to outcomes.
+Every paid click that becomes a qualified meeting carries its origin signal end-to-end. The campaign that drove it, the keyword that triggered it, the landing page it touched, and the Google Click ID are all captured on the first page load, persisted through the form, written into the Pipedrive Lead, preserved when that Lead is qualified into a Deal, and uploaded back to Google Ads as offline conversions so spend can be attributed to actual demand — not vanity form fills.
+
+A Pipedrive **Lead** is raw inbound interest. A Pipedrive **Deal** in the "Inbound Project" pipeline is the qualification gate — Sales has confirmed at least service interest in a conversation. The Lead-to-Deal conversion preserves all 9 attribution custom fields automatically (matching field keys on both object types), so attribution survives the human qualification step. Two Google Ads conversion events fire from this: a low-signal "Pipedrive Lead Created" on every form-with-gclid for early Smart Bidding training data, and a high-signal "Pipedrive MQL" only when a Lead is converted to a Deal — the real optimization target.
 
 **This section is the overview.** For implementation details (field keys, conversion IDs, cron schedules, script paths, failure modes), see [analytics-attribution.md](analytics-attribution.md) ([download raw](https://raw.githubusercontent.com/bobklein/ds-brand-guide/main/docs/analytics-attribution.md)). Scheduler-specific webhook details remain in [pipedrive-scheduler-setup.md](pipedrive-scheduler-setup.md).
 
@@ -1855,7 +1857,7 @@ Every paid click that becomes a lead carries its origin signal end-to-end. The c
 | **Google Ads** | Paid traffic source. Sets gclid on every paid click. |
 | **Browser session (`ds-includes-v2.js`)** | Reads URL UTMs + gclid, injects into Formspree hidden fields, fires GA4 + PostHog events. |
 | **Formspree** | Receives form submission. Fires webhook to Netlify Function. |
-| **Netlify Function (`formspree-webhook.mjs`)** | Creates Pipedrive Person + Organization + Lead with 8 custom attribution fields. |
+| **Netlify Function (`formspree-webhook.mjs`)** | Creates Pipedrive Person + Organization + Lead with 9 custom attribution fields. |
 | **Pipedrive** | Source-of-truth lead system. Lead custom fields hold all attribution. |
 | **Pipedrive Scheduler** | Meeting bookings. Two-way sync with Google Calendar. |
 | **Google Analytics 4** | Event tracking (page_view, form_submit, generate_lead). |
@@ -1882,19 +1884,25 @@ Every paid click that becomes a lead carries its origin signal end-to-end. The c
 
 4. Netlify Function creates Pipedrive Lead
    - Person (dedupe by email) + Organization
-   - Lead with 8 custom attribution fields
+   - Lead with 9 custom attribution fields
    - Note containing full form text
 
 5. Client-side analytics fire
    - GA4: form_submit + generate_lead (sendBeacon)
    - PostHog: session events via /ingest/* reverse proxy
 
-6. Next morning, 9am ET cron
-   - Reads Pipedrive Leads with gclid from last 24h
-   - Uploads to Google Ads as offline conversions
-   - Closes the attribution loop
+6. Sales qualification (manual)
+   - Sales talks to the Lead to confirm at least service interest
+   - On confirmation: convert Lead → Deal in Pipeline 1 "Inbound Project"
+   - Deal lands in stage 2 "Marketing Qualified"
+   - All 9 attribution fields auto-copy from Lead to Deal (matching field keys)
 
-7. Next morning, 7:30am ET cron
+7. Next morning, 9am ET cron — uploads TWO conversion events
+   - Every Lead with gclid → "Pipedrive Lead Created" ($50, low signal)
+   - Every Deal in Pipeline 1 with gclid → "Pipedrive MQL" (high signal — real
+     optimization target for Smart Bidding)
+
+8. Next morning, 7:30am ET cron
    - Outputs daily morning brief combining all systems
 ```
 
@@ -1916,9 +1924,10 @@ Every form **must** include these hidden fields:
 <input type="hidden" name="gclid" value="">
 <input type="hidden" name="referrer" value="">
 <input type="hidden" name="landing_page" value="/lp/ai-build-partner/">
+<input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 ```
 
-UTM, gclid, and referrer values are populated automatically by `ds-includes-v2.js`. The `source` is a unique identifier per form. The `landing_page` is hardcoded per-LP for forms that live on landing pages.
+UTM, gclid, and referrer values are populated automatically by `ds-includes-v2.js`. The `source` is a unique identifier per form (also used as the `source_page` value submitted to Pipedrive, which `ds-includes-v2.js` derives from `source` at submit time). The `landing_page` is hardcoded per-LP for forms that live on landing pages. The `_gotcha` hidden input is a Formspree spam honeypot — required on every form; do not modify or remove.
 
 The webhook always creates a Pipedrive **Lead** (not a Deal). Every Lead carries the attribution payload in 8 custom fields. Organic-traffic leads simply have empty attribution fields.
 
@@ -1940,7 +1949,7 @@ When a visitor clicks the link, `ds-includes-v2.js` intercepts the click, sends 
 
 ### 17.5 CSP Requirements
 
-The Content Security Policy in `netlify.toml` must include the following domains for the full attribution stack to work. Always run `python3 scratchpad/validate_csp.py` before push.
+The Content Security Policy in `netlify.toml` must include the following domains for the full attribution stack to work. Before any push that touches `netlify.toml` or adds external scripts, manually verify that every new domain is in the CSP — silent CSP blocks are a frequent source of analytics outages.
 
 | CSP Directive | Required Domains | Purpose |
 |---|---|---|
@@ -1955,7 +1964,7 @@ The Content Security Policy in `netlify.toml` must include the following domains
 
 The following rules are non-negotiable. Each was learned by breaking things in production and has a working-memory entry to prevent recurrence.
 
-1. **Always run `python3 scratchpad/validate_csp.py` before any push** that adds external scripts or modifies `netlify.toml`. CSP errors silently break analytics in production.
+1. **Manually verify CSP before any push** that adds external scripts or modifies `netlify.toml`. CSP errors silently break analytics in production — fonts, ads, third-party scripts, and analytics events all fail with no surface error.
 2. **Never remove StatCounter.** It is the GA4 backup.
 3. **Never expose PostHog `phx_` (Personal API) keys in client code or chat.** They grant full account access. `phc_` (Project) keys are public-safe by design.
 4. **Do not try to create Pipedrive Lead custom fields via API.** Pipedrive doesn't expose this. Always use the Pipedrive UI; then add the new field key to `formspree-webhook.mjs`.

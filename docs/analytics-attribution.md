@@ -135,7 +135,10 @@ This is what makes paid attribution closed-loop. Without it, Google Ads only see
 ### Google Ads account
 
 - Customer ID: `1651404286` (Digital Scientists)
-- Conversion action: `Pipedrive MQL` (ID `7612728371`)
+- **Two conversion actions fire from the offline upload cron (post 2026-05-22):**
+  - `Pipedrive Lead Created` — fires on every Lead with GCLID. Low signal ($50 default value). Gives Smart Bidding daily training data even when MQL volume is small.
+  - `Pipedrive MQL` — fires only when a Lead has been converted to a Deal in Pipeline 1 (Inbound Project). High signal. Real optimization target.
+- The cron script looks up conversion actions by NAME at runtime, not by hardcoded ID, so action IDs are not coupled to the script.
 - 5 active Search campaigns (as of 2026-05-22):
   - AI Build Partner (camp ID 23854408286)
   - Healthcare AI Build (23849081403)
@@ -150,11 +153,19 @@ This is what makes paid attribution closed-loop. Without it, Google Ads only see
 - **Script:** `scratchpad/pd_leads_to_ads_offline_conv.py`
 - **Wrapper:** `scratchpad/run_pd_to_ads_conv.sh`
 - **Schedule:** `0 9 * * *` (9am ET daily)
-- **What it does:**
-  1. Queries Pipedrive for all Leads with a non-empty `GCLID` custom field created in the last 24 hours.
-  2. For each, builds a `ClickConversion` with the GCLID, the conversion action ID, and the conversion timestamp.
-  3. Calls Google Ads `ConversionUploadService.UploadClickConversions` with the batch.
-- **Side effect:** Google Ads attributes the conversion back to the original click. The keyword/ad/campaign that generated the lead is now visible in Google Ads reports.
+- **What it does** (two passes, two conversion events):
+
+  **Pass 1 — "Pipedrive Lead Created" (low-signal early data):**
+  1. Queries Pipedrive `/leads` for any Lead created in the last 7 days with the GCLID custom field populated.
+  2. For each, uploads a `ClickConversion` with $50 value to the "Pipedrive Lead Created" conversion action.
+
+  **Pass 2 — "Pipedrive MQL" (high-signal qualification event):**
+  1. Queries Pipedrive `/deals` for any Deal in **Pipeline 1 ("Inbound Project")** created in the last 7 days with GCLID populated.
+  2. For each, uploads a `ClickConversion` with the Deal value (or $500 default if value not yet set) to the "Pipedrive MQL" conversion action.
+
+- **Why two passes:** A Pipedrive Lead is raw inbound — not yet qualified. A Deal in Pipeline 1 is the result of Sales confirming service interest in a conversation. The two events represent funnel stages of meaningfully different value. Smart Bidding learns better with both signals than with either alone.
+- **Lead → Deal conversion preserves all 9 attribution custom fields** — Pipedrive auto-maps by field key. No data is lost when Sales qualifies a Lead by converting to a Deal.
+- **Idempotency:** Google Ads dedupes by gclid + conversion_action + conversion_date_time. Re-running the cron does not inflate counts.
 
 ### Manual CPC → Smart Bidding transition
 
@@ -225,6 +236,8 @@ The Content Security Policy in `netlify.toml` must include the following domains
 | `worker-src` | `'self' blob:` | PostHog Web Worker for batching |
 | `form-action` | `formspree.io` | Form submission endpoint |
 
+Before any push that touches `netlify.toml` or adds external scripts, manually verify every new domain is in the CSP. Silent CSP blocks are a frequent source of analytics outages — fonts, pixels, third-party scripts, and conversion events all fail without a visible error in production.
+
 See `pipedrive-scheduler-setup.md` for scheduler-specific webhook details and Google Calendar sync.
 
 ---
@@ -233,7 +246,7 @@ See `pipedrive-scheduler-setup.md` for scheduler-specific webhook details and Go
 
 The following rules were learned by breaking things in production. Each has a working-memory entry to prevent recurrence:
 
-1. **Always run `python3 scratchpad/validate_csp.py` before any push** that adds external scripts or modifies `netlify.toml`. CSP errors silently break analytics in production.
+1. **Manually verify CSP before any push** that adds external scripts or modifies `netlify.toml`. CSP errors silently break analytics in production — fonts, pixels, third-party scripts, and conversion events all fail with no surface error.
 2. **Never remove StatCounter.** It's the GA4 backup. (See `feedback_statcounter.md`.)
 3. **Never expose PostHog `phx_` (Personal API) keys in client code or chat.** They grant full account access. `phc_` (Project) keys are public-safe by design.
 4. **Do not try to create Pipedrive Lead custom fields via API.** Pipedrive doesn't expose this. Always use the Pipedrive UI; then add the new field key to `formspree-webhook.mjs`.
