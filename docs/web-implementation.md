@@ -1842,38 +1842,92 @@ Cache headers are set in `netlify.toml` and control how long Cloudflare (CDN) an
 
 ---
 
-## 17. Forms & CRM Integration
+## 17. Analytics, Attribution & CRM Integration
 
-The website connects to Pipedrive CRM through three integrated systems. Full technical documentation (webhook architecture, API keys, failure modes) lives in `scratchpad/pipedrive-scheduler-setup.md` in the DS website repo. A formatted HTML version is available at `pipedrive-scheduler-report.html`.
+Every paid click that becomes a lead carries its origin signal end-to-end. The campaign that drove it, the keyword that triggered it, the landing page it touched, and the Google Click ID are all captured on the first page load, persisted through the form, written into the Pipedrive Lead, and uploaded back to Google Ads the next morning so spend can be attributed to outcomes.
 
-### 17.1 Overview
+**This section is the overview.** For implementation details (field keys, conversion IDs, cron schedules, script paths, failure modes), see [analytics-attribution.md](analytics-attribution.md) ([download raw](https://raw.githubusercontent.com/bobklein/ds-brand-guide/main/docs/analytics-attribution.md)). Scheduler-specific webhook details remain in [pipedrive-scheduler-setup.md](pipedrive-scheduler-setup.md).
 
-| System | Purpose | Pages |
-|---|---|---|
-| **Formspree Forms** | Contact forms, inquiries, newsletter signups | 20+ pages |
-| **Pipedrive Scheduler** | Meeting bookings (replaced Calendly March 2026) | 6 pages |
-| **Google Calendar** | Two-way sync with Pipedrive for scheduling | Automatic |
+### 17.1 The System Stack
 
-### 17.2 Formspree Forms
+| System | Role |
+|---|---|
+| **Google Ads** | Paid traffic source. Sets gclid on every paid click. |
+| **Browser session (`ds-includes-v2.js`)** | Reads URL UTMs + gclid, injects into Formspree hidden fields, fires GA4 + PostHog events. |
+| **Formspree** | Receives form submission. Fires webhook to Netlify Function. |
+| **Netlify Function (`formspree-webhook.mjs`)** | Creates Pipedrive Person + Organization + Lead with 8 custom attribution fields. |
+| **Pipedrive** | Source-of-truth lead system. Lead custom fields hold all attribution. |
+| **Pipedrive Scheduler** | Meeting bookings. Two-way sync with Google Calendar. |
+| **Google Analytics 4** | Event tracking (page_view, form_submit, generate_lead). |
+| **PostHog** | Client-side session recording. Reverse-proxied to bypass ad blockers. |
+| **StatCounter** | Independent backup analytics. Confirms GA4 when it disagrees. |
+| **PD → Ads cron** | Daily 9am ET upload of PD MQLs back to Google Ads as offline conversions. |
+| **Daily morning brief** | 7:30am ET unified report combining Ads + PostHog + Pipedrive + search-term alerts. |
+
+### 17.2 Data Flow
+
+```
+1. User clicks Google Ad
+   └─> Lands on /lp/{slug}/?utm_source=google&utm_medium=cpc
+        &utm_campaign=AI_BUILD_PARTNER&gclid=Cj0KCQiA...
+
+2. ds-includes-v2.js reads URL on load
+   - Captures utm_source/medium/campaign/content/term, gclid, referrer
+   - Injects values into Formspree hidden fields on every form
+   - Initializes GA4 + PostHog
+
+3. User submits form
+   └─> Formspree receives the payload
+   └─> Formspree fires webhook to formspree-webhook.mjs
+
+4. Netlify Function creates Pipedrive Lead
+   - Person (dedupe by email) + Organization
+   - Lead with 8 custom attribution fields
+   - Note containing full form text
+
+5. Client-side analytics fire
+   - GA4: form_submit + generate_lead (sendBeacon)
+   - PostHog: session events via /ingest/* reverse proxy
+
+6. Next morning, 9am ET cron
+   - Reads Pipedrive Leads with gclid from last 24h
+   - Uploads to Google Ads as offline conversions
+   - Closes the attribution loop
+
+7. Next morning, 7:30am ET cron
+   - Outputs daily morning brief combining all systems
+```
+
+### 17.3 Forms
 
 All forms submit to a single Formspree endpoint: `https://formspree.io/f/xvzbywbr`
 
 Every form **must** include these hidden fields:
 
 ```html
-<input type="hidden" name="source" value="page-identifier">
-<input type="hidden" name="_subject" value="Lead Title for Pipedrive">
+<input type="hidden" name="source" value="lp-ai-build-partner">
+<input type="hidden" name="_subject" value="AI Architect Consultation Request">
+<input type="hidden" name="_next" value="https://digitalscientists.com/thank-you/">
+<input type="hidden" name="utm_source" value="">
+<input type="hidden" name="utm_medium" value="">
+<input type="hidden" name="utm_campaign" value="">
+<input type="hidden" name="utm_content" value="">
+<input type="hidden" name="utm_term" value="">
+<input type="hidden" name="gclid" value="">
+<input type="hidden" name="referrer" value="">
+<input type="hidden" name="landing_page" value="/lp/ai-build-partner/">
 ```
 
-UTM hidden fields (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`) are injected automatically by `ds-includes-v2.js` — do not add them manually.
+UTM, gclid, and referrer values are populated automatically by `ds-includes-v2.js`. The `source` is a unique identifier per form. The `landing_page` is hardcoded per-LP for forms that live on landing pages.
 
-**How it works:** Formspree receives the submission → fires a webhook to `formspree-webhook.mjs` → the function creates a Person (deduplicated by email) and Organization in Pipedrive → creates a **Deal** (if UTMs present) or **Lead** (no UTMs) with a pinned note containing the form details.
+The webhook always creates a Pipedrive **Lead** (not a Deal). Every Lead carries the attribution payload in 8 custom fields. Organic-traffic leads simply have empty attribution fields.
 
-### 17.3 Pipedrive Scheduler
+### 17.4 Pipedrive Scheduler
 
-All scheduler links point to: `https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein`
+All scheduler links point to:
+`https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein`
 
-**Link format** (most pages):
+**Standard link format:**
 ```html
 <a href="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
    target="_blank" rel="noopener noreferrer"
@@ -1882,60 +1936,51 @@ All scheduler links point to: `https://digitalscientists3.pipedrive.com/schedule
 </a>
 ```
 
-**Iframe embed** (assessment page only):
-```html
-<iframe src="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
-        title="Schedule a Meeting with Bob Klein"
-        frameborder="0" height="700px" width="100%"
-        style="min-width:320px" allowfullscreen></iframe>
-```
+When a visitor clicks the link, `ds-includes-v2.js` intercepts the click, sends the attribution payload to `schedule-lead.mjs`, then redirects to the Scheduler. After booking, a Pipedrive webhook syncs the Activity to Google Calendar.
 
-**How it works (two phases):**
-1. **Pre-booking:** When a visitor clicks a scheduler link, `ds-includes-v2.js` intercepts the click, sends UTM data to `schedule-lead.mjs` (creates a Deal for campaign traffic), then redirects to the Scheduler.
-2. **Post-booking:** After the visitor books, Pipedrive creates an Activity. A webhook fires to `scheduler-webhook.mjs`, which enriches the Deal with contact info and form text, or creates a Lead for organic traffic. The Activity syncs to Google Calendar automatically.
+### 17.5 CSP Requirements
 
-### 17.4 UTM Attribution Rule
+The Content Security Policy in `netlify.toml` must include the following domains for the full attribution stack to work. Always run `python3 scratchpad/validate_csp.py` before push.
 
-Pipedrive Leads do not support custom fields. UTM data can only be stored natively on Deals.
-
-| Visitor has UTMs? | Pipedrive record | Pipeline |
+| CSP Directive | Required Domains | Purpose |
 |---|---|---|
-| **Yes** | Deal | Inbound Project → Marketing Qualified |
-| **No** | Lead | Inbox (qualify manually) |
+| `script-src` | `us-assets.i.posthog.com`, `www.googletagmanager.com`, `www.google-analytics.com`, `c.statcounter.com` | PostHog runtime, GA4, StatCounter |
+| `img-src` | `us.i.posthog.com`, `www.google-analytics.com`, `c.statcounter.com`, `googleads.g.doubleclick.net` | Pixel tracking + Google Ads conversion pixels |
+| `connect-src` | `us.i.posthog.com`, `*.google-analytics.com`, `formspree.io`, `*.pipedrive.com` | API endpoints |
+| `frame-src` | `digitalscientists3.pipedrive.com` | Scheduler iframe |
+| `worker-src` | `'self' blob:` | PostHog Web Worker for batching |
+| `form-action` | `formspree.io` | Form submission endpoint |
 
-This rule applies consistently across both forms and scheduler bookings.
+### 17.6 Operational Rules
 
-### 17.5 Adding a New Form Page
+The following rules are non-negotiable. Each was learned by breaking things in production and has a working-memory entry to prevent recurrence.
 
-When creating a new page with a form:
+1. **Always run `python3 scratchpad/validate_csp.py` before any push** that adds external scripts or modifies `netlify.toml`. CSP errors silently break analytics in production.
+2. **Never remove StatCounter.** It is the GA4 backup.
+3. **Never expose PostHog `phx_` (Personal API) keys in client code or chat.** They grant full account access. `phc_` (Project) keys are public-safe by design.
+4. **Do not try to create Pipedrive Lead custom fields via API.** Pipedrive doesn't expose this. Always use the Pipedrive UI; then add the new field key to `formspree-webhook.mjs`.
+5. **For new Google Ads campaigns:** always set `positive_geo_target_type = PRESENCE` explicitly. Google's default wastes spend on overseas curiosity clicks.
+6. **Post-push QA always.** Every push to `digitalscientists.com` requires a post-push QA pass on the live site.
 
-1. Copy the form HTML from an existing page (e.g., `/start/index.html`)
-2. Update the `source` hidden field with a unique page identifier
-3. Update the `_subject` hidden field with the desired Pipedrive Lead/Deal title
-4. UTM fields are auto-injected — no manual setup needed
-5. The form will automatically route to Pipedrive via the existing Formspree webhook
+### 17.7 Adding a New Form Page
 
-### 17.6 Adding a Scheduler Link
+1. Copy the form HTML from an existing landing page (e.g., `/lp/ai-build-partner/index.html`).
+2. Update the `source` hidden field with a unique page identifier (used for Pipedrive Lead title and reporting).
+3. Update the `_subject` hidden field with the desired Pipedrive Lead title.
+4. Update the `landing_page` hidden field to match the page path.
+5. UTM, gclid, and referrer fields are auto-injected — do not modify.
+6. Run `python3 scratchpad/validate_csp.py` and post-push QA.
 
-When adding a scheduler CTA to a new page:
+### 17.8 Adding a Scheduler Link
 
-1. Use the standard link format from 17.3
-2. `ds-includes-v2.js` automatically intercepts scheduler link clicks — no additional JS needed
-3. Ensure `digitalscientists3.pipedrive.com` remains in the CSP `frame-src` directive (already configured in `netlify.toml`)
-
-### 17.7 CSP Requirements
-
-The following domains must be in the Content Security Policy (`netlify.toml`) for forms and scheduling to work:
-
-| CSP Directive | Required Domains |
-|---|---|
-| `frame-src` | `digitalscientists3.pipedrive.com` |
-| `connect-src` | `formspree.io`, `*.pipedrive.com` |
-| `form-action` | `formspree.io` |
+1. Use the standard link format from §17.4.
+2. `ds-includes-v2.js` automatically intercepts scheduler link clicks — no additional JS needed.
+3. Ensure `digitalscientists3.pipedrive.com` remains in the CSP `frame-src` directive (already configured in `netlify.toml`).
 
 ---
 
 ## Revision History
 
+- 2026-05-22: v1.2 — Rewrote §17 as an overview of the full attribution stack (Formspree, Pipedrive Leads with 8 custom fields, GA4, PostHog, StatCounter, Google Ads offline conversion loop, daily morning brief). Implementation details moved to companion file `analytics-attribution.md`.
 - 2026-03-16: v1.1 — Added §17 Forms & CRM Integration (Formspree, Pipedrive Scheduler, Google Calendar, UTM attribution)
 - 2026-03-07: v1.0 — Extracted from ds-design-standard.md as part of brand guide consolidation

@@ -525,6 +525,8 @@ https://digitalscientists.com/blog/ai-implementation-gap/?utm_source=linkedin&ut
 
 **Validation:** Before any link goes live, verify: (1) all values are lowercase, (2) campaign has a date prefix, (3) source matches the platform, (4) content identifies the specific placement. Scott reviews UTMs as part of content review.
 
+**Where the data goes:** UTM parameters captured on the landing page travel with the visitor through every system. They are written into Pipedrive Lead custom fields on form submission, fired into Google Analytics 4 and PostHog as events, and uploaded back to Google Ads as offline conversions when a lead qualifies. The full attribution stack is documented in [`web-implementation.md` §17](web-implementation.md#17-analytics-attribution--crm-integration), with implementation details in [`analytics-attribution.md`](analytics-attribution.md).
+
 ### 6.10 AI Writing Instructions
 
 This section is designed to be loaded into Claude, ChatGPT, or any AI writing tool as a system prompt or project instruction. Copy the block below into your AI assistant's context when drafting DS content.
