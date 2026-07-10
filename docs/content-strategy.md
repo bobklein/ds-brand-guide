@@ -981,6 +981,8 @@ At the end of Q2, answer:
 
 ### Phase 3: Editorial Calendar Begins (March 17)
 
+> **Operational runbook:** the exact publish commands (scaffolder, image processing, search index, sitemap, validation, deploy) live in `PUBLISHING.md` at the root of the `digitalscientists.com` repo. All helper scripts are in `site/tools/` (not `scratchpad/`), and deploy = push to `main` (Netlify auto-publishes `public/`). This section is the editorial cadence; that file is the how-to.
+
 Weekly publishing workflow (2 blogs/week):
 
 ```
@@ -996,7 +998,7 @@ FRIDAY:    Publish LinkedIn Post 2 → DS company page
            (Draws from either Blog A or Blog B, whichever has stronger extract)
 ```
 
-**Case study weeks (3, 4, 5, 12):** Blog B is a backstory post. The corresponding case study page is created the same week using `scratchpad/add_case_study.py`. Client permission must be confirmed before publish.
+**Case study weeks (3, 4, 5, 12):** Blog B is a backstory post. The corresponding case study page is created the same week using `site/tools/add_case_study.py`. Client permission must be confirmed before publish.
 
 ### Phase 4: Case Study Backstories (Q3 2026)
 

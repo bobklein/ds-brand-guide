@@ -1978,7 +1978,7 @@ The following rules are non-negotiable. Each was learned by breaking things in p
 3. Update the `_subject` hidden field with the desired Pipedrive Lead title.
 4. Update the `landing_page` hidden field to match the page path.
 5. UTM, gclid, and referrer fields are auto-injected — do not modify.
-6. Run `python3 scratchpad/validate_csp.py` and post-push QA.
+6. Run `python3 site/tools/validate_csp.py` and post-push QA.
 
 ### 17.8 Adding a Scheduler Link
 

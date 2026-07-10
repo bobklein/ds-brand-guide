@@ -516,7 +516,7 @@ These exist on-site but need H1 rewrites or deeper content:
 1. **Bob conducts client interview** (30-45 min call) or provides notes from the engagement
 2. **Team drafts** using case study template (challenge → approach → results)
 3. **Bob reviews** for accuracy and voice
-4. **Team publishes** using `scratchpad/add_case_study.py` + Procedure C1
+4. **Team publishes** using `site/tools/add_case_study.py` + Procedure C1
 5. **Cross-link** from relevant blog posts and service pages
 6. **Add to llms.txt** if it's a flagship result
 

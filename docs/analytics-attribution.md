@@ -225,7 +225,7 @@ PostHog is reverse-proxied through `/ingest/*` specifically to prevent this. If 
 
 ## 9. CSP Requirements (full domain list)
 
-The Content Security Policy in `netlify.toml` must include the following domains for the full attribution stack to work. Always run `python3 scratchpad/validate_csp.py` before push.
+The Content Security Policy in `netlify.toml` must include the following domains for the full attribution stack to work. Always run `python3 site/tools/validate_csp.py` before push.
 
 | CSP Directive | Required Domains | Purpose |
 |---|---|---|
