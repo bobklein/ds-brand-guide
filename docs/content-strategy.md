@@ -981,7 +981,38 @@ At the end of Q2, answer:
 
 ### Phase 3: Editorial Calendar Begins (March 17)
 
-> **Operational runbook:** the exact publish commands (scaffolder, image processing, search index, sitemap, validation, deploy) live in `PUBLISHING.md` at the root of the `digitalscientists.com` repo. All helper scripts are in `site/tools/` (not `scratchpad/`), and deploy = push to `main` (Netlify auto-publishes `public/`). This section is the editorial cadence; that file is the how-to.
+> **Operational runbook:** the exact publish commands (scaffolder, image processing, search index, sitemap, validation, deploy) live in `PUBLISHING.md` at the root of the `digitalscientists.com` repo. All helper scripts are in `site/tools/` (not `scratchpad/`), and deploy = push to `main` (Netlify auto-publishes `public/`). This section is the editorial cadence; the subsection below is the how-to.
+
+### How to publish a post
+
+**The model.** There is no CMS. The site is static files in the `digitalscientists.com` GitHub repo. "Publishing" means adding the post files and pushing to `main` — Netlify auto-deploys `public/` to the live site in a minute or two. There is no publish button and no build step to wait on. Always `git pull` before starting; the repo is worked on from multiple machines.
+
+**Approval gate.** Copy never ships on the operator's judgment alone. Draft → Bob approves the copy/positioning → push. (Per the PPC/copy operating rule: converge before shipping, don't iterate live.)
+
+**Recommended path — Claude Code.** Open Claude Code inside the repo folder and paste this prompt (fill in the blanks). It follows `PUBLISHING.md`, matches brand voice, and pauses before anything goes live:
+
+```
+I want to publish a new blog post to the DS site. Please:
+1. Read PUBLISHING.md and follow that process exactly.
+2. Load the DS brand voice from this guide and match it.
+3. git pull first.
+4. Scaffold with add_blog_post.py using:
+   - Title: <TITLE>
+   - Category: <healthcare | ai | development | design | product | news>
+   - Author: <AUTHOR>
+   - Date: today
+5. Draft: <PASTE DRAFT>. Write it in; add a meta description, the correct
+   CTA (/proof/ for healthcare, /start/ otherwise), and 3 related-reading
+   links to existing DS posts.
+6. Hero image at <PATH>: process to spec (1440px WebP, <200KB) and
+   regenerate the share image.
+7. Run validate_content.py and rebuild the search index; summarize changes
+   and give me the local preview path.
+8. STOP before pushing. Do NOT commit or push until I confirm Bob approved.
+```
+After Bob signs off: tell Claude `Copy is approved. Commit and push to main.`, then `Run the daily QA and confirm the live page.`
+
+**Manual path.** The exact commands (scaffolder, image conversion via Pillow, search index, sitemap, validation, `git push`, QA) are in `PUBLISHING.md` at the repo root. That file is the single source of truth for the commands — this guide covers standards and voice.
 
 Weekly publishing workflow (2 blogs/week):
 
