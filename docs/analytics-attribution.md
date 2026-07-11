@@ -6,6 +6,19 @@
 
 ---
 
+## ⚠️ Known attribution gaps to fix (from the H1 2026 reassessment)
+
+Site *wiring* is complete — GA4 + PostHog fire on ~100% of pages. The gaps are in **measurement configuration**, which needs GA4/GTM admin (not a code change). Fix these so channel performance is trustworthy for demand decisions:
+
+1. **GA4 under-attributes paid.** Paid clicks are being credited to Direct/Organic. Audit UTM tagging on all paid destinations (Google Ads, LinkedIn, ChatGPT/OpenAI Ads), enable auto-tagging (GCLID) end-to-end, and confirm the GA4 channel grouping isn't collapsing paid into Direct. Check that the CSP allows the ad platforms' tags (it does — see the whitelist).
+2. **Lead tracking only began May 2026.** Pre-May conversions aren't captured, so channel CVR is unreliable before then. Backfill isn't possible; going forward, ensure the `generate_lead` event fires on every form success (form pages + LPs) with source attributes.
+3. **"Direct" is inflated by bot/untagged traffic** (~55% of sessions at ~30% engagement). Use PostHog bot filtering and GA4 referral-exclusion/definitions to separate real humans; don't read raw Direct as brand demand.
+4. **Reconcile the two systems.** GA4 (acquisition/attribution) vs PostHog (behavior, heatmaps, replay) should agree on session/lead counts within reason; document which is source-of-truth for which metric.
+
+*These are platform-configuration tasks (GA4 Admin + GTM), not site-code edits.*
+
+---
+
 ## 1. Pipedrive Lead Custom Fields (the 8 attribution fields)
 
 Every Pipedrive Lead created by the Formspree webhook carries 8 custom fields that store the attribution payload. The field keys are 40-character hex strings, fixed at creation time, and hardcoded into `formspree-webhook.mjs` in the website repo.
