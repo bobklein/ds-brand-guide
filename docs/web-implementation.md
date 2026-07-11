@@ -9,6 +9,22 @@
 
 ---
 
+## ⚠️ Canonical standards (2026 cleanup — supersedes anything below that conflicts)
+
+A full front-end cleanup established these as the canonical rules. Where an older section conflicts, **this block wins.**
+
+- **Build:** CSS is the committed, purged `ds-tailwind.css` — **no Tailwind CDN.** After adding/changing any Tailwind class, run `npm run build:css` and commit the regenerated file, or the class silently does nothing live. See `BUILD.md`.
+- **Fonts:** self-hosted via `ds-fonts.css` (Inter + Roboto Mono, subset). No Google Fonts CDN.
+- **Legacy removed:** `ds-wp-layout.css` and the `.wp-content-legacy` wrapper are retired. **New pages are hand-crafted Tailwind only.**
+- **CTA standard:** primary = `bg-dsBlue text-white hover:bg-dsBlack`, **never inverted** (no white-on-dark primary). Track with `data-cta` attributes.
+- **Color:** use the brand tokens + dsBlue tint scale (`bg-dsBlue/5`, `/10`). **Never** stock Tailwind `blue-*`, and **no** red/amber/green/emerald — semantic states use `dsTeal`/`dsLime` (positive) or neutral `dsGray`/`dsBlack` (caution), with **dark text for contrast** (never `dsTeal` as text on white). Icons are inline SVG — **no emoji, no stock green/red check-marks.**
+- **Typography:** headings `letter-spacing:-0.02em`; body target **18px/1.6**; **no em/en dashes** (— or –) in copy — use commas or hyphens (brand editorial rule).
+- **Accessibility (required on every page):** one `<h1>`; content inside `<main id="main-content">`; skip-to-content link; visible `:focus-visible` ring; nav submenus reachable via `:focus-within`; FAQ accordions expose state (`aria-expanded`, or native `<details>`); and a no-JS + `prefers-reduced-motion` fallback for `.fade-up` (content must not stay hidden if JS fails).
+- **SEO/LLM:** title, meta description, canonical, OG, and JSON-LD on every page; if a page emits `FAQPage` schema it **must** have a matching visible FAQ.
+- **Media:** keep images < 200KB; convert oversized photos to WebP and animated GIFs to muted looping video.
+
+---
+
 ## Table of Contents
 
 1. [Page Architecture](#1-page-architecture)
@@ -38,19 +54,14 @@
 Every restyled page MUST include these files in the `<head>`:
 
 ```html
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config = { theme: { extend: { colors: {
-    dsBlue: '#304FFF', dsBlack: '#050505', dsGray: '#F5F5F5',
-    dsTeal: '#26D9C4', dsLime: '#D1F259',
-}, fontFamily: {
-    sans: ['Inter', 'system-ui', 'sans-serif'],
-    mono: ['Roboto Mono', 'monospace'],
-}}}}</script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Compiled, committed Tailwind (NOT the CDN). Regenerate with `npm run build:css` after adding classes. -->
+<link rel="stylesheet" href="../ds-tailwind.css">
+<link rel="stylesheet" href="../ds-fonts.css">   <!-- self-hosted Inter + Roboto Mono, subset, font-display:swap -->
 <link rel="stylesheet" href="../ds-nav.css">
-<link rel="stylesheet" href="../ds-wp-layout.css">
-<script src="../ds-includes.js" defer></script>
+<script src="../ds-includes-v2.js" defer></script>
 ```
+
+> **2026 update:** The Tailwind Play CDN, the Google Fonts CDN, and `ds-wp-layout.css` are **removed**. Styling now comes from the **committed, purged `ds-tailwind.css`** (built from `tailwind.config.js` + `src/tailwind-input.css` via `npm run build:css` — see `BUILD.md`). Fonts are **self-hosted** via `ds-fonts.css`. The include loader is **`ds-includes-v2.js`**. Because the CSS is pre-built and purged, **any new Tailwind class has no effect until you re-run the build** and commit the regenerated stylesheet.
 
 And before `</body>`:
 ```html
@@ -90,12 +101,14 @@ The outer `.page-container` wrappers have inline `max-width: 1200px` from the WP
 
 ### 1.4 Key CSS/JS Files
 
-| File | Purpose | Lines |
+| File | Purpose | Notes |
 |------|---------|-------|
-| `ds-wp-layout.css` | Maps WP block classes to DS design system | ~2200 |
-| `ds-nav.css` | Nav + footer styles | ~280 |
-| `ds-includes.js` | Auto-loads nav/footer, detects base path | ~40 |
-| `ds-wp-interactivity.js` | Swiper init, FAQ accordion, tab switching, alternating backgrounds | ~190 |
+| `ds-tailwind.css` | Compiled + purged Tailwind: brand tokens + all utilities in use | committed; rebuild via `npm run build:css` |
+| `ds-fonts.css` | Self-hosted Inter + Roboto Mono (subset, `font-display:swap`) | replaces the Google Fonts CDN |
+| `ds-nav.css` | Nav + footer styles; submenus open on `:focus-within` (keyboard) | ~320 |
+| `ds-includes-v2.js` | Auto-loads nav/footer/analytics slots, detects base path | ~90 |
+| `ds-wp-interactivity.js` | Swiper carousels, tab switching, sticky CTA | legacy pages only (~16 pages) |
+| ~~`ds-wp-layout.css`~~ | **Removed 2026** — was orphaned (0 pages referenced it) | deleted |
 
 ### 1.5 Two Page Paradigms
 
