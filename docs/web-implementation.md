@@ -97,7 +97,9 @@ Adjust `../` prefix per directory depth (e.g., `../../` for 2-deep, `../../../` 
 
 ### 1.3 CSS Override Chain
 
-The outer `.page-container` wrappers have inline `max-width: 1200px` from the WP theme. `ds-wp-layout.css` Section 0 overrides these with `max-width: none !important` so section backgrounds extend edge-to-edge. Inner `__container` classes (Section 2) constrain content to `max-width: 1280px`.
+> **Retired (2026):** This override chain relied on `ds-wp-layout.css`, which has been **removed**. It applied only to the legacy `.wp-content-legacy` pattern below. Hand-crafted pages don't use `.page-container` at all — they constrain content directly with `max-w-screen-xl mx-auto`. Kept here only to explain older markup you may still encounter.
+>
+> *(Historical: the outer `.page-container` wrappers had inline `max-width: 1200px` from the WP theme; `ds-wp-layout.css` Section 0 overrode these to `max-width: none !important`, and inner `__container` classes constrained content to `max-width: 1280px`.)*
 
 ### 1.4 Key CSS/JS Files
 
@@ -112,23 +114,16 @@ The outer `.page-container` wrappers have inline `max-width: 1200px` from the WP
 
 ### 1.5 Two Page Paradigms
 
-The site has two types of pages. Both use the same design system (colors, fonts, spacing, components) but differ in how sections are structured.
+**Hand-crafted Tailwind is the one and only standard for new work.** A legacy WP-restyled pattern still exists on some older pages and is being retired.
 
-**WP-restyled pages** — Migrated from WordPress, wrapped in `.wp-content-legacy`:
-- Sections use `.guttenberg-block` class with `data-bg` attributes
-- Background alternation is handled by `ds-wp-interactivity.js` (automatic even/odd)
-- Content containers use `.columns-content__container` or `.text-block__container`
-- FAQ accordion uses `.faq-new__item` classes + JS event listeners
-- Examples: `ai-machine-learning/`, `ux-design/`, most `blog/` posts
-
-**Hand-crafted pages** — Written directly in Tailwind, no WP wrapper:
+**Hand-crafted pages (the standard)** — Written directly in Tailwind, no WP wrapper:
 - Sections are bare `<section>` tags with explicit Tailwind classes (`py-20 px-6 bg-dsGray`)
 - Background alternation is manual (author alternates `bg-white` / `bg-dsGray`)
 - Content containers use `max-w-screen-xl mx-auto` directly
-- FAQ accordion uses inline `onclick` handlers + CSS (see Section 6.16)
-- Examples: `healthcare/index.html`, `services/blueprint/`, `healthcare/ai-agents/*`
+- FAQ accordions expose state — `aria-expanded` (kept in sync on toggle) or native `<details>` (see the Canonical standards block)
+- Examples: `healthcare/index.html`, `services/blueprint/`, `healthcare/ai-guides/*`
 
-**Which to use for new pages:** Always hand-crafted. The WP wrapper exists only for migrated content that hasn't been rewritten. When rewriting a WP-restyled page, strip the `.wp-content-legacy` wrapper and write direct Tailwind.
+**WP-restyled pages (LEGACY — being retired):** Migrated-from-WordPress pages wrapped in `.wp-content-legacy`, using `.guttenberg-block` sections and `ds-wp-interactivity.js` (Swiper/tabs/alternating backgrounds). Their `ds-wp-layout.css` stylesheet was **removed in 2026** (it was orphaned). Do **not** build new pages this way; when you touch a legacy page, migrate it to hand-crafted Tailwind and drop the `.wp-content-legacy` wrapper.
 
 **How to tell which type a page is:** Check for `<div class="wp-content-legacy">` near the top. If present, it's WP-restyled. If the body starts with `<div id="ds-nav-slot">` followed by bare `<section>` tags, it's hand-crafted.
 
@@ -525,7 +520,7 @@ No opacity reduction (always 1.0)
 - All logos: `object-contain` with per-logo `max-w-[...]` to prevent stretching
 - NO `opacity` reduction — use only `grayscale(100%)`
 
-**WP Block Variants (handled via ds-wp-layout.css):**
+**WP Block Variants** *(LEGACY — these were styled by the now-removed `ds-wp-layout.css`; applies only to un-migrated `.wp-content-legacy` pages. For new/hand-crafted pages, build the logo ribbon directly in Tailwind.)*:
 - `client-logos-new` with `.swiper .swiper-wrapper`: CSS overrides Swiper's `width: 100%` on slides with `width: auto !important; flex: 0 0 auto`
 - `client-logos-new` with `.grid.centered`: CSS overrides grid with `display: flex`
 - `client-logos` (older block): Simpler flex layout, same ribbon pattern
@@ -808,7 +803,7 @@ Button: centered below, mt-8
 | Background | Text | Button | Inline Links |
 |------------|------|--------|-------------|
 | `bg-dsBlue` | `text-white` / `text-blue-100` | `bg-white text-dsBlue hover:bg-dsBlack hover:text-white` | `text-white underline hover:no-underline` |
-| `bg-[#333333]` | `text-white` / `text-gray-300` | `bg-white text-dsBlack hover:bg-dsBlue hover:text-white` | `text-white underline` |
+| `bg-dsBlack` (use dsBlack, not off-palette #333333) | `text-white` / `text-gray-300` | `bg-dsBlue text-white hover:bg-white hover:text-dsBlue` | `text-white underline` |
 | `bg-dsTeal` | `text-dsBlack` | `bg-dsBlack text-white hover:bg-dsBlue` | `text-dsBlack underline` |
 | `bg-dsLime` | `text-dsBlack` | `bg-dsBlack text-white hover:bg-dsBlue` | `text-dsBlack underline` |
 
@@ -1071,6 +1066,8 @@ See `brand-guide.md` for brand-level color pairing rules.
 
 ### When `data-bg="#333"` or `bg-[#333333]`:
 
+> **Off-palette:** `#333333` is not a brand token. For new/dark sections use `bg-dsBlack` (#050505). This section documents the legacy charcoal pattern for pages that still use it.
+
 - Background: `#333333`
 - Text color: `#ffffff`
 - Heading color: `#ffffff`
@@ -1237,10 +1234,10 @@ Selector: `.guttenberg-block:not(.spacer-new)` inside `.wp-content-legacy`
 
 - All paths MUST be relative (depth-appropriate `../` prefix)
 - Root-relative paths break in certain deployment contexts
-- `ds-includes.js` auto-detects `basePath` from its own `src` URL
+- `ds-includes-v2.js` auto-detects `basePath` from its own `src` URL
 - On Netlify, basePath returns `/` (no subdirectory prefix needed)
 - `.nojekyll` file required in repo root for subdirectory `index.html` serving
-- Nav/footer links use bare-relative paths resolved by `ds-includes.js`
+- Nav/footer links use bare-relative paths resolved by `ds-includes-v2.js`
 
 ### Netlify Configuration Reference (from `netlify.toml`)
 
@@ -1338,7 +1335,7 @@ Mobile: stacks to single column (content above, image below)
    - Provides context: who the client is and what the engagement delivered
 
 4. Tech Tags: flex flex-wrap gap-2
-   - Each tag: text-xs font-medium text-dsBlue bg-blue-50 px-3 py-1 rounded-full
+   - Each tag: text-xs font-medium text-dsBlue bg-dsBlue/5 px-3 py-1 rounded-full
    - 3-5 tags typical (technologies, platforms, or service areas)
    - NO CTA buttons in the hero
 ```
@@ -1377,9 +1374,9 @@ Mobile: stacks to single column (content above, image below)
                     Brief context about the client and what was delivered.
                 </p>
                 <div class="flex flex-wrap gap-2">
-                    <span class="text-xs font-medium text-dsBlue bg-blue-50 px-3 py-1 rounded-full">Tech 1</span>
-                    <span class="text-xs font-medium text-dsBlue bg-blue-50 px-3 py-1 rounded-full">Tech 2</span>
-                    <span class="text-xs font-medium text-dsBlue bg-blue-50 px-3 py-1 rounded-full">Tech 3</span>
+                    <span class="text-xs font-medium text-dsBlue bg-dsBlue/5 px-3 py-1 rounded-full">Tech 1</span>
+                    <span class="text-xs font-medium text-dsBlue bg-dsBlue/5 px-3 py-1 rounded-full">Tech 2</span>
+                    <span class="text-xs font-medium text-dsBlue bg-dsBlue/5 px-3 py-1 rounded-full">Tech 3</span>
                 </div>
             </div>
             <div class="relative flex justify-center">

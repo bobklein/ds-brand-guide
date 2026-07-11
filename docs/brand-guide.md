@@ -270,7 +270,7 @@ Status indicators should be the **brightest visual elements** in any composition
 |------------|------|---------|-------|
 | White / dsGray | dsBlack headings, gray-600 body | bg-dsBlue text-white | text-dsBlue |
 | dsBlack | White headings, gray-500 body | bg-dsBlue text-white | text-white |
-| #333333 | White headings, gray-300 body | bg-white text-dsBlack | text-white |
+| dsBlack (use dsBlack, not off-palette #333333) | White headings, gray-300 body | bg-dsBlue text-white | text-white |
 | dsBlue | White text | bg-white text-dsBlue | text-white underline |
 | dsTeal | dsBlack text | bg-dsBlack text-white | text-dsBlack underline |
 | dsLime | dsBlack text | bg-dsBlack text-white | text-dsBlack underline |
