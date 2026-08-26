@@ -803,7 +803,7 @@ Button: centered below, mt-8
 | Background | Text | Button | Inline Links |
 |------------|------|--------|-------------|
 | `bg-dsBlue` | `text-white` / `text-blue-100` | `bg-white text-dsBlue hover:bg-dsBlack hover:text-white` | `text-white underline hover:no-underline` |
-| `bg-dsBlack` (use dsBlack, not off-palette #333333) | `text-white` / `text-gray-300` | `bg-dsBlue text-white hover:bg-white hover:text-dsBlue` | `text-white underline` |
+| `bg-dsBlack` (use dsBlack, not off-palette #333333) | `text-white` / `text-gray-300` | `bg-dsBlue text-white hover:bg-white hover:text-dsBlack` | `text-white underline` |
 | `bg-dsTeal` | `text-dsBlack` | `bg-dsBlack text-white hover:bg-dsBlue` | `text-dsBlack underline` |
 | `bg-dsLime` | `text-dsBlack` | `bg-dsBlack text-white hover:bg-dsBlue` | `text-dsBlack underline` |
 
