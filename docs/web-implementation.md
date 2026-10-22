@@ -19,7 +19,7 @@ A full front-end cleanup established these as the canonical rules. Where an olde
 - **CTA standard:** primary = `bg-dsBlue text-white hover:bg-dsBlack`, **never inverted** (no white-on-dark primary). Track with `data-cta` attributes.
 - **Color:** use the brand tokens + dsBlue tint scale (`bg-dsBlue/5`, `/10`). **Never** stock Tailwind `blue-*`, and **no** red/amber/green/emerald — semantic states use `dsTeal`/`dsLime` (positive) or neutral `dsGray`/`dsBlack` (caution), with **dark text for contrast** (never `dsTeal` as text on white). Icons are inline SVG — **no emoji, no stock green/red check-marks.**
 - **Typography:** headings `letter-spacing:-0.02em`; body target **18px/1.6**; **no em/en dashes** (— or –) in copy — use commas or hyphens (brand editorial rule).
-- **Accessibility (required on every page):** one `<h1>`; content inside `<main id="main-content">`; skip-to-content link; visible `:focus-visible` ring; nav submenus reachable via `:focus-within`; FAQ accordions expose state (`aria-expanded`, or native `<details>`); and a no-JS + `prefers-reduced-motion` fallback for `.fade-up` (content must not stay hidden if JS fails).
+- **Accessibility (required on every page):** one `<h1>`; content inside `<main id="main-content">`; skip-to-content link; visible `:focus-visible` ring; nav submenus reachable via `:focus-within`; FAQ accordions use native `<details>` (Section 6.16); and a no-JS + `prefers-reduced-motion` fallback for `.fade-up` (content must not stay hidden if JS fails).
 - **SEO/LLM:** title, meta description, canonical, OG, and JSON-LD on every page; if a page emits `FAQPage` schema it **must** have a matching visible FAQ.
 - **Media:** keep images < 200KB; convert oversized photos to WebP and animated GIFs to muted looping video.
 
@@ -120,7 +120,7 @@ Adjust `../` prefix per directory depth (e.g., `../../` for 2-deep, `../../../` 
 - Sections are bare `<section>` tags with explicit Tailwind classes (`py-20 px-6 bg-dsGray`)
 - Background alternation is manual (author alternates `bg-white` / `bg-dsGray`)
 - Content containers use `max-w-screen-xl mx-auto` directly
-- FAQ accordions expose state — `aria-expanded` (kept in sync on toggle) or native `<details>` (see the Canonical standards block)
+- FAQ accordions use native `<details>` (Section 6.16)
 - Examples: `healthcare/index.html`, `services/blueprint/`, `healthcare/ai-guides/*`
 
 **WP-restyled pages (LEGACY — being retired):** Migrated-from-WordPress pages wrapped in `.wp-content-legacy`, using `.guttenberg-block` sections and `ds-wp-interactivity.js` (Swiper/tabs/alternating backgrounds). Their `ds-wp-layout.css` stylesheet was **removed in 2026** (it was orphaned). Do **not** build new pages this way; when you touch a legacy page, migrate it to hand-crafted Tailwind and drop the `.wp-content-legacy` wrapper.
@@ -687,55 +687,40 @@ Pagination: clickable dots
 Nav: prev/next buttons
 ```
 
-### 6.16 FAQ Accordion
+### 6.16 FAQ Accordion (one standard, every page)
 
-**WP Class:** `faq-new` (WP-migrated pages use `ds-wp-interactivity.js`)
-**Hand-crafted pages** use inline onclick + CSS (no JS file required).
+**The only FAQ pattern on the site (Bob, 22 Oct 2026).** Native `<details>`, no JavaScript. Every FAQ uses it: service pages, healthcare pages, problem pages, location pages, AI guides and blog posts. Button accordions (`.faq-open`), gray-chevron details, plus-icon details and static Q&A card grids are all retired.
 
-**Live example (hand-crafted):** `public/healthcare/index.html` lines 1245-1325
+**Live example:** `public/services/forward-deployed-ai-engineering/index.html` (the FAQ section).
 
 ```html
-<section class="py-20 px-6 bg-dsGray">
-    <div class="max-w-screen-xl mx-auto">
-        <div class="max-w-3xl mx-auto">
-            <div class="text-center mb-12 fade-up">
-                <span class="text-xs font-medium text-dsBlue uppercase tracking-wider font-mono">FAQ</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-dsBlack mt-3 mb-4">Frequently Asked Questions</h2>
-                <p class="text-gray-600">Subtitle text here.</p>
-            </div>
-
-            <div class="space-y-4 fade-up" id="faq-accordion">
-                <div class="border border-gray-200 rounded-xl overflow-hidden">
-                    <button class="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gray-50 transition" onclick="this.parentElement.classList.toggle('faq-open')">
-                        <span class="font-semibold text-dsBlack pr-4">Question text here?</span>
-                        <svg class="w-5 h-5 text-gray-500 flex-shrink-0 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <div class="faq-body px-6 pb-5 hidden">
-                        <p class="text-gray-600 leading-relaxed">Answer text here.</p>
-                    </div>
-                </div>
-                <!-- repeat for each Q&A -->
-            </div>
+<section class="py-20 px-6">
+    <div class="max-w-3xl mx-auto">
+        <div class="mb-12 fade-up">
+            <span class="text-xs font-medium text-dsBlue uppercase tracking-wider">Frequently Asked</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-dsBlack mt-3">Common questions about [topic].</h2>
+        </div>
+        <div class="space-y-3 max-w-3xl fade-up">
+            <details class="group border border-gray-200 rounded-xl p-6 hover:border-dsBlue transition open:border-dsBlue open:shadow-sm">
+                <summary class="flex justify-between items-center cursor-pointer list-none gap-4">
+                    <h3 class="font-bold text-dsBlack text-lg">Question text here?</h3>
+                    <svg class="w-5 h-5 text-dsBlue flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </summary>
+                <p class="text-gray-600 leading-relaxed mt-4">Answer text here.</p>
+            </details>
+            <!-- repeat for each Q&A -->
         </div>
     </div>
 </section>
-
-<style>
-    .faq-open .faq-icon { transform: rotate(180deg); }
-    .faq-open .faq-body { display: block !important; }
-</style>
 ```
 
-**Key mechanics:**
-- Toggle: `onclick="this.parentElement.classList.toggle('faq-open')"`
-- Chevron rotates via `.faq-open .faq-icon { transform: rotate(180deg); }`
-- Answer shows via `.faq-open .faq-body { display: block !important; }` overriding `hidden`
-- Arrow is a minimal gray chevron — NO dark circle background, NO number prefix on hand-crafted pages
-
-**WP-migrated FAQ** (`faq-new` class) uses different mechanics:
-- `ds-wp-interactivity.js` handles toggle via `max-height` animation (0.35s ease)
-- Number prefix: `text-dsBlue font-bold text-lg`
-- Border: `border-top 1px solid gray-200` between items
+**Rules:**
+- Question is an `<h3>` inside `<summary>`; one blue chevron that flips when open.
+- Open state: blue border and a light shadow (`open:border-dsBlue open:shadow-sm`).
+- The answer is one `<p>`; for several paragraphs or a list, wrap them in `<div class="text-gray-600 leading-relaxed mt-4 space-y-3">`.
+- The list sits in a `max-w-3xl` column, aligned like the section heading (centered heading, centered list).
+- Pair it with matching `FAQPage` JSON-LD (Section on schema below). The visible questions and the schema must match.
+- No `onclick`, no `.faq-open` CSS, no plus icons, no numbered prefixes, and no always-open Q&A card grids.
 
 ### 6.17 Services List / Tabbed Accordion
 
@@ -990,7 +975,7 @@ Each component pattern maps to specific live pages. Use these as copy-from sourc
 | Testimonial carousel (Section 6.8) | `healthcare/index.html` | Hand-crafted |
 | Logo ribbon (Section 6.9) | `healthcare/index.html` | Hand-crafted |
 | Blog card grid (Section 6.12) | `blog/index.html` | Hand-crafted |
-| FAQ accordion — hand-crafted (Section 6.16) | `healthcare/ai-agents/intelligent-scheduling/index.html` | Hand-crafted |
+| FAQ accordion (Section 6.16) | `services/forward-deployed-ai-engineering/index.html` | Hand-crafted |
 | FAQ accordion — WP (Section 6.16) | `ai-machine-learning/index.html` | WP-restyled |
 | CTA banner — dsBlue (Section 6.19) | `services/blueprint/index.html` | Hand-crafted |
 | What's Next navigation (Section 6.20) | `healthcare/ai-agents/intelligent-scheduling/index.html` | Hand-crafted |

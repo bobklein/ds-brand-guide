@@ -2264,7 +2264,7 @@ Style: Clean lines, no gradients, no 3D effects, no neon, executive tone.
       <h3 class="text-xl font-bold mb-4">Buttons — Three Tiers</h3>
       <div class="bg-dsGray rounded-xl border border-gray-200 p-8 mb-4">
         <div class="flex flex-wrap items-center gap-4">
-          <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3 text-sm font-medium rounded-full hover:bg-dsBlack transition" onclick="return false">Start The Experiment &rarr;</a>
+          <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3 text-sm font-medium rounded-full hover:bg-dsBlack transition" onclick="return false">Talk it over &rarr;</a>
           <a href="#" class="inline-flex items-center gap-3 border-2 border-dsBlack text-dsBlack px-6 py-3 rounded-full font-medium uppercase hover:bg-dsBlack hover:text-white transition-all" onclick="return false">VIEW CASE STUDY <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
           <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all" onclick="return false">View All &rarr;</a>
         </div>
@@ -2275,7 +2275,14 @@ Style: Clean lines, no gradients, no 3D effects, no neon, executive tone.
 &lt;a class="inline-flex items-center gap-2 bg-dsBlue text-white
    px-6 py-3 text-sm font-medium rounded-full
    hover:bg-dsBlack transition"&gt;
-  Start The Experiment &amp;rarr;
+  Talk it over &amp;rarr;
+&lt;/a&gt;
+
+&lt;!-- Tier 1, homepage hero size (live homepage) --&gt;
+&lt;a class="inline-flex items-center gap-2 bg-dsBlue text-white
+   px-8 py-4 rounded-full font-semibold text-lg
+   hover:bg-dsBlack transition-all"&gt;
+  Start building &amp;rarr;
 &lt;/a&gt;
 
 &lt;!-- Tier 2: Outline --&gt;
@@ -2389,19 +2396,19 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
       <h3 class="text-xl font-bold mb-4">FAQ Accordion</h3>
       <div class="bg-dsGray rounded-xl border border-gray-200 p-8 mb-4">
         <div class="space-y-3">
-          <details class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-              How does the FAQ accordion work?
-              <span class="text-gray-400 text-xl ml-2 transition-transform">+</span>
+          <details class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-dsBlue transition open:border-dsBlue open:shadow-sm">
+            <summary class="flex justify-between items-center cursor-pointer list-none gap-4">
+              <h3 class="font-bold text-dsBlack text-lg">How does the FAQ accordion work?</h3>
+              <svg class="w-5 h-5 text-dsBlue flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </summary>
-            <div class="px-5 pb-5 text-gray-600 text-sm">Each FAQ item is a <code class="bg-gray-50 px-1 rounded text-xs font-mono">&lt;details&gt;</code> element with a <code class="bg-gray-50 px-1 rounded text-xs font-mono">&lt;summary&gt;</code>. The + icon rotates to × when open. Background is white on dsGray sections.</div>
+            <div class="text-gray-600 leading-relaxed mt-4 text-sm">Each FAQ item is a <code class="bg-gray-50 px-1 rounded text-xs font-mono">&lt;details&gt;</code> element with a <code class="bg-gray-50 px-1 rounded text-xs font-mono">&lt;summary&gt;</code>. The question is an h3, a blue chevron flips when open, and the open item gets a blue border. This is the one FAQ pattern on the site; copy it from <code class="bg-gray-50 px-1 rounded text-xs font-mono">services/forward-deployed-ai-engineering/</code>. Button accordions, plus icons and static Q&amp;A card grids are retired.</div>
           </details>
-          <details class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <summary class="cursor-pointer p-5 font-semibold flex justify-between items-center">
-              What about Swiper carousels?
-              <span class="text-gray-400 text-xl ml-2 transition-transform">+</span>
+          <details class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-dsBlue transition open:border-dsBlue open:shadow-sm">
+            <summary class="flex justify-between items-center cursor-pointer list-none gap-4">
+              <h3 class="font-bold text-dsBlack text-lg">What about Swiper carousels?</h3>
+              <svg class="w-5 h-5 text-dsBlue flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </summary>
-            <div class="px-5 pb-5 text-gray-600 text-sm">Carousels use Swiper.js (v11). Include the Swiper CSS and JS CDN links. Initialize via <code class="bg-gray-50 px-1 rounded text-xs font-mono">ds-wp-interactivity.js</code> which auto-detects <code class="bg-gray-50 px-1 rounded text-xs font-mono">.swiper</code> containers.</div>
+            <div class="text-gray-600 leading-relaxed mt-4 text-sm">Carousels use Swiper.js (v11). Include the Swiper CSS and JS CDN links. Initialize via <code class="bg-gray-50 px-1 rounded text-xs font-mono">ds-wp-interactivity.js</code> which auto-detects <code class="bg-gray-50 px-1 rounded text-xs font-mono">.swiper</code> containers.</div>
           </details>
         </div>
       </div>
@@ -2421,9 +2428,9 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
       <div class="grid md:grid-cols-3 gap-6 mb-12">
         <div class="bg-white rounded-xl border-2 border-dsBlue p-6">
           <div class="inline-block bg-dsBlue text-white text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Tier 1: High Intent</div>
-          <h4 class="font-bold mb-2">Start The Experiment</h4>
-          <p class="text-gray-600 text-sm mb-3">Links to <code class="bg-gray-50 px-1 rounded text-xs font-mono">/proof/</code>. Solid dsBlue filled button. Used for visitors ready to engage — case study CTAs, healthcare pages, pricing discussions.</p>
-          <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-5 py-2.5 text-sm font-medium rounded-full hover:bg-dsBlack transition" onclick="return false">Start The Experiment &rarr;</a>
+          <h4 class="font-bold mb-2">Talk it over</h4>
+          <p class="text-gray-600 text-sm mb-3">Links to <code class="bg-gray-50 px-1 rounded text-xs font-mono">/start/</code> (add <code class="bg-gray-50 px-1 rounded text-xs font-mono">?path=</code> to preselect a route). Solid dsBlue filled button. The site-wide primary CTA, used in the nav and on service pages.</p>
+          <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-5 py-2.5 text-sm font-medium rounded-full hover:bg-dsBlack transition" onclick="return false">Talk it over &rarr;</a>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Tier 2: Mid Intent</div>
@@ -2433,9 +2440,9 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="inline-block bg-gray-200 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Tier 3: Awareness</div>
-          <h4 class="font-bold mb-2">Learn More / Assess</h4>
-          <p class="text-gray-600 text-sm mb-3">Links to service pages or assessment tool. Text link with arrow. Used for early-stage visitors — blog inline CTAs, sidebar prompts.</p>
-          <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all" onclick="return false">Take the AI Readiness Assessment &rarr;</a>
+          <h4 class="font-bold mb-2">Read More</h4>
+          <p class="text-gray-600 text-sm mb-3">Links to a service page or case study. Text link with arrow. Used for early-stage visitors — blog inline CTAs, sidebar prompts.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all" onclick="return false">How the Blueprint works &rarr;</a>
         </div>
       </div>
 
@@ -2444,8 +2451,9 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <h4 class="font-bold mb-3 text-green-700">Use These</h4>
           <ul class="space-y-2 text-sm text-gray-600">
-            <li>&#10003; "Start The Experiment"</li>
+            <li>&#10003; "Talk it over"</li>
             <li>&#10003; "Start a Conversation"</li>
+            <li>&#10003; "Book a strategy consultation"</li>
             <li>&#10003; "Discuss Your AI Opportunity"</li>
             <li>&#10003; "Schedule AI Opportunity Call"</li>
             <li>&#10003; "See More Healthcare Case Studies"</li>
@@ -2458,6 +2466,7 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
             <li>&#10005; "Get In Touch" → use "Start a Conversation"</li>
             <li>&#10005; "Contact Us" as button → OK as page heading only</li>
             <li>&#10005; "Click Here"</li>
+            <li>&#10005; "Start The Experiment" (The Experiment is no longer a starting offer; start with a Blueprint)</li>
             <li>&#10005; "Submit" (on forms — use specific action verb)</li>
           </ul>
         </div>
