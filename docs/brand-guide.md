@@ -239,7 +239,7 @@ Geometric shapes derived from the DS brand system — L-shaped, square, and quar
 | Token | Hex | RGB | Usage |
 |-------|-----|-----|-------|
 | dsGray | `#F5F5F5` | 245, 245, 245 | Alternating section backgrounds |
-| dsTeal | `#26D9C4` | 38, 217, 196 | Accent highlights (checkmarks, icons, dark-section accents) |
+| dsTeal | `#26D9C4` | 38, 217, 196 | Accent highlights (icons, dark-section accents). Checkmarks on white use dsBlue SVG (live site) |
 | dsLime | `#D1F259` | 209, 242, 89 | Accent backgrounds (CTA banners, attention) |
 
 ### 4.3 Supporting Grays
@@ -1018,7 +1018,7 @@ The DS website uses Tailwind CSS (CDN) with a custom color/font configuration. A
 - Equal height via flexbox (cards in grids match tallest card)
 
 **Buttons (3 tiers):**
-1. **Primary filled:** `bg-dsBlue text-white px-6 py-3 rounded-full font-medium hover:bg-dsBlack` — normal case
+1. **Primary filled:** `bg-dsBlue text-white px-6 py-3 rounded-full font-medium hover:bg-dsBlack` — normal case. Homepage hero size: `px-8 py-4 font-semibold text-lg`
 2. **Outline:** `border-2 border-dsBlack text-dsBlack px-6 py-3 rounded-full font-medium hover:bg-dsBlack hover:text-white` — UPPERCASE
 3. **Text link:** `text-dsBlue font-semibold text-sm uppercase tracking-wider` — with → arrow
 
