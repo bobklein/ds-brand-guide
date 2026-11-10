@@ -433,13 +433,13 @@ Each content type has a distinct voice treatment, even when the underlying voice
 | Content Type | Voice | Length | Opening Pattern | Closing Pattern | CTA Style |
 |-------------|-------|--------|-----------------|-----------------|-----------|
 | **Blog A** (thought leadership) | Bob — opinionated, historical | 1,200–2,000 words | Observation or anecdote from experience | Clear position or open question | Soft — woven into the argument, never a banner |
-| **Blog B** (technical/SEO) | DS Company — expert, generous | 1,500–3,000 words | Define the topic, state the argument | Summary + next step | Direct — link to service page or assessment |
+| **Blog B** (technical/SEO) | DS Company — expert, generous | 1,500–3,000 words | Define the topic, state the argument | Summary + next step | Direct — link to the page the post supports, then "Talk it over" |
 | **Bob LinkedIn (Tue)** | Bob — writes from scratch | 200–300 words | Concrete observation or story | Question that invites comment | None in post body. Link in first comment. |
 | **Bob LinkedIn (Thu/Sat)** | Bob — edits from Japheth draft | 100–350 words | Data point, framework, or hot take | Question or clear POV | None in post body. Link in first comment. |
 | **DS LinkedIn** | DS Company — data-backed | 100–200 words | Lead metric or blog headline | Question or engagement prompt | Link to blog post |
-| **HC Newsletter** | Bob — conversational, like texting a peer | 2 paragraphs for Bob's take; rest is assembled | "Here's what I'm thinking about this week" | No formal close — Bob's take ends naturally | Rotating CTA (The Experiment, assessment, contact) |
+| **HC Newsletter** | Bob — conversational, like texting a peer | 2 paragraphs for Bob's take; rest is assembled | "Here's what I'm thinking about this week" | No formal close — Bob's take ends naturally | "Talk it over" (/start/) |
 | **McKnight's Column** | Bob — practitioner op-ed | 700 words | Operator-facing problem statement | Actionable framework or question | None — editorial, not promotional |
-| **Service page** (website) | DS Company — expert, structured | 2,500–3,500 words | "What is [X]?" definition section | FAQ schema + CTA to contact/assessment | Direct — button to /start/ or /contact/ |
+| **Service page** (website) | DS Company — expert, structured | 2,500–3,500 words | "What is [X]?" definition section | FAQ schema + "Talk it over" | Direct — button to /start/ or the inline #start form |
 | **Case study** (website) | DS Company — factual, results-led | 800–1,200 words | Lead metric + one-sentence context | Results table + related case studies | Soft — "See how we can help" |
 
 ### 6.7 Content Pillars and Voice Mapping
@@ -663,7 +663,7 @@ If it looks like a SaaS landing page from 2016, reject it.
 
 When used in illustrations:
 - Calm posture, focused, reviewing documents, engaged in evaluation
-- Always viewed from fully behind, in profile, or from above — **never facing camera, no visible faces**
+- In profile or from above — **never facing camera, and never a prominent faceless back** (Bob, Nov 2026). Make the scene and the objects the subject; keep any people incidental, distant or small in frame
 - Gray/dark suits for business, scrubs for healthcare
 - Figures always have purpose — doing something, not posing
 
@@ -693,6 +693,14 @@ Risk should **NOT** be shown as:
 - Catastrophic imagery of any kind
 
 Risk at Digital Scientists is managed through discipline — not avoided through magic.
+
+### 7.8 Site Image Rules (Bob, Nov 2026)
+
+- **Never crop people.** Show the whole person, legs included. Tall images (people, devices, diagrams) render whole: `w-auto max-w-full mx-auto max-h-[560px] object-contain`, not `object-cover`.
+- **No masked clinicians.** Surgical masks date a page to 2020.
+- **No faceless backs.** See 7.5.
+- **Caption what isn't obvious.** Every screenshot, diagram or product shot gets a one-line caption under it: what it is and why it's there. People photos don't need one.
+- **Never reuse an image across pages.** Each hero or section image appears once. Only case study thumbnails, logos and testimonial photos repeat. If nothing fits, use an icon-led or typographic layout.
 
 ---
 
@@ -1018,9 +1026,17 @@ The DS website uses Tailwind CSS (CDN) with a custom color/font configuration. A
 - Equal height via flexbox (cards in grids match tallest card)
 
 **Buttons (3 tiers):**
-1. **Primary filled:** `bg-dsBlue text-white px-6 py-3 rounded-full font-medium hover:bg-dsBlack` — normal case. Homepage hero size: `px-8 py-4 font-semibold text-lg`
-2. **Outline:** `border-2 border-dsBlack text-dsBlack px-6 py-3 rounded-full font-medium hover:bg-dsBlack hover:text-white` — UPPERCASE
+1. **Primary filled:** `bg-dsBlue text-white px-6 py-3 text-sm rounded-full font-medium hover:bg-dsBlack` — normal case. The only dsBlue button on a page; label is **"Talk it over"** site-wide (Bob, 9 Nov 2026), linking to `/start/?route=…&source=…` or the page's inline `#start` form. Inside dark bands it never inverts to white: `hover:bg-dsBlack hover:ring-2 hover:ring-white/40`. Homepage hero size: `px-8 py-4 font-semibold`, offer-named ("Build with Us", "Start with a Blueprint"). The header button still reads "Get Started".
+2. **Outline (thin, normal case):** on light `border border-gray-300 text-dsBlack px-6 py-3 text-sm font-medium rounded-full hover:border-dsBlack`; on dark `border border-gray-500 text-white hover:border-white px-6 py-3 font-medium rounded-full`. Labels: "See the work", "Ways to start", "How we work". The heavy `border-2` uppercase outline is retired.
 3. **Text link:** `text-dsBlue font-semibold text-sm uppercase tracking-wider` — with → arrow
+
+Retired CTA labels: "Start a Conversation", "Schedule a call" and its variants, and every assessment CTA (assessments are retired as offers).
+
+**Header dropdowns:** Services and Healthcare share one style (`.ds-dd-*` in `public/ds-nav.css`, markup in `public/includes/nav.html`): 560px panel; each item is an icon, a title and a one-line description; a gray side column of secondary links (More / Popular); a footer with an overview link and the "Talk it over" button. Build with Us is the first Services item.
+
+**Comparison tables:** header `bg-dsBlack` with white text. When a table compares provider types, the Digital Scientists row is a solid `bg-dsBlue` band with white text. Compare categories, not named firms.
+
+**"In healthcare" cross-link strip:** general service pages carry a thin `bg-white border-t border-gray-100` strip (between `hc-crosslink:start` / `hc-crosslink:end` comments) above the closing CTA: an "In healthcare" eyebrow, then descriptive links whose anchor text is the target page's main phrase.
 
 **Labels:** `text-xs font-medium text-dsBlue uppercase tracking-wider`
 
