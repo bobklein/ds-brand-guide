@@ -239,7 +239,7 @@ Geometric shapes derived from the DS brand system — L-shaped, square, and quar
 | Token | Hex | RGB | Usage |
 |-------|-----|-----|-------|
 | dsGray | `#F5F5F5` | 245, 245, 245 | Alternating section backgrounds |
-| dsTeal | `#26D9C4` | 38, 217, 196 | Accent highlights (icons, dark-section accents). Check icons are dsTeal inline SVG on every background (Bob, 10 Nov 2026) |
+| dsTeal | `#26D9C4` | 38, 217, 196 | Accent highlights (icons, dark-section accents). Check icons: dsTeal on dark and blue backgrounds, dsBlue on white (contrast; Bob, 10 Nov 2026) |
 | dsLime | `#D1F259` | 209, 242, 89 | Accent backgrounds (CTA banners, attention) |
 
 ### 4.3 Supporting Grays
