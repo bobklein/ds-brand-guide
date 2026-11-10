@@ -16,12 +16,14 @@ A full front-end cleanup established these as the canonical rules. Where an olde
 - **Build:** CSS is the committed, purged `ds-tailwind.css` — **no Tailwind CDN.** After adding/changing any Tailwind class, run `npm run build:css` and commit the regenerated file, or the class silently does nothing live. See `BUILD.md`.
 - **Fonts:** self-hosted via `ds-fonts.css` (Inter + Roboto Mono, subset). No Google Fonts CDN.
 - **Legacy removed:** `ds-wp-layout.css` and the `.wp-content-legacy` wrapper are retired. **New pages are hand-crafted Tailwind only.**
-- **CTA standard:** primary = `bg-dsBlue text-white hover:bg-dsBlack`, **never inverted** (no white-on-dark primary). Track with `data-cta` attributes.
-- **Color:** use the brand tokens + dsBlue tint scale (`bg-dsBlue/5`, `/10`). **Never** stock Tailwind `blue-*`, and **no** red/amber/green/emerald — semantic states use `dsTeal`/`dsLime` (positive) or neutral `dsGray`/`dsBlack` (caution), with **dark text for contrast** (never `dsTeal` as text on white). Icons are inline SVG — **no emoji, no stock green/red check-marks.**
+- **CTA standard:** primary = `bg-dsBlue text-white hover:bg-dsBlack`, **never turns white on hover.** On white, gray or black backgrounds the primary is dsBlue (inside dark bands: `hover:bg-dsBlack hover:ring-2 hover:ring-white/40`). **On a dsBlue band the primary is white:** `bg-white text-dsBlue hover:bg-dsBlack hover:text-white`, because a blue button on blue disappears (Bob, 10 Nov 2026). Label is **"Talk it over"** site-wide (Bob, 9 Nov 2026), to `/start/?route=…&source=…` or the page's inline `#start` form. Retired: "Start a Conversation", "Schedule a call" variants, every assessment CTA. The header button reads "Get Started" (Bob, 10 Nov 2026: keep it for now). Secondary = thin outline, normal case (§4.1). Track with `data-cta` attributes.
+- **Color:** use the brand tokens + dsBlue tint scale (`bg-dsBlue/5`, `/10`). **Never** stock Tailwind `blue-*`, and **no** red/amber/green/emerald — semantic states use `dsTeal`/`dsLime` (positive) or neutral `dsGray`/`dsBlack` (caution), with **dark text for contrast** (never `dsTeal` as text on white). Icons are inline SVG — **no emoji, no stock green/red check-marks.** **Check icons:** dsTeal on dark and dsBlue backgrounds, dsBlue on white or gray (Bob, 10 Nov 2026). dsTeal on white is about 1.8:1, below the WCAG 3:1 minimum for meaningful icons, and stays off body text on white.
 - **Typography:** headings `letter-spacing:-0.02em`; body target **18px/1.6**; **no em/en dashes** (— or –) in copy — use commas or hyphens (brand editorial rule).
 - **Accessibility (required on every page):** one `<h1>`; content inside `<main id="main-content">`; skip-to-content link; visible `:focus-visible` ring; nav submenus reachable via `:focus-within`; FAQ accordions use native `<details>` (Section 6.16); and a no-JS + `prefers-reduced-motion` fallback for `.fade-up` (content must not stay hidden if JS fails).
 - **SEO/LLM:** title, meta description, canonical, OG, and JSON-LD on every page; if a page emits `FAQPage` schema it **must** have a matching visible FAQ.
 - **Media:** keep images < 200KB; convert oversized photos to WebP and animated GIFs to muted looping video.
+- **Images (Bob, Nov 2026):** never crop people (tall images render whole with `object-contain`, §8.3); no masked clinicians; no faceless backs; a one-line caption under any screenshot, diagram or product shot whose meaning isn't obvious (people photos don't need one); never reuse an image across pages.
+- **Header dropdowns:** Services and Healthcare share one `.ds-dd-*` component (§6.25).
 
 ---
 
@@ -240,25 +242,36 @@ hover:bg-dsBlack transition
 Normal case (NOT uppercase)
 Arrow: SVG icon (w-4 h-4) or -> character
 ```
-Example from healthcare.html: "Discuss Your AI Opportunity ->"
+Label: "Talk it over ->" (the only primary label; the homepage hero names the offers instead)
 
-**Tier 2 — Outline Button** (secondary)
+Inside a dark band (`bg-dsBlack` and similar):
 ```
-inline-flex items-center gap-3
-border-2 border-dsBlack text-dsBlack
-px-6 py-3
-rounded-full font-medium (500)
-hover:bg-dsBlack hover:text-white transition-all
-Text content is UPPERCASE
-Arrow: SVG icon (w-5 h-5)
+inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3
+rounded-full hover:bg-dsBlack hover:ring-2 hover:ring-white/40
+font-medium transition
 ```
-Example from healthcare.html: "VIEW CASE STUDY ->"
+Never `hover:bg-white` / `hover:text-dsBlack` on a primary.
+
+**Tier 2 — Outline Button** (secondary; thin, normal case)
+```
+On light:
+inline-flex items-center justify-center gap-2
+border border-gray-300 text-dsBlack
+px-6 py-3 text-sm font-medium
+rounded-full hover:border-dsBlack transition
+
+On dark:
+inline-flex items-center gap-2
+border border-gray-500 text-white hover:border-white
+px-6 py-3 font-medium rounded-full transition
+```
+Labels: "See the work ->", "Ways to start ->", "How we work ->". The older `border-2` UPPERCASE outline is retired.
 
 **Tier 3 — Text Link CTA** (tertiary / inline)
 ```
 inline-flex items-center gap-2
 text-dsBlue font-semibold (600) text-sm
-uppercase tracking-wider
+normal case (uppercase is for eyebrow labels only; Bob, 10 Nov 2026)
 hover:gap-3 transition-all
 Arrow: -> character or SVG
 ```
@@ -412,8 +425,8 @@ This section contains the full HTML template and class reference for every DS we
                     Description text here. One or two paragraphs max.
                 </p>
 
-                <a href="#contact" class="inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3 text-sm font-medium rounded-full hover:bg-white hover:text-dsBlack transition">
-                    CTA Text
+                <a href="#start" data-cta="primary" class="inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3 text-sm font-medium rounded-full hover:bg-dsBlack hover:ring-2 hover:ring-white/40 transition">
+                    Talk it over
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             </div>
@@ -772,12 +785,10 @@ Button: centered below, mt-8
 <section class="py-20 px-6 bg-dsBlue">
     <div class="max-w-screen-xl mx-auto text-center fade-up">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to define what to build?</h2>
-        <p class="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">30 minutes. No pitch. We'll help you determine
-            if a Blueprint is the right starting point&mdash;or recommend a
-            <a href="../diagnostic/" class="text-white font-semibold underline hover:no-underline">Diagnostic</a>
-            to identify the opportunity first.</p>
-        <a href="../../start/" class="inline-flex items-center gap-2 bg-white text-dsBlue px-8 py-4 rounded-full font-medium hover:bg-dsBlack hover:text-white transition text-lg">
-            Start a Blueprint &rarr;
+        <p class="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">30 minutes. No pitch. We'll help you decide
+            whether a Blueprint is the right starting point.</p>
+        <a href="../../start/?route=define-the-plan&amp;source=blueprint-cta" data-cta="primary" class="inline-flex items-center gap-2 bg-white text-dsBlue px-8 py-4 rounded-full font-medium hover:bg-dsBlack hover:text-white transition text-lg">
+            Talk it over &rarr;
         </a>
     </div>
 </section>
@@ -788,7 +799,7 @@ Button: centered below, mt-8
 | Background | Text | Button | Inline Links |
 |------------|------|--------|-------------|
 | `bg-dsBlue` | `text-white` / `text-blue-100` | `bg-white text-dsBlue hover:bg-dsBlack hover:text-white` | `text-white underline hover:no-underline` |
-| `bg-dsBlack` (use dsBlack, not off-palette #333333) | `text-white` / `text-gray-300` | `bg-dsBlue text-white hover:bg-white hover:text-dsBlack` | `text-white underline` |
+| `bg-dsBlack` (use dsBlack, not off-palette #333333) | `text-white` / `text-gray-300` | `bg-dsBlue text-white hover:bg-dsBlack hover:ring-2 hover:ring-white/40` (never inverts to white) | `text-white underline` |
 | `bg-dsTeal` | `text-dsBlack` | `bg-dsBlack text-white hover:bg-dsBlue` | `text-dsBlack underline` |
 | `bg-dsLime` | `text-dsBlack` | `bg-dsBlack text-white hover:bg-dsBlue` | `text-dsBlack underline` |
 
@@ -797,8 +808,8 @@ Button: centered below, mt-8
 <section class="py-20 px-6 bg-dsBlue">
     <div class="max-w-screen-xl mx-auto text-center fade-up">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Let's talk about your challenge</h2>
-        <a href="../../start/" class="inline-flex items-center gap-2 bg-white text-dsBlue px-8 py-4 rounded-full font-medium hover:bg-dsBlack hover:text-white transition text-lg">
-            Start a Conversation &rarr;
+        <a href="../../start/" data-cta="primary" class="inline-flex items-center gap-2 bg-white text-dsBlue px-8 py-4 rounded-full font-medium hover:bg-dsBlack hover:text-white transition text-lg">
+            Talk it over &rarr;
         </a>
     </div>
 </section>
@@ -832,7 +843,7 @@ The modern pattern replaces the WP single-link nav with a 3-card grid pointing t
 
         <div class="grid md:grid-cols-3 gap-6">
             <a href="../documentation-automation/" class="group border border-gray-200 rounded-xl p-6 hover:border-dsBlue transition">
-                <span class="text-xs text-green-600 font-medium uppercase tracking-wider">Fastest Payback</span>
+                <span class="text-xs text-dsBlue font-medium uppercase tracking-wider">Fastest Payback</span>
                 <h3 class="font-bold text-dsBlack mt-2 mb-2 group-hover:text-dsBlue transition">AI Documentation Automation</h3>
                 <p class="text-gray-500 text-sm">Now that you have more visits, reduce documentation burden. 45->5 min per visit.</p>
             </a>
@@ -844,7 +855,7 @@ The modern pattern replaces the WP single-link nav with a 3-card grid pointing t
             </a>
 
             <a href="../virtual-care-assistants/" class="group border border-gray-200 rounded-xl p-6 hover:border-dsBlue transition">
-                <span class="text-xs text-purple-600 font-medium uppercase tracking-wider">Proven at Scale</span>
+                <span class="text-xs text-dsBlue font-medium uppercase tracking-wider">Proven at Scale</span>
                 <h3 class="font-bold text-dsBlack mt-2 mb-2 group-hover:text-dsBlue transition">Virtual Care Assistants</h3>
                 <p class="text-gray-500 text-sm">Extend clinical capacity without more headcount. 3x patients per nurse.</p>
             </a>
@@ -857,10 +868,12 @@ The modern pattern replaces the WP single-link nav with a 3-card grid pointing t
 
 | Label | Color | When to use |
 |-------|-------|------------|
-| Fastest Payback | `text-green-600` | Quick-win, low-effort recommendation |
+| Fastest Payback | `text-dsBlue` | Quick-win, low-effort recommendation |
 | Highest ROI | `text-dsBlue` | Revenue/savings-focused recommendation |
-| Proven at Scale | `text-purple-600` | Mature solution with validated results |
-| Most Popular | `text-amber-600` | Highest traffic/engagement recommendation |
+| Proven at Scale | `text-dsBlue` | Mature solution with validated results |
+| Most Popular | `text-dsBlue` | Highest traffic/engagement recommendation |
+
+All labels use `text-dsBlue`; the words differentiate, not the color. No stock Tailwind green, purple or amber.
 
 **Rules:**
 - Always use `<a>` wrapping the entire card (not a button inside a card)
@@ -984,8 +997,89 @@ Each component pattern maps to specific live pages. Use these as copy-from sourc
 | Dark section #333 (Section 9) | `services/blueprint/index.html` | Hand-crafted |
 | Related Work cards | `case-studies/custom-ehr-development/index.html` | Hand-crafted |
 | Tab switching (Section 10.3) | `healthcare/capabilities/ai-integration/index.html` | WP-restyled |
+| Header dropdowns (Section 6.25) | `includes/nav.html` + `ds-nav.css` | Shared include |
+| Comparison table, DS row (Section 6.26) | `healthcare/software-pe-companies/index.html` | Hand-crafted |
+| "In healthcare" strip (Section 6.27) | `api-integration-development/index.html` | Hand-crafted |
 
 **Rule:** When creating a new page, read the "Best Example Page" first. Copy its structure, then modify content. Never build from memory alone.
+
+### 6.25 Header Dropdown Menus
+
+Services and Healthcare use one shared dropdown component (Bob's "Option 1", 9 Nov 2026). Markup lives in `public/includes/nav.html` (pre-rendered into every page by `render_includes.py`); styles are the `.ds-dd-*` rules in `public/ds-nav.css`.
+
+- Panel: `.ds-services-inner.ds-dd` / `.ds-healthcare-inner.ds-dd`, 560px wide (`max-width: calc(100vw - 32px)`), no inner padding.
+- `.ds-dd-grid`: main column + 190px side column.
+- `.ds-dd-item`: 30px icon tile (`.ds-dd-ic`, dsBlue stroke icon on `#eef1ff`), a 15px semibold title and a 13px gray one-line description. Hover: `#f4f6ff` background, title turns dsBlue.
+- `.ds-dd-side`: `#f5f5f5` column with a Roboto Mono eyebrow (`.ds-dd-k`: "More" in Services, "Popular" in Healthcare) and plain 14px links.
+- `.ds-dd-foot`: overview link (`.ds-dd-more`: "All services →" / "Case studies →") and the primary CTA (`.ds-dd-cta`, dsBlue pill, hover dsBlack, "Talk it over →", `data-cta="primary"`).
+- Services order: Build with Us, Blueprint, Minimum viable product, Full build, Production support.
+- Mobile mirrors each menu as an accordion: item titles, then an `<h5>` eyebrow and the side links. Keep desktop and mobile in sync.
+- The header button (`.ds-contact-btn`) reads "Get Started" (Bob, 10 Nov 2026: keep it for now).
+
+```html
+<div class="ds-services-inner ds-dd">
+  <div class="ds-dd-grid">
+    <div class="ds-dd-main">
+      <a href="services/build-with-us/" class="ds-dd-item">
+        <span class="ds-dd-ic"><svg …></svg></span>
+        <span><strong>Build with Us</strong><span>Experiment. Two weeks, then monthly</span></span>
+      </a>
+      …
+    </div>
+    <div class="ds-dd-side">
+      <p class="ds-dd-k">More</p>
+      <a href="method/">How we work</a>
+      …
+    </div>
+  </div>
+  <div class="ds-dd-foot">
+    <a href="services/" class="ds-dd-more">All services &#8594;</a>
+    <a href="start/?route=define-the-plan&amp;source=nav-services" class="ds-dd-cta" data-cta="primary" data-cta-location="nav-services">Talk it over &#8594;</a>
+  </div>
+</div>
+```
+
+### 6.26 Comparison Tables
+
+When a table compares provider types, the Digital Scientists row is a solid dsBlue band with white text. Compare categories, never named firms, and say so in a note under the table.
+
+```html
+<div class="overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+  <table class="w-full text-base border-collapse">
+    <thead class="bg-dsBlack"><tr>
+      <th scope="col" class="text-left font-semibold text-white px-5 py-4">Provider type</th>
+      <th scope="col" class="text-left font-semibold text-white px-5 py-4">Speed</th>
+    </tr></thead>
+    <tbody>
+      <tr class="border-b border-gray-200 last:border-0">
+        <td class="align-top px-5 py-4 text-gray-700 font-semibold text-dsBlack">Strategy firms</td>
+        <td class="align-top px-5 py-4 text-gray-700">Months, then a handoff</td>
+      </tr>
+      <tr class="bg-dsBlue">
+        <td class="align-top px-5 py-4 text-white font-bold">Digital Scientists</td>
+        <td class="align-top px-5 py-4 text-white font-medium"><strong>Working software in two weeks</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class="text-sm text-gray-500 mt-3">Categories, not ratings of any one firm.</p>
+```
+
+### 6.27 "In healthcare" Cross-Link Strip
+
+General service pages link to their healthcare counterparts with a thin strip just above the closing CTA band. Mark it with `hc-crosslink` comments so it can be found and updated site-wide. One eyebrow label, then descriptive links. Anchor text is the target page's main phrase, never "learn more" or "click here".
+
+```html
+<!-- hc-crosslink:start -->
+<section class="py-10 px-6 bg-white border-t border-gray-100" aria-label="In healthcare">
+    <div class="max-w-screen-xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3">
+        <span class="text-xs font-medium text-dsBlue uppercase tracking-wider">In healthcare</span>
+        <a href="../healthcare/integrations/" class="inline-flex items-center gap-1 font-semibold text-dsBlack hover:text-dsBlue">Healthcare integrations &rarr;</a>
+        <a href="../healthcare/domains/ehr-integrations/" class="inline-flex items-center gap-1 font-semibold text-dsBlack hover:text-dsBlue">EHR integration &rarr;</a>
+    </div>
+</section>
+<!-- hc-crosslink:end -->
+```
 
 ---
 
@@ -1042,6 +1136,19 @@ Not every image should be `w-full`. Size images according to their content type 
 2. **Center undersized images.** When an image is constrained smaller than its container, wrap it in `flex items-center justify-center`.
 3. **Always include `h-auto`** with width constraints to maintain aspect ratio.
 4. **Portrait vs landscape matters.** Landscape images can fill their column; portrait images (app screenshots, phone mockups) must be constrained.
+
+### 8.3 Image Content Rules (Bob, Nov 2026)
+
+1. **Never crop people.** Show the whole person, legs included. Any hero whose height is 0.7 of its width or more renders whole:
+   `rounded-2xl shadow-xl w-auto max-w-full mx-auto max-h-[560px] object-contain`
+   Wide images can use `w-full max-h-[480px] object-cover object-top`.
+2. **No masked clinicians.** Surgical masks date a page.
+3. **No faceless backs.** A person seen only from behind reads as awkward. Make the scene and objects the subject.
+4. **Caption what isn't obvious.** Every screenshot, diagram or product shot gets one line under it: what it is and why it's there. People photos don't need one.
+   ```html
+   <figcaption class="text-sm text-gray-500 mt-3 text-center">What it is, and why it's here.</figcaption>
+   ```
+5. **Never reuse an image across pages.** Each hero or section image appears once. Only case study thumbnails, logos and testimonial photos repeat. If nothing fits, use an icon-led or typographic layout instead of a stand-in photo.
 
 ---
 
@@ -1985,6 +2092,7 @@ The following rules are non-negotiable. Each was learned by breaking things in p
 
 ## Revision History
 
+- 2026-11-10: v1.3 — Synced to the live site after the healthcare rebuild: "Talk it over" as the one primary label; thin normal-case outline buttons; no white inversion on dark bands; header dropdowns (§6.25); comparison-table DS row (§6.26); "In healthcare" strip (§6.27); image content rules (§8.3); nav-card labels on brand tokens.
 - 2026-05-22: v1.2 — Rewrote §17 as an overview of the full attribution stack (Formspree, Pipedrive Leads with 8 custom fields, GA4, PostHog, StatCounter, Google Ads offline conversion loop, daily morning brief). Implementation details moved to companion file `analytics-attribution.md`.
 - 2026-03-16: v1.1 — Added §17 Forms & CRM Integration (Formspree, Pipedrive Scheduler, Google Calendar, UTM attribution)
 - 2026-03-07: v1.0 — Extracted from ds-design-standard.md as part of brand guide consolidation

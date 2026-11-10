@@ -129,7 +129,7 @@
     <div class="toc-part">Part 9 — Reference Docs</div>
     <a href="#reference-docs" class="toc-link">34. Reference Documents</a>
   </nav>
-  <p class="text-gray-400 text-xs mt-6">Last updated: March 2026</p>
+  <p class="text-gray-400 text-xs mt-6">Last updated: November 2026</p>
 </aside>
 
 <!-- ============================================================ -->
@@ -2042,6 +2042,25 @@ Style: Clean lines, no gradients, no 3D effects, no neon, executive tone.
         </div>
       </div>
 
+      <div class="p-6 bg-white rounded-xl border-2 border-dsBlue mb-6">
+        <h4 class="font-bold mb-3">Image Rules for Site Pages (Bob, Nov 2026)</h4>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><strong>Never crop people.</strong> Show the whole person, legs included. Tall images (people, devices, diagrams) render whole with <code class="bg-gray-50 px-1 rounded text-xs font-mono">object-contain</code>, capped at <code class="bg-gray-50 px-1 rounded text-xs font-mono">max-h-[560px]</code>, never <code class="bg-gray-50 px-1 rounded text-xs font-mono">object-cover</code> that cuts them off.</li>
+          <li><strong>No masked clinicians.</strong> Surgical masks date a page to 2020.</li>
+          <li><strong>No faceless backs.</strong> A person seen only from behind reads as awkward. Make the scene and the objects the subject; if people appear, keep them incidental.</li>
+          <li><strong>Caption anything that isn&rsquo;t obvious.</strong> Every screenshot, diagram or product shot gets one line under it: what it is and why it&rsquo;s there. People photos don&rsquo;t need one.</li>
+          <li><strong>Never reuse an image across pages.</strong> Each hero or section image appears once. Only case study thumbnails, logos and testimonial photos repeat. If nothing fits, use an icon-led or typographic layout instead of a stand-in photo.</li>
+        </ul>
+        <pre class="mt-4 bg-gray-50 rounded-lg p-4 text-xs font-mono text-gray-700 overflow-x-auto"><code>&lt;!-- Tall hero image, shown whole --&gt;
+&lt;img class="rounded-2xl shadow-xl w-auto max-w-full mx-auto max-h-[560px] object-contain" &hellip;&gt;
+
+&lt;!-- One-line caption under a screenshot or diagram --&gt;
+&lt;figure&gt;
+  &lt;img &hellip;&gt;
+  &lt;figcaption class="text-sm text-gray-500 mt-3 text-center"&gt;What it is, and why it&rsquo;s here.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+      </div>
+
       <div class="p-6 bg-dsGray rounded-xl border border-gray-200">
         <h4 class="font-bold mb-3">Screenshot Sanitization Checklist</h4>
         <p class="text-gray-600 text-sm mb-3">Before publishing <em>any</em> screenshot, verify the following have been removed or obscured:</p>
@@ -2265,31 +2284,53 @@ Style: Clean lines, no gradients, no 3D effects, no neon, executive tone.
       <div class="bg-dsGray rounded-xl border border-gray-200 p-8 mb-4">
         <div class="flex flex-wrap items-center gap-4">
           <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3 text-sm font-medium rounded-full hover:bg-dsBlack transition" onclick="return false">Talk it over &rarr;</a>
-          <a href="#" class="inline-flex items-center gap-3 border-2 border-dsBlack text-dsBlack px-6 py-3 rounded-full font-medium uppercase hover:bg-dsBlack hover:text-white transition-all" onclick="return false">VIEW CASE STUDY <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all" onclick="return false">View All &rarr;</a>
+          <a href="#" class="inline-flex items-center justify-center gap-2 border border-gray-300 text-dsBlack px-6 py-3 text-sm font-medium rounded-full hover:border-dsBlack transition" onclick="return false">See the work &rarr;</a>
+          <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm hover:gap-3 transition-all" onclick="return false">View All &rarr;</a>
         </div>
       </div>
+      <div class="bg-dsBlack rounded-xl p-8 mb-4">
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-6 py-3 rounded-full hover:bg-dsBlack hover:ring-2 hover:ring-white/40 font-medium transition" onclick="return false">Talk it over &rarr;</a>
+          <a href="#" class="inline-flex items-center gap-2 border border-gray-500 text-white hover:border-white px-6 py-3 font-medium rounded-full transition" onclick="return false">See the work &rarr;</a>
+        </div>
+        <p class="text-gray-300 text-sm mt-4">On dark bands the primary stays dsBlue and hovers to dsBlack with a faint white ring. It never inverts to a white button. The outline goes thin and gray.</p>
+      </div>
+      <p class="text-sm text-gray-500 mb-4">Outline buttons are thin (<code class="bg-gray-50 px-1 rounded text-xs font-mono">border</code>, not <code class="bg-gray-50 px-1 rounded text-xs font-mono">border-2</code>) and normal case. The older heavy, uppercase outline is retired.</p>
       <details class="mb-10">
         <summary class="cursor-pointer text-sm font-semibold text-dsBlue hover:underline">View button code</summary>
-        <pre class="mt-2 bg-gray-50 rounded-lg p-4 text-xs font-mono text-gray-700 overflow-x-auto"><code>&lt;!-- Tier 1: Primary Filled --&gt;
-&lt;a class="inline-flex items-center gap-2 bg-dsBlue text-white
+        <pre class="mt-2 bg-gray-50 rounded-lg p-4 text-xs font-mono text-gray-700 overflow-x-auto"><code>&lt;!-- Tier 1: Primary Filled (the only dsBlue button) --&gt;
+&lt;a data-cta="primary" class="inline-flex items-center gap-2 bg-dsBlue text-white
    px-6 py-3 text-sm font-medium rounded-full
    hover:bg-dsBlack transition"&gt;
   Talk it over &amp;rarr;
 &lt;/a&gt;
 
-&lt;!-- Tier 1, homepage hero size (live homepage) --&gt;
-&lt;a class="inline-flex items-center gap-2 bg-dsBlue text-white
-   px-8 py-4 rounded-full font-semibold text-lg
-   hover:bg-dsBlack transition-all"&gt;
-  Start building &amp;rarr;
+&lt;!-- Tier 1 inside a dark band: no white inversion --&gt;
+&lt;a data-cta="primary" class="inline-flex items-center gap-2 bg-dsBlue text-white
+   px-6 py-3 rounded-full hover:bg-dsBlack
+   hover:ring-2 hover:ring-white/40 font-medium transition"&gt;
+  Talk it over &amp;rarr;
 &lt;/a&gt;
 
-&lt;!-- Tier 2: Outline --&gt;
-&lt;a class="inline-flex items-center gap-3 border-2 border-dsBlack
-   text-dsBlack px-6 py-3 rounded-full font-medium uppercase
-   hover:bg-dsBlack hover:text-white transition-all"&gt;
-  VIEW CASE STUDY &amp;rarr;
+&lt;!-- Tier 1, homepage hero size (dark hero; offer-named on the homepage) --&gt;
+&lt;a data-cta="home-build-with-us" class="inline-flex items-center gap-2 bg-dsBlue text-white
+   px-8 py-4 rounded-full font-semibold
+   hover:bg-dsBlack hover:ring-2 hover:ring-white/40 transition-all"&gt;
+  Build with Us &amp;rarr;
+&lt;/a&gt;
+
+&lt;!-- Tier 2: Outline, on light --&gt;
+&lt;a data-cta="secondary" class="inline-flex items-center justify-center gap-2
+   border border-gray-300 text-dsBlack px-6 py-3 text-sm
+   font-medium rounded-full hover:border-dsBlack transition"&gt;
+  See the work &amp;rarr;
+&lt;/a&gt;
+
+&lt;!-- Tier 2: Outline, on dark --&gt;
+&lt;a data-cta="secondary" class="inline-flex items-center gap-2
+   border border-gray-500 text-white hover:border-white
+   px-6 py-3 font-medium rounded-full transition"&gt;
+  See the work &amp;rarr;
 &lt;/a&gt;
 
 &lt;!-- Tier 3: Text Link --&gt;
@@ -2298,6 +2339,76 @@ Style: Clean lines, no gradients, no 3D effects, no neon, executive tone.
    hover:gap-3 transition-all"&gt;
   View All &amp;rarr;
 &lt;/a&gt;</code></pre>
+      </details>
+
+      <!-- Header dropdown menus -->
+      <h3 class="text-xl font-bold mb-4">Header Dropdown Menus</h3>
+      <p class="text-gray-600 mb-4 max-w-3xl">Services and Healthcare share one dropdown style. Each item has an icon, a title and a one-line description. A gray side column holds secondary links (More, Popular). A footer row carries an overview link and the primary CTA. The panel is 560px wide. Build with Us is the first Services item. The header button itself reads &ldquo;Get Started&rdquo; (Bob, 10 Nov 2026: keep it for now).</p>
+      <style>
+        .gdd { width: 560px; max-width: 100%; background:#fff; border:1px solid #e5e7eb; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+        .gdd .ds-dd-grid { display: grid; grid-template-columns: minmax(0, 1fr) 190px; }
+        .gdd .ds-dd-main { padding: 12px; }
+        .gdd .ds-dd-item { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; padding: 9px 10px; border-radius: 10px; text-decoration: none; color: #111827; }
+        .gdd .ds-dd-item:hover { background: #f4f6ff; }
+        .gdd .ds-dd-item:hover strong { color: #304FFF; }
+        .gdd .ds-dd-item strong { display: block; font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+        .gdd .ds-dd-item span span { display: block; font-size: 13px; color: #6b7280; line-height: 1.4; margin-top: 1px; }
+        .gdd .ds-dd-ic { width: 30px; height: 30px; border-radius: 8px; background: #eef1ff; color: #304FFF; display: flex; align-items: center; justify-content: center; }
+        .gdd .ds-dd-ic svg { width: 16px; height: 16px; }
+        .gdd .ds-dd-side { background: #f5f5f5; border-left: 1px solid #e5e7eb; padding: 16px 18px; }
+        .gdd .ds-dd-k { font-family: 'Roboto Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6b7280; margin: 0 0 8px; }
+        .gdd .ds-dd-side a { display: block; font-size: 14px; color: #111827; text-decoration: none; padding: 5px 0; line-height: 1.35; }
+        .gdd .ds-dd-side a:hover { color: #304FFF; }
+        .gdd .ds-dd-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #e5e7eb; padding: 12px 18px; background: #fff; }
+        .gdd .ds-dd-more { color: #304FFF; font-weight: 600; font-size: 14px; text-decoration: none; }
+        .gdd .ds-dd-cta { background: #304FFF; color: #fff; border-radius: 999px; padding: 9px 16px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background .15s ease; }
+        .gdd .ds-dd-cta:hover { background: #050505; color: #fff; }
+      </style>
+      <div class="bg-dsGray rounded-xl border border-gray-200 p-8 mb-4 overflow-x-auto">
+        <div class="gdd">
+          <div class="ds-dd-grid">
+            <div class="ds-dd-main">
+              <a href="#" onclick="return false" class="ds-dd-item"><span class="ds-dd-ic"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/></svg></span><span><strong>Build with Us</strong><span>Experiment. Two weeks, then monthly</span></span></a>
+              <a href="#" onclick="return false" class="ds-dd-item"><span class="ds-dd-ic"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><span><strong>Blueprint</strong><span>Discover. 4 to 6 weeks to a plan</span></span></a>
+              <a href="#" onclick="return false" class="ds-dd-item"><span class="ds-dd-ic"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg></span><span><strong>Full build</strong><span>Engineer. 3 to 12 months to production</span></span></a>
+            </div>
+            <div class="ds-dd-side">
+              <p class="ds-dd-k">More</p>
+              <a href="#" onclick="return false">How we work</a>
+              <a href="#" onclick="return false">The Lab</a>
+              <a href="#" onclick="return false">Healthcare</a>
+            </div>
+          </div>
+          <div class="ds-dd-foot">
+            <a href="#" onclick="return false" class="ds-dd-more">All services &#8594;</a>
+            <a href="#" onclick="return false" class="ds-dd-cta">Talk it over &#8594;</a>
+          </div>
+        </div>
+      </div>
+      <details class="mb-10">
+        <summary class="cursor-pointer text-sm font-semibold text-dsBlue hover:underline">View dropdown structure</summary>
+        <pre class="mt-2 bg-gray-50 rounded-lg p-4 text-xs font-mono text-gray-700 overflow-x-auto"><code>Markup: public/includes/nav.html   Styles: .ds-dd-* in public/ds-nav.css
+
+&lt;div class="ds-services-inner ds-dd"&gt;            &lt;!-- 560px wide --&gt;
+  &lt;div class="ds-dd-grid"&gt;                       &lt;!-- main column + 190px side column --&gt;
+    &lt;div class="ds-dd-main"&gt;
+      &lt;a class="ds-dd-item"&gt;
+        &lt;span class="ds-dd-ic"&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; &lt;!-- 30px dsBlue icon on #eef1ff --&gt;
+        &lt;span&gt;&lt;strong&gt;Title&lt;/strong&gt;&lt;span&gt;One-line description&lt;/span&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-dd-side"&gt;                     &lt;!-- gray #f5f5f5 --&gt;
+      &lt;p class="ds-dd-k"&gt;More&lt;/p&gt; &lt;a&gt;…&lt;/a&gt;      &lt;!-- "Popular" in Healthcare --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-dd-foot"&gt;
+    &lt;a class="ds-dd-more"&gt;All services &amp;#8594;&lt;/a&gt;   &lt;!-- "Case studies" in Healthcare --&gt;
+    &lt;a class="ds-dd-cta" data-cta="primary"&gt;Talk it over &amp;#8594;&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+Healthcare uses .ds-healthcare-inner.ds-dd with the same children.
+Mobile mirrors both menus as accordions (item titles, then the side links).</code></pre>
       </details>
 
       <!-- Cards -->
@@ -2392,6 +2503,56 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
       </div>
       <p class="text-sm text-gray-500 mb-10">Standard grids: <code class="bg-gray-50 px-1 rounded text-xs font-mono">grid md:grid-cols-2 gap-6</code> or <code class="bg-gray-50 px-1 rounded text-xs font-mono">grid md:grid-cols-3 gap-6</code>. Cards use <code class="bg-gray-50 px-1 rounded text-xs font-mono">lg:grid-cols-3</code> for later breakpoint.</p>
 
+      <!-- Comparison tables -->
+      <h3 class="text-xl font-bold mb-4">Comparison Tables</h3>
+      <p class="text-gray-600 mb-4 max-w-3xl">When a table compares types of providers, the Digital Scientists row is a solid dsBlue band with white text, so the reader finds it at a glance. The header is dsBlack. Compare categories, never named firms.</p>
+      <div class="overflow-x-auto rounded-2xl border border-gray-200 bg-white mb-2">
+        <table class="w-full text-base border-collapse" style="margin:0">
+          <thead class="bg-dsBlack"><tr><th scope="col" class="text-left font-semibold text-white px-5 py-4">Provider type</th><th scope="col" class="text-left font-semibold text-white px-5 py-4">Quality</th><th scope="col" class="text-left font-semibold text-white px-5 py-4">Speed</th></tr></thead>
+          <tbody>
+            <tr class="border-b border-gray-200 last:border-0"><td class="align-top px-5 py-4 text-gray-700 font-semibold text-dsBlack">Strategy firms</td><td class="align-top px-5 py-4 text-gray-700">A plan, not software</td><td class="align-top px-5 py-4 text-gray-700">Months, then a handoff</td></tr>
+            <tr class="bg-dsBlue"><td class="align-top px-5 py-4 text-white font-bold">Digital Scientists</td><td class="align-top px-5 py-4 text-white font-medium"><strong>Production-grade, every change reviewed</strong></td><td class="align-top px-5 py-4 text-white font-medium"><strong>Working software in two weeks</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-gray-500 mb-4">Categories, not ratings of any one firm.</p>
+      <details class="mb-10">
+        <summary class="cursor-pointer text-sm font-semibold text-dsBlue hover:underline">View table code</summary>
+        <pre class="mt-2 bg-gray-50 rounded-lg p-4 text-xs font-mono text-gray-700 overflow-x-auto"><code>Wrapper: overflow-x-auto rounded-2xl border border-gray-200 bg-white
+Table:   w-full text-base border-collapse
+Header:  thead bg-dsBlack; th text-left font-semibold text-white px-5 py-4
+Row:     tr border-b border-gray-200 last:border-0
+         first td: align-top px-5 py-4 font-semibold text-dsBlack; others text-gray-700
+DS row:  tr bg-dsBlue
+         first td: align-top px-5 py-4 text-white font-bold
+         others:   align-top px-5 py-4 text-white font-medium, value in &lt;strong&gt;
+Note:    p text-sm text-gray-500 mt-3 under the table
+Live:    healthcare/software-pe-companies/</code></pre>
+      </details>
+
+      <!-- In healthcare cross-link strip -->
+      <h3 class="text-xl font-bold mb-4">&ldquo;In healthcare&rdquo; Cross-Link Strip</h3>
+      <p class="text-gray-600 mb-4 max-w-3xl">General service pages end with a thin strip that points to their healthcare counterparts, just above the closing CTA. One eyebrow label, then descriptive links. The anchor text is the target page&rsquo;s main phrase, never &ldquo;learn more&rdquo;.</p>
+      <div class="rounded-xl border border-gray-200 mb-4 overflow-hidden">
+        <section class="py-10 px-6 bg-white border-t border-gray-100" aria-label="In healthcare">
+          <div class="max-w-screen-xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3">
+            <span class="text-xs font-medium text-dsBlue uppercase tracking-wider">In healthcare</span><a href="#" onclick="return false" class="inline-flex items-center gap-1 font-semibold text-dsBlack hover:text-dsBlue">Healthcare integrations &rarr;</a><a href="#" onclick="return false" class="inline-flex items-center gap-1 font-semibold text-dsBlack hover:text-dsBlue">EHR integration &rarr;</a>
+          </div>
+        </section>
+      </div>
+      <details class="mb-10">
+        <summary class="cursor-pointer text-sm font-semibold text-dsBlue hover:underline">View strip code</summary>
+        <pre class="mt-2 bg-gray-50 rounded-lg p-4 text-xs font-mono text-gray-700 overflow-x-auto"><code>&lt;!-- hc-crosslink:start --&gt;
+&lt;section class="py-10 px-6 bg-white border-t border-gray-100" aria-label="In healthcare"&gt;
+  &lt;div class="max-w-screen-xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3"&gt;
+    &lt;span class="text-xs font-medium text-dsBlue uppercase tracking-wider"&gt;In healthcare&lt;/span&gt;
+    &lt;a href="../healthcare/integrations/"
+       class="inline-flex items-center gap-1 font-semibold text-dsBlack hover:text-dsBlue"&gt;Healthcare integrations &amp;rarr;&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- hc-crosslink:end --&gt;</code></pre>
+      </details>
+
       <!-- FAQ Accordion -->
       <h3 class="text-xl font-bold mb-4">FAQ Accordion</h3>
       <div class="bg-dsGray rounded-xl border border-gray-200 p-8 mb-4">
@@ -2429,20 +2590,20 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
         <div class="bg-white rounded-xl border-2 border-dsBlue p-6">
           <div class="inline-block bg-dsBlue text-white text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Tier 1: High Intent</div>
           <h4 class="font-bold mb-2">Talk it over</h4>
-          <p class="text-gray-600 text-sm mb-3">Links to <code class="bg-gray-50 px-1 rounded text-xs font-mono">/start/</code> (add <code class="bg-gray-50 px-1 rounded text-xs font-mono">?path=</code> to preselect a route). Solid dsBlue filled button. The site-wide primary CTA, used in the nav and on service pages.</p>
+          <p class="text-gray-600 text-sm mb-3">The one primary label, site-wide (Bob, 9 Nov 2026). Links to <code class="bg-gray-50 px-1 rounded text-xs font-mono">/start/?route=&hellip;&amp;source=&hellip;</code> or to the page&rsquo;s inline <code class="bg-gray-50 px-1 rounded text-xs font-mono">#start</code> form. Solid dsBlue, hover dsBlack, never turns white on hover. The only dsBlue button on a page. On a dsBlue band it is white with blue text, hover dsBlack with white text. The homepage hero names the two offers instead (Build with Us, Start with a Blueprint). The header button reads &ldquo;Get Started&rdquo; (Bob, 10 Nov 2026: keep it for now).</p>
           <a href="#" class="inline-flex items-center gap-2 bg-dsBlue text-white px-5 py-2.5 text-sm font-medium rounded-full hover:bg-dsBlack transition" onclick="return false">Talk it over &rarr;</a>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="inline-block bg-dsBlue/10 text-dsBlue text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Tier 2: Mid Intent</div>
-          <h4 class="font-bold mb-2">Start a Conversation</h4>
-          <p class="text-gray-600 text-sm mb-3">Links to <code class="bg-gray-50 px-1 rounded text-xs font-mono">/start/</code>. Outlined button. Used for visitors exploring — service pages, blog posts, general inquiries.</p>
-          <a href="#" class="inline-flex items-center gap-2 border-2 border-dsBlack text-dsBlack px-5 py-2.5 text-sm rounded-full font-medium hover:bg-dsBlack hover:text-white transition-all" onclick="return false">Start a Conversation &rarr;</a>
+          <h4 class="font-bold mb-2">See the work &middot; Ways to start &middot; How we work</h4>
+          <p class="text-gray-600 text-sm mb-3">Thin outline button, normal case. For visitors still looking: the work, the ways to start, the method. Sits next to the primary.</p>
+          <a href="#" class="inline-flex items-center justify-center gap-2 border border-gray-300 text-dsBlack px-5 py-2.5 text-sm font-medium rounded-full hover:border-dsBlack transition" onclick="return false">See the work &rarr;</a>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="inline-block bg-gray-200 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-3">Tier 3: Awareness</div>
           <h4 class="font-bold mb-2">Read More</h4>
           <p class="text-gray-600 text-sm mb-3">Links to a service page or case study. Text link with arrow. Used for early-stage visitors — blog inline CTAs, sidebar prompts.</p>
-          <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm uppercase tracking-wider hover:gap-3 transition-all" onclick="return false">How the Blueprint works &rarr;</a>
+          <a href="#" class="inline-flex items-center gap-2 text-dsBlue font-semibold text-sm hover:gap-3 transition-all" onclick="return false">How the Blueprint works &rarr;</a>
         </div>
       </div>
 
@@ -2451,19 +2612,22 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <h4 class="font-bold mb-3 text-green-700">Use These</h4>
           <ul class="space-y-2 text-sm text-gray-600">
-            <li>&#10003; "Talk it over"</li>
-            <li>&#10003; "Start a Conversation"</li>
-            <li>&#10003; "Book a strategy consultation"</li>
-            <li>&#10003; "Discuss Your AI Opportunity"</li>
-            <li>&#10003; "Schedule AI Opportunity Call"</li>
-            <li>&#10003; "See More Healthcare Case Studies"</li>
+            <li>&#10003; "Talk it over" (primary, every page)</li>
+            <li>&#10003; "See the work" (secondary)</li>
+            <li>&#10003; "Ways to start" (secondary)</li>
+            <li>&#10003; "How we work" (secondary)</li>
+            <li>&#10003; "Build with Us" / "Start with a Blueprint" (homepage hero only)</li>
+            <li>&#10003; Descriptive text links named for the page they open, e.g. "How the Blueprint works"</li>
           </ul>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-6">
           <h4 class="font-bold mb-3 text-red-700">Retired Phrases</h4>
           <ul class="space-y-2 text-sm text-gray-600">
+            <li>&#10005; "Start a Conversation" → use "Talk it over"</li>
+            <li>&#10005; "Schedule a call", "Schedule AI Opportunity Call", "Book a strategy consultation", "Discuss Your AI Opportunity" → use "Talk it over" (booking happens after the form)</li>
+            <li>&#10005; Any assessment CTA ("Get Assessment" and the like). Assessments are retired as offers.</li>
             <li>&#10005; "Learn More" (as a button — acceptable as text link)</li>
-            <li>&#10005; "Get In Touch" → use "Start a Conversation"</li>
+            <li>&#10005; "Get In Touch" → use "Talk it over"</li>
             <li>&#10005; "Contact Us" as button → OK as page heading only</li>
             <li>&#10005; "Click Here"</li>
             <li>&#10005; "Start The Experiment" (The Experiment is no longer a starting offer; start with a Blueprint)</li>
@@ -2485,7 +2649,7 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
       </div>
 
       <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
-        <strong>Dual-Path Case Study CTAs:</strong> Every case study page should offer two paths — a direct engagement CTA ("Let's Talk About Your Healthcare Platform") pointing to <code class="bg-amber-100 px-1 rounded text-xs font-mono">/proof/</code> and a continue-exploring CTA ("See More Healthcare Case Studies") linking back to the portfolio.
+        <strong>Dual-Path Case Study CTAs:</strong> Every case study page closes with two paths: &ldquo;Talk it over&rdquo; to <code class="bg-amber-100 px-1 rounded text-xs font-mono">/start/</code>, and a continue-exploring outline button to the page the case proves (for example &ldquo;Explore Healthcare&rdquo;).
       </div>
     </div>
   </section>
@@ -2624,7 +2788,7 @@ px-3 py-1 rounded-full uppercase tracking-wider</code></pre>
             <tr><td class="px-6 py-3 font-semibold">Hero Image</td><td class="px-6 py-3">Required. Must follow the Blog Hero Image System (Section 14). 1440×810px, WebP, &lt;200KB.</td></tr>
             <tr><td class="px-6 py-3 font-semibold">Lead Paragraph</td><td class="px-6 py-3">State the argument in the first 2 sentences. Don't bury the lede.</td></tr>
             <tr><td class="px-6 py-3 font-semibold">Structure</td><td class="px-6 py-3">H2 subheadings every 300–400 words. Use lists and tables for scanability.</td></tr>
-            <tr><td class="px-6 py-3 font-semibold">CTA</td><td class="px-6 py-3">Every post must end with a CTA. Healthcare posts → Tier 1 (/proof/). General posts → Tier 2 (/start/).</td></tr>
+            <tr><td class="px-6 py-3 font-semibold">CTA</td><td class="px-6 py-3">Every post must end with a CTA: &ldquo;Talk it over&rdquo; to /start/, plus a link to the page the post supports, using that page&rsquo;s main phrase.</td></tr>
             <tr><td class="px-6 py-3 font-semibold">Author</td><td class="px-6 py-3">Named author with title. No "DS Team" bylines.</td></tr>
           </tbody>
         </table>
@@ -3741,7 +3905,7 @@ text-decoration: none;</code></pre>
       <div class="grid md:grid-cols-2 gap-6 mb-12">
         <div class="guide-card" style="border-left: 4px solid #304FFF;">
           <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Phase 1 &mdash; Pre-Booking</p>
-          <p class="text-sm text-gray-600 mb-2">Visitor clicks &ldquo;Schedule a Call&rdquo; on our site. JS intercepts the click, reads UTMs from <code>sessionStorage</code>, and calls <code>schedule-lead.mjs</code>.</p>
+          <p class="text-sm text-gray-600 mb-2">Visitor clicks a scheduler link on our site (offered on /start/ and the thank-you page, after the form). JS intercepts the click, reads UTMs from <code>sessionStorage</code>, and calls <code>schedule-lead.mjs</code>.</p>
           <p class="text-sm text-gray-600 mb-2"><strong>Campaign traffic:</strong> Creates a Deal with UTM custom fields (no person linked yet).</p>
           <p class="text-sm text-gray-600"><strong>Organic:</strong> Passthrough &mdash; no Pipedrive action. Browser redirects to Scheduler.</p>
         </div>
@@ -3758,12 +3922,10 @@ text-decoration: none;</code></pre>
       <table class="mb-12">
         <thead><tr><th>Page</th><th>Format</th></tr></thead>
         <tbody>
-          <tr><td><code>/start/</code></td><td>Button (also has a Formspree form)</td></tr>
+          <tr><td><code>/start/</code></td><td>Link offered after the Formspree form</td></tr>
           <tr><td><code>/thank-you/</code></td><td>Button (post-form CTA)</td></tr>
-          <tr><td><code>/healthcare/assessment/</code></td><td><strong>Embedded iframe</strong> (in-page widget)</td></tr>
-          <tr><td><code>/event/paltc26-annual-conference/</code></td><td>4 buttons (hero + pills + footer)</td></tr>
-          <tr><td><code>/event/beckers-health-it-rcm-2026/</code></td><td>4 buttons (hero + pills + footer)</td></tr>
-          <tr><td><code>/event/2026-nchcfa-annual-convention-expo/</code></td><td>1 button (footer)</td></tr>
+          <tr><td><code>/rural-health-transformation/talk/</code></td><td>Link</td></tr>
+          <tr><td>A few healthcare data and AI blog posts</td><td>Inline link</td></tr>
         </tbody>
       </table>
 
@@ -3811,7 +3973,7 @@ text-decoration: none;</code></pre>
 &lt;/a&gt;</code></pre>
         </div>
         <div>
-          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Iframe Embed (Assessment Page Style)</p>
+          <p class="text-xs font-medium text-dsBlue uppercase tracking-wider mb-2">Iframe Embed (not used on live pages)</p>
           <pre><code>&lt;iframe
   src="https://digitalscientists3.pipedrive.com/scheduler/kOOeAEu2/meeting-with-bob-klein"
   title="Schedule a Meeting with Bob Klein"
@@ -3914,7 +4076,7 @@ STRUCTURE: H1 title + 4-6 H2 sections + CTA
 AUDIENCE: [CTO/CIO | COO/CFO | startup founder]
 
 Include at least 2 specific data points or metrics.
-End with a CTA linking to /proof/ (for healthcare topics) or /start/ (general).</pre>
+End with a "Talk it over" CTA linking to /start/, and link the page this post supports.</pre>
           <p class="text-sm text-gray-600">The Claude ecosystem includes: <strong>Claude</strong> (claude.ai) for drafting and brainstorming, <strong>Nana Banana</strong> for image generation, and <strong>Claude Code</strong> for implementation. Project context is maintained via CLAUDE.md and memory files.</p>
         </div>
       </details>
