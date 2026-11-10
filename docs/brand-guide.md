@@ -1026,7 +1026,7 @@ The DS website uses Tailwind CSS (CDN) with a custom color/font configuration. A
 - Equal height via flexbox (cards in grids match tallest card)
 
 **Buttons (3 tiers):**
-1. **Primary filled:** `bg-dsBlue text-white px-6 py-3 text-sm rounded-full font-medium hover:bg-dsBlack` — normal case. The only dsBlue button on a page; label is **"Talk it over"** site-wide (Bob, 9 Nov 2026), linking to `/start/?route=…&source=…` or the page's inline `#start` form. Inside dark bands it never inverts to white: `hover:bg-dsBlack hover:ring-2 hover:ring-white/40`. Homepage hero size: `px-8 py-4 font-semibold`, offer-named ("Build with Us", "Start with a Blueprint"). The header button still reads "Get Started".
+1. **Primary filled:** `bg-dsBlue text-white px-6 py-3 text-sm rounded-full font-medium hover:bg-dsBlack` — normal case. The only dsBlue button on a page; label is **"Talk it over"** site-wide (Bob, 9 Nov 2026), linking to `/start/?route=…&source=…` or the page's inline `#start` form. Inside dark bands it never inverts to white: `hover:bg-dsBlack hover:ring-2 hover:ring-white/40`. Homepage hero size: `px-8 py-4 font-semibold`, offer-named ("Build with Us", "Start with a Blueprint"). The header button reads "Get Started" (Bob, 10 Nov 2026: keep it for now).
 2. **Outline (thin, normal case):** on light `border border-gray-300 text-dsBlack px-6 py-3 text-sm font-medium rounded-full hover:border-dsBlack`; on dark `border border-gray-500 text-white hover:border-white px-6 py-3 font-medium rounded-full`. Labels: "See the work", "Ways to start", "How we work". The heavy `border-2` uppercase outline is retired.
 3. **Text link:** `text-dsBlue font-semibold text-sm uppercase tracking-wider` — with → arrow
 

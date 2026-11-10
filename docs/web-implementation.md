@@ -16,7 +16,7 @@ A full front-end cleanup established these as the canonical rules. Where an olde
 - **Build:** CSS is the committed, purged `ds-tailwind.css` — **no Tailwind CDN.** After adding/changing any Tailwind class, run `npm run build:css` and commit the regenerated file, or the class silently does nothing live. See `BUILD.md`.
 - **Fonts:** self-hosted via `ds-fonts.css` (Inter + Roboto Mono, subset). No Google Fonts CDN.
 - **Legacy removed:** `ds-wp-layout.css` and the `.wp-content-legacy` wrapper are retired. **New pages are hand-crafted Tailwind only.**
-- **CTA standard:** primary = `bg-dsBlue text-white hover:bg-dsBlack`, **never inverted** (no white-on-dark primary). Inside dark bands: `hover:bg-dsBlack hover:ring-2 hover:ring-white/40`, never `hover:bg-white`. Label is **"Talk it over"** site-wide (Bob, 9 Nov 2026), to `/start/?route=…&source=…` or the page's inline `#start` form. Retired: "Start a Conversation", "Schedule a call" variants, every assessment CTA. The header button still reads "Get Started". Secondary = thin outline, normal case (§4.1). Track with `data-cta` attributes.
+- **CTA standard:** primary = `bg-dsBlue text-white hover:bg-dsBlack`, **never inverted** (no white-on-dark primary). Inside dark bands: `hover:bg-dsBlack hover:ring-2 hover:ring-white/40`, never `hover:bg-white`. Label is **"Talk it over"** site-wide (Bob, 9 Nov 2026), to `/start/?route=…&source=…` or the page's inline `#start` form. Retired: "Start a Conversation", "Schedule a call" variants, every assessment CTA. The header button reads "Get Started" (Bob, 10 Nov 2026: keep it for now). Secondary = thin outline, normal case (§4.1). Track with `data-cta` attributes.
 - **Color:** use the brand tokens + dsBlue tint scale (`bg-dsBlue/5`, `/10`). **Never** stock Tailwind `blue-*`, and **no** red/amber/green/emerald — semantic states use `dsTeal`/`dsLime` (positive) or neutral `dsGray`/`dsBlack` (caution), with **dark text for contrast** (never `dsTeal` as text on white). Icons are inline SVG — **no emoji, no stock green/red check-marks.**
 - **Typography:** headings `letter-spacing:-0.02em`; body target **18px/1.6**; **no em/en dashes** (— or –) in copy — use commas or hyphens (brand editorial rule).
 - **Accessibility (required on every page):** one `<h1>`; content inside `<main id="main-content">`; skip-to-content link; visible `:focus-visible` ring; nav submenus reachable via `:focus-within`; FAQ accordions use native `<details>` (Section 6.16); and a no-JS + `prefers-reduced-motion` fallback for `.fade-up` (content must not stay hidden if JS fails).
@@ -1014,7 +1014,7 @@ Services and Healthcare use one shared dropdown component (Bob's "Option 1", 9 N
 - `.ds-dd-foot`: overview link (`.ds-dd-more`: "All services →" / "Case studies →") and the primary CTA (`.ds-dd-cta`, dsBlue pill, hover dsBlack, "Talk it over →", `data-cta="primary"`).
 - Services order: Build with Us, Blueprint, Minimum viable product, Full build, Production support.
 - Mobile mirrors each menu as an accordion: item titles, then an `<h5>` eyebrow and the side links. Keep desktop and mobile in sync.
-- The header button (`.ds-contact-btn`) still reads "Get Started".
+- The header button (`.ds-contact-btn`) reads "Get Started" (Bob, 10 Nov 2026: keep it for now).
 
 ```html
 <div class="ds-services-inner ds-dd">
