@@ -302,7 +302,9 @@ Status indicators should be the **brightest visual elements** in any composition
 | Role | Family | Weights | Source |
 |------|--------|---------|--------|
 | Primary (all text) | Inter | 300, 400, 500, 600, 700, 800 | Google Fonts |
-| Monospace (code, data) | Roboto Mono | 400, 500 | Google Fonts |
+| Monospace (code, data, small card labels) | Roboto Mono | 400, 500 | Self-hosted (`ds-fonts.css`) |
+
+**Label rule (Bob, 27 Nov 2026):** section eyebrows above an H2 use Inter (`text-xs font-medium text-dsBlue uppercase tracking-wider`). Small labels *inside* cards, diagrams and illustrations (card kickers, phase names, durations, badges, table column heads) use Roboto Mono, uppercase, 11-12px, letter-spacing about 0.1em, weight 500-600. The homepage is the reference (problem cards, method phases, events strip).
 
 **Inter replaced RM Pro** (the previous brand typeface) across all channels as of 2025. All new assets must use Inter. Do not use RM Pro in any new material.
 
